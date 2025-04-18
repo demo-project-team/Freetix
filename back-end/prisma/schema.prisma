@@ -1,0 +1,117 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id           String    @id @default(uuid())
+    name         String
+    email        String    @unique
+    phone        String    @unique
+    passwordHash String
+    profileImage String?
+    bookings     Booking[]
+    reviews      Review[]
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+}
+
+model Vendor {
+    id          String    @id @default(uuid())
+    name        String
+    description String?
+    category    Category  @relation(fields: [categoryId], references: [id])
+    categoryId  String
+    location    String
+    mapLat      Float?
+    mapLng      Float?
+    phone       String
+    email       String
+    imageUrl    String?
+    ratingAvg   Float     @default(0)
+    services    Service[]
+    reviews     Review[]
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+}
+
+model Category {
+    id      String   @id @default(uuid())
+    name    String
+    icon    String?
+    vendors Vendor[]
+}
+
+model Service {
+    id              String            @id @default(uuid())
+    name            String
+    description     String?
+    durationMinutes Int
+    price           Float
+    imageUrl        String?
+    vendor          Vendor            @relation(fields: [vendorId], references: [id])
+    vendorId        String
+    schedules       ServiceSchedule[]
+    createdAt       DateTime          @default(now())
+}
+
+model ServiceSchedule {
+    id        String    @id @default(uuid())
+    service   Service   @relation(fields: [serviceId], references: [id])
+    serviceId String
+    date      DateTime
+    startTime DateTime
+    endTime   DateTime
+    isBooked  Boolean   @default(false)
+    booking   Booking[] @relation("booking")
+}
+
+model Booking {
+    id                String          @id @default(uuid())
+    user              User            @relation(fields: [userId], references: [id])
+    userId            String
+    serviceSchedule   ServiceSchedule @relation("booking", fields: [serviceScheduleId], references: [id])
+    serviceScheduleId String
+    status            BookingStatus   @default(PENDING)
+    paymentStatus     PaymentStatus   @default(UNPAID)
+    notes             String?
+    payment           Payment?        @relation("Payment")
+    createdAt         DateTime        @default(now())
+}
+
+model Review {
+    id        String   @id @default(uuid())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    vendor    Vendor   @relation(fields: [vendorId], references: [id])
+    vendorId  String
+    rating    Int
+    comment   String?
+    createdAt DateTime @default(now())
+}
+
+model Payment {
+    id            String   @id @default(uuid())
+    booking       Booking  @relation("Payment", fields: [bookingId], references: [id])
+    bookingId     String   @unique
+    amount        Float
+    method        String
+    transactionId String
+    paidAt        DateTime
+}
+
+enum BookingStatus {
+    PENDING
+    CONFIRMED
+    CANCELLED
+    COMPLETED
+}
+
+enum PaymentStatus {
+    UNPAID
+    PAID
+}
