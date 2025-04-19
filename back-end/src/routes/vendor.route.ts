@@ -16,4 +16,4 @@ const vendorScema = z.object({
     imageUrl : z.string().optional(),
 })
 VendorRouter.post('', validate(vendorScema), postVendor )
-VendorRouter.get('', getVendor)
+VendorRouter.get('', getVendor);
