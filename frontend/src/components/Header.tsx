@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import { Input } from './ui/input';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -9,7 +10,7 @@ const Header = () => {
   return (
     <div className="bg-black text-white p-4 w-full flex items-center justify-between sticky top-0 shadow-lg">
       <form  className="flex-1 mx-4">
-        <input
+        <Input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

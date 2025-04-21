@@ -11,7 +11,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 p-4">
-          <h1 className="text-4xl text-pink-500 neon-text">Welcome to DreamApp</h1>
+          <h1 className="text-4xl text-[#c77dff] neon-text">Welcome to Freetix</h1>
         </main>
         <Footer />
       </div>
