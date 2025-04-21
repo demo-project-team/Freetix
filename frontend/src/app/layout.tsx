@@ -35,7 +35,7 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+                  {children}
             </ThemeProvider>
           </QueryClientProvider>
         </NuqsAdapter>
