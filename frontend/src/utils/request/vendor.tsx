@@ -8,13 +8,13 @@ export const getVendor = async (categoryId : string) => {
         console.log(error)
     }
 }
-export const getVendorByFilter = async (name? : string, categoryId? :string, district? : string) => {
+export const getVendorByFilter = async (name? : string, categoryId? :string[], districtId? : string) => {
     try {
         const {data} = await axiosInstance.get(`/category`, {           
             params : {
                 name, 
                 categoryId, 
-                district,
+                districtId,
             }
          })
          return data
