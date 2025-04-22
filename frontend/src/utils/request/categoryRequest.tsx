@@ -9,10 +9,10 @@ export const postCategory = async (values: categoryInput) => {
     console.log(error);
   }
 };
-export const getCategory = async () => {
+export const getCategory = async ():Promise<void> => {
   try {
     const { data } = await axiosInstance.get("/category");
-    return data;
+    return data.data;
   } catch (error) {
     console.log(error);
   }
@@ -28,6 +28,8 @@ export const putCategory = async (id: string, values: categoryInput) => {
 export const getCategoryById = async (id : string) => {
   try {
     const { data } = await axiosInstance.get(`/category/${id}`);
+    console.log(data);
+    
     return data.data;
   } catch (error) {
     console.log(error);
