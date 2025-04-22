@@ -22,23 +22,25 @@ model User {
 }
 
 model Vendor {
-    id          String     @id @default(uuid())
-    name        String
-    description String?
-    categories  Category[]
-    location    String
-    mapLat      Float?
-    mapLng      Float?
-    phone       String
-    email       String
-    imageUrl    String?
-    ratingAvg   Float      @default(0)
-    services    Service[]
-    reviews     Review[]
-    createdAt   DateTime   @default(now())
-    updatedAt   DateTime   @updatedAt
-    address     Address?
-    addressID   String?
+    id             String       @id @default(uuid())
+    name           String
+    description    String?
+    categories     Category[]
+    location       String
+    mapLat         Float?
+    mapLng         Float?
+    phone          String
+    email          String
+    imageUrl       String?
+    ratingAvg      Float        @default(0)
+    services       Service[]
+    reviews        Review[]
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
+    address        Address?
+    addressID      String?
+    admin          Organization @relation(fields: [OrganizationId], references: [id])
+    OrganizationId String
 }
 
 model Category {
@@ -136,6 +138,19 @@ model City {
     Address  Address[]
 }
 
+model Organization {
+    id                   String   @id @default(uuid())
+    name                 String
+    email                String
+    passwordHash         String
+    phone                String
+    createdAt            DateTime @default(now())
+    updatedAt            DateTime @updatedAt
+    vendor               Vendor[]
+    OrganizationRegister String
+    request              Request  @default(PENDING)
+}
+
 enum BookingStatus {
     PENDING
     CONFIRMED
@@ -146,4 +161,10 @@ enum BookingStatus {
 enum PaymentStatus {
     UNPAID
     PAID
+}
+
+enum Request {
+    APPROVED
+    CANCELLED
+    PENDING
 }

@@ -25,3 +25,11 @@ export const putCategory = async (id: string, values: categoryInput) => {
     console.log(error);
   }
 };
+export const getCategoryById = async (id : string) => {
+  try {
+    const { data } = await axiosInstance.get(`/category/${id}`);
+    return data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
