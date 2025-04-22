@@ -4,6 +4,7 @@ import { prisma } from '../../lib/prisma';
 export const postVendor = async (req: Request, res: Response) => {
   try {
     const { name, description, location, mapLat, mapLng, phone, email, imageUrl } = req.body;
+    const orgId = req.params.orgId
     const rawCategoryIds = req.query.categoryId;
     const categoryIds: string[] = Array.isArray(rawCategoryIds)
       ? rawCategoryIds.map((id) => String(id))
@@ -23,6 +24,7 @@ export const postVendor = async (req: Request, res: Response) => {
         categories: {
           connect: categoryIds.map((id) => ({ id })),
         },
+        OrganizationId :orgId
       },
     });
 
