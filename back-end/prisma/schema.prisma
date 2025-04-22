@@ -22,31 +22,31 @@ model User {
 }
 
 model Vendor {
-    id          String    @id @default(uuid())
+    id          String     @id @default(uuid())
     name        String
     description String?
-    category    Category  @relation(fields: [categoryId], references: [id])
-    categoryId  String
+    categories  Category[]
     location    String
     mapLat      Float?
     mapLng      Float?
     phone       String
     email       String
     imageUrl    String?
-    ratingAvg   Float     @default(0)
+    ratingAvg   Float      @default(0)
     services    Service[]
     reviews     Review[]
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
     address     Address?
     addressID   String?
 }
 
 model Category {
-    id      String   @id @default(uuid())
+    id      String    @id @default(uuid())
     name    String
     icon    String?
     vendors Vendor[]
+    Service Service[]
 }
 
 model Service {
@@ -55,6 +55,8 @@ model Service {
     description     String?
     durationMinutes Int
     price           Float
+    category        Category          @relation(fields: [categoryId], references: [id])
+    categoryId      String
     imageUrl        String?
     vendor          Vendor            @relation(fields: [vendorId], references: [id])
     vendorId        String
@@ -108,13 +110,30 @@ model Payment {
 }
 
 model Address {
-    id                 String  @id @default(uuid())
-    street             String
-    city               String?
-    districtOrProvince String
-    SumOrKhoroo        String
-    vendor             Vendor  @relation(fields: [vendorID], references: [id], onDelete: Cascade)
-    vendorID           String  @unique
+    id          String   @id @default(uuid())
+    street      String
+    city        City     @relation(fields: [cityId], references: [id])
+    cityId      String
+    district    District @relation(fields: [districtId], references: [id])
+    SumOrKhoroo String
+    vendor      Vendor   @relation(fields: [vendorID], references: [id], onDelete: Cascade)
+    vendorID    String   @unique
+    districtId  String
+}
+
+model District {
+    id      String    @id @default(uuid())
+    name    String
+    city    City      @relation(fields: [cityId], references: [id])
+    cityId  String
+    Address Address[]
+}
+
+model City {
+    id       String     @id @default(uuid())
+    name     String
+    district District[]
+    Address  Address[]
 }
 
 enum BookingStatus {

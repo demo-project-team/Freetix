@@ -4,7 +4,12 @@ import { prisma } from '../../lib/prisma';
 export const postVendor = async (req: Request, res: Response) => {
   try {
     const { name, description, location, mapLat, mapLng, phone, email, imageUrl } = req.body;
-    const categoryId = req.params.categoryId;
+    const rawCategoryIds = req.query.categoryId;
+    const categoryIds: string[] = Array.isArray(rawCategoryIds)
+      ? rawCategoryIds.map((id) => String(id))
+      : rawCategoryIds
+        ? [String(rawCategoryIds)]
+        : [];
     const newVendor = await prisma.vendor.create({
       data: {
         name,
@@ -15,7 +20,9 @@ export const postVendor = async (req: Request, res: Response) => {
         phone,
         email,
         imageUrl,
-        categoryId,
+        categories: {
+          connect: categoryIds.map((id) => ({ id })),
+        },
       },
     });
 
