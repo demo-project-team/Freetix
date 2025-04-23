@@ -4,12 +4,14 @@ import { prisma } from '../../lib/prisma';
 import jwt from 'jsonwebtoken';
 
 export const signUpOrg = async (req: Request, res: Response): Promise<void> => {
-  const { username, email, password, phone, OrganizationRegister } = req.body;
+  const { name, email, password, phone, OrganizationRegister } = req.body;
+  console.log();
+  
   try {
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await prisma.organization.create({
       data: {
-        name: username,
+        name,
         email,
         passwordHash,
         phone,

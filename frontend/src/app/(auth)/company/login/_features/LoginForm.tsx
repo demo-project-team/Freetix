@@ -1,8 +1,7 @@
 "use client";
 
-import { loginSchema } from "@/schemas/userSchema";
+import { OrganizationLoginInput, organizationSchemaLogin } from "@/schemas/userSchema";
 import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   FormControl,
@@ -13,23 +12,23 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { signInRequest } from "@/utils/request/authRequest";
 import { motion } from 'framer-motion'
 import { useRouter } from "next/navigation";
+import { loginOrg } from "@/utils/request/authRequest";
 
-export const LoginForm = () => {
+const LoginForm = () => {
   const router = useRouter()
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<OrganizationLoginInput>({
+    resolver: zodResolver(organizationSchemaLogin),
     values: {
-      emailOrPhone: "",
+      phoneOrOrganizationRegister: "",
       password: "",
     },
   });
-  const login = async (values: z.infer<typeof loginSchema>) => {
-    const response = await  signInRequest(values)
+  const login = async (values:OrganizationLoginInput) => {
+    const response =await loginOrg(values)
     if (response) {
-      router.push(``)
+      router.push(`/organization/${response.id}`)
     }
   };
   return (
@@ -44,7 +43,7 @@ export const LoginForm = () => {
         <form onSubmit={form.handleSubmit(login)} >
           <FormField
             control={form.control}
-            name="emailOrPhone"
+            name="phoneOrOrganizationRegister"
             render={({ field }) => (    
               <FormItem >
                 <Label>Email</Label>
@@ -80,3 +79,4 @@ export const LoginForm = () => {
     </div>
   );
 };
+export default LoginForm

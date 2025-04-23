@@ -4,6 +4,7 @@ import { CategoryRouter } from './routes/category.routes';
 import { VendorRouter } from './routes/vendor.route';
 import cors from 'cors';
 import { ServiceRouter } from './routes/service.route';
+import { OrganizationRouter } from './routes/organiztion.route';
 const app = express();
 app.use(
   cors({
@@ -21,6 +22,7 @@ app.use('/auth', AuthRouter);
 app.use('/category', CategoryRouter);
 app.use('/vendor', VendorRouter);
 app.use('/service', ServiceRouter)
+app.use('/org', OrganizationRouter)
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

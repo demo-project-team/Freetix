@@ -5,7 +5,7 @@ import { prisma } from '../../lib/prisma';
 export const getCategoryById = async (req: Request, res: Response): Promise<void> => {
     const id = req.params.id
   try {
-    const categories = await prisma.category.findMany({
+    const categories = await prisma.category.findFirst({
         where : {
             id
         },
