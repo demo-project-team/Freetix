@@ -14,9 +14,6 @@ import {
   User
 } from 'lucide-react';
 
-import { HomeUp} from './Home';
-
-
 const Sidebar = () => {
   return (
     <div className="flex min-h-screen bg-gray-950">
@@ -97,7 +94,6 @@ const Sidebar = () => {
     </aside>
 
     {/* Main Content */}
-    <HomeUp/>
 
 
     {/* User Profile Button (Fixed) */}
