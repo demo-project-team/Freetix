@@ -21,7 +21,7 @@ export const signInOrg = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     if (user.request !== 'APPROVED') {
-        res.status(401).json({succes : false, message:""})
+        res.status(401).json({succes : false, message:"not approved"})
         return
     }
     const token = jwt.sign({ user: user }, '1234', { expiresIn: '8h' });
