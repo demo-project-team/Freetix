@@ -15,5 +15,5 @@ const vendorScema = z.object({
     email : z.string().email(),
     imageUrl : z.string().optional(),
 })
-VendorRouter.post('', validate(vendorScema), postVendor )
+VendorRouter.post('/:orgId', validate(vendorScema), postVendor )
 VendorRouter.get('', getVendor);

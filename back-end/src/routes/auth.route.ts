@@ -18,7 +18,7 @@ const loginSchema = z.object({
 });
 const organizationSchema = z.object({
   email : z.string(),
-  name : z.string(),
+  username : z.string(),
   password : z.string().min(8),
   phone : z.string(),
   OrganizationRegister : z.string()
