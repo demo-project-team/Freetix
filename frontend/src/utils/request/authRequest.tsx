@@ -1,7 +1,6 @@
 import axiosInstance from "@/lib/axios";
-import { UserLoginInput, UserRegisterInput } from "@/schemas/userSchema";
+import { OrganizationInput, OrganizationLoginInput, statusInput, UserLoginInput, UserRegisterInput } from "@/schemas/userSchema";
 import Cookies from "js-cookie";
-
 export const singUpRequest = async (values: UserRegisterInput) => {
   try {
     const response = await axiosInstance.post(
@@ -27,4 +26,37 @@ export const signInRequest = async (values: UserLoginInput) => {
     console.log(error);
   }
 };
+export const signUpOrg = async (values : OrganizationInput) => {
+  try {
+    const {data} = await axiosInstance.post('/auth/organization/sign-up', values)
+    return data 
+   } catch (error) {
+    console.log(error);
+  }
+}
+export const loginOrg = async (values : OrganizationLoginInput)=>{
+  try {
+    const {data} = await axiosInstance.post('/auth/organization/sign-in', values)
+    Cookies.set('org', data.token)
+    return data
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+export const getOrg = async ()=> {
+  try {
+    const {data} = await axiosInstance.get(`/org`)
+    return data.data
+  } catch (error) {
+    console.log(error);
+  }
+}
 
+export const putOrgReq = async (value:statusInput, id : string) => {
+  try {
+    await axiosInstance.put(`/org/${id}`, value)
+  } catch (error) {
+    console.log(error);
+  }
+}

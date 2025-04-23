@@ -1,14 +1,10 @@
+import { Category } from "@/Types/types";
 import { getCategoryById } from "@/utils/request/categoryRequest";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useContext } from "react";
 type CategoryContextType = {
-  category: Category[];
+  category: Category;
   refetchCategory: () => void;
-};
-type Category = {
-  name: string;
-  id: string;
-  icon: string;
 };
 const CategoryContext = createContext<CategoryContextType | null>(null);
 export const CategoryProvider = ({

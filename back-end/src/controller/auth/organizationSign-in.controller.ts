@@ -3,12 +3,12 @@ import bcrypt from 'bcrypt';
 import { prisma } from '../../lib/prisma';
 import jwt from 'jsonwebtoken';
 
-export const signIn = async (req: Request, res: Response): Promise<void> => {
-  const { OrganizationRegister, password, emailOrPhone } = req.body;
+export const signInOrg = async (req: Request, res: Response): Promise<void> => {
+  const { phoneOrOrganizationRegister, password} = req.body;
   try {
     const user = await prisma.organization.findFirst({
       where: {
-        OR: [{ email: emailOrPhone }, { phone: emailOrPhone }, { OrganizationRegister }],
+        OR: [{ phone: phoneOrOrganizationRegister }, { OrganizationRegister:phoneOrOrganizationRegister }],
       },
     });
     if (!user) {
@@ -25,7 +25,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
         return
     }
     const token = jwt.sign({ user: user }, '1234', { expiresIn: '8h' });
-    res.status(200).json({ success: true, message: 'Sign-in successful', token: token });
+    res.status(200).json({ success: true, message: 'Sign-in successful', token: token, id: user.id });
   } catch (error) {
     res.status(500).json({
       success: false,

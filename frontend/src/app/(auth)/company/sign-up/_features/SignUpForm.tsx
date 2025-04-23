@@ -1,6 +1,6 @@
 "use client";
 
-import { signUpSchema } from "@/schemas/userSchema";
+import { organizationSchema } from "@/schemas/userSchema";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,30 +13,31 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { singUpRequest } from "@/utils/request/authRequest";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import  { Loader2 } from 'lucide-react'
+import { Loader2 } from "lucide-react";
+import { signUpOrg } from "@/utils/request/authRequest";
+import { toast } from "sonner";
 
 export const SignUpForm = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false)
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
+  const [loading, setLoading] = useState(false);
+  const form = useForm<z.infer<typeof organizationSchema>>({
+    resolver: zodResolver(organizationSchema),
     values: {
       email: "",
       password: "",
-      username: "",
       phone: "",
-      profileImage: "",
+      OrganizationRegister: "",
+      name: "",
     },
   });
-  const signUp = async (values: z.infer<typeof signUpSchema>) => {
-    setLoading(true)
-    const response = await singUpRequest(values);
+  const signUp = async (values: z.infer<typeof organizationSchema>) => {
+    setLoading(true);
+    const response = await signUpOrg(values);
     if (response) {
-      router.push("/");
-      setLoading(false)
+        toast(<div>Request sent succesful</div>)
+        setLoading(false)
+    }else{
+        toast(<div>failed</div>)
     }
     setLoading(false)
   };
@@ -45,12 +46,12 @@ export const SignUpForm = () => {
       <form onSubmit={form.handleSubmit(signUp)} className="mt-[20px] flex flex-col gap-3">
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <Label>UserName</Label>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="Enter organization name" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -63,7 +64,7 @@ export const SignUpForm = () => {
             <FormItem>
               <Label>Phone</Label>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="enter phone number" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,7 +77,7 @@ export const SignUpForm = () => {
             <FormItem>
               <Label>Email</Label>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="enter email" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -89,19 +90,31 @@ export const SignUpForm = () => {
             <FormItem>
               <Label>Password</Label>
               <FormControl>
+                <Input {...field} type="password" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="OrganizationRegister"
+          render={({ field }) => (
+            <FormItem>
+              <Label>Байгууллагын регистэр</Label>
+              <FormControl>
                 <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div onClick={()=>router.push('/company/sign-up')} className="text-sm text-blue-400 hover:underline cursor-pointer">login by organization</div>
         <Button
-        disabled={loading}
+          disabled={loading}
           type="submit"
           className="mt-[20px] h-9 px-4 px-3 w-full py-2 cursor-bot-allowed"
         >
-            {loading && <Loader2/>}
+          {loading && <Loader2 className="animate-spin"/>}
           Continue
         </Button>
       </form>
