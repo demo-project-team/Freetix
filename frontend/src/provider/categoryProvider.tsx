@@ -1,8 +1,8 @@
 import { getCategoryById } from "@/utils/request/categoryRequest";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useContext } from "react";
 type CategoryContextType = {
-  categories: Category[];
+  category: Category[];
   refetchCategory: () => void;
 };
 type Category = {
@@ -18,14 +18,21 @@ export const CategoryProvider = ({
   children: ReactNode;
   id: string;
 }) => {
-  const { data: categories = [], refetch: refetchCategory } = useQuery({
+  const { data: category, refetch: refetchCategory } = useQuery({
     queryKey: ["category", id],
     queryFn: () => getCategoryById(id),
     staleTime: 1000 * 60 * 5,
   });
   return (
-    <CategoryContext.Provider value={{ categories, refetchCategory }}>
+    <CategoryContext.Provider value={{ category, refetchCategory }}>
       {children}
     </CategoryContext.Provider>
   );
+};
+export const useCategory = () => {
+  const context = useContext(CategoryContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
 };
