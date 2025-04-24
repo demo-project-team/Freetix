@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import {
@@ -13,18 +12,11 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { GameOrder } from "./Gameorder";
 import { OpenUser } from "./Openuser";
+import { Button } from "./ui/button";
 
-
-type Category = {
-  name: string;
-  id: string;
-  icon: string;
-};
 
 const Header = () => {
   const { data: category = [] } = useQuery({
@@ -44,28 +36,28 @@ const Header = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded"
           />
         </div>
-        <div className="flex items-center space-x-6">
-          <button className="flex flex-col items-center text-xs">
+        <div className="flex items-center space-x-3">
+          <Button className="flex flex-col items-center text-xs px-4 py-3">
             <ArrowRightLeft width={25} height={25} />
             <p className="text-center text-base font-semibold">Trade-In</p>
-          </button>
-          <button className="flex flex-col items-center text-xs">
+          </Button>
+          <Button className="flex flex-col items-center text-xs">
             <Sparkles width={25} height={25} />
             <p className="text-center text-base font-semibold">GameStop Pro</p>
-          </button>
-          <button className="flex flex-col items-center text-xs">
+          </Button>
+          <Button className="flex flex-col items-center text-xs">
             <OpenUser />
             <p className="text-center text-base font-semibold">Sign In</p>
-          </button>
-          <button className="flex flex-col items-center text-xs">
+          </Button>
+          <Button className="flex flex-col items-center text-xs">
             <ShoppingCart width={25} height={25} />
             <p className="text-center text-base font-semibold">Cart</p>
-          </button>
+          </Button>
         </div>
       </div>
       <Carousel>
         <CarouselContent className="px-8 bg-gray-300 ">
-          {category.map((category: Category, i) => (
+          {category.map((category, i) => (
             <CarouselItem key={i} className="basis-1/12">
               <div>
                 <h3 className="text-base gap-3 font-semibold mb-2 text-black flex hover:underline">
@@ -77,24 +69,6 @@ const Header = () => {
           ))}
         </CarouselContent>
       </Carousel>
-
-      <div className="w-screen">
-        <Carousel className="w-full max-w-xs">
-          <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index}>
-                <div className="relative h-[600px]">
-                  <div className="mt-[59px] mt-[80px] overflow-hidden w-full h-1/2 lg:h-full">
-                    <img src="/shop.jpg" className="w-full sm:h-auto " />
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
     </header>
   );
 };
