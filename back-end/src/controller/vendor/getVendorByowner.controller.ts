@@ -4,10 +4,14 @@ import { prisma } from '../../lib/prisma';
 
 export const getVendorByOwner = async (req: Request, res: Response): Promise<void> => {
     const id = req.user.id
+    console.log(id);
+    
   try {
     const vendor = await prisma.vendor.findFirst({
      where : {
-        OrganizationId : id
+        Organization : {
+          id : id
+        }
      }
     });
     console.log(vendor);

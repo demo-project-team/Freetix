@@ -28,32 +28,36 @@ export const getVendorByFilter = async (
   }
 };
 export const vendorByOwner = async (id: string) => {
-    const organization = Cookies.get('org')
+  const organization = Cookies.get("org");
   try {
     const { data } = await axiosInstance.get(`/vendor/owner/${id}`, {
-        headers : {
-            Authorization:`Bearer ${organization}`
-        }
+      headers: {
+        Authorization: `Bearer ${organization}`,
+      },
     });
     console.log(data);
-    
+
     return data.data;
   } catch (error) {
     console.log(error);
   }
 };
-export const postVendor = async (values:vendorInput, category: string[])=> {
-    const organization = Cookies.get('org')
-    try {
-        const response = await axiosInstance.post(`/vendor`,  values,
-            {
-                headers : {
-                    Authorization : `Bearer ${organization}`
-                },
-                params : {category}
-            }
-        )
-    } catch (error) {
-        console.log(error);
-    }
-}
+export const postVendor = async (values: vendorInput, category: string[]) => {
+  const organization = Cookies.get("org");
+  console.log(category);
+  if (!organization) {
+    throw new Error('Organization token not found');
+  }
+
+  try {
+    const response = await axiosInstance.post(`/vendor?categoryId=${category.toString()}`, values, {
+      headers: {
+        Authorization: `Bearer ${organization}`,
+      },
+      
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
