@@ -1,47 +1,39 @@
-"use client";
+'use client'
 
-import { signUpSchema } from "@/schemas/userSchema";
-import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { singUpRequest } from "@/utils/request/authRequest";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { TabsContent } from "@radix-ui/react-tabs"
+import { FormProvider, useForm } from "react-hook-form"
+import { FormControl, FormField, FormItem, FormMessage } from "./ui/form"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Loader2 } from "lucide-react"
+import { useState } from "react"
+import { signUpSchema } from "@/schemas/userSchema"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { singUpRequest } from "@/utils/request/authRequest"
+import { z } from "zod"
 
-
-export const SignUpForm = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
-    values: {
-      email: "",
-      password: "",
-      username: "",
-      phone: "",
-      profileImage: "",
-    },
-  });
-  const signUp = async (values: z.infer<typeof signUpSchema>) => {
-    setLoading(true);
-    const response = await singUpRequest(values);
-    if (response) {
-      router.push("/");
-      setLoading(false);
+export const Sign = () => {
+      const [loading, setLoading] = useState(false);
+      const form = useForm<z.infer<typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
+        values: {
+          email: "",
+          password: "",
+          username: "",
+          phone: "",
+          profileImage: "",
+        },
+      });
+      const signUp = async (values: z.infer<typeof signUpSchema>) => {
+        setLoading(true);
+        const response = await singUpRequest(values);
+        if (response) {
+          setLoading(false);
+        }
+        setLoading(false);
     }
-    setLoading(false);
-  };
-  return (
+    return(
+        <TabsContent value="password">
             <FormProvider {...form}>
               <form
                 onSubmit={form.handleSubmit(signUp)}
@@ -52,7 +44,7 @@ export const SignUpForm = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>UserName</Label>
+                      <p>UserName</p>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -65,7 +57,7 @@ export const SignUpForm = () => {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Phone</Label>
+                      <p>Phone</p>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -78,7 +70,7 @@ export const SignUpForm = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Email</Label>
+                      <p>Email</p>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -91,7 +83,7 @@ export const SignUpForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <Label>Password</Label>
+                      <p>Password</p>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -109,5 +101,6 @@ export const SignUpForm = () => {
                 </Button>
               </form>
             </FormProvider>
-  );
-};
+        </TabsContent>
+    )
+}
