@@ -26,7 +26,6 @@ model Vendor {
     name         String
     description  String?
     categories   Category[]
-    location     String
     mapLat       Float?
     mapLng       Float?
     phone        String
@@ -39,7 +38,8 @@ model Vendor {
     updatedAt    DateTime      @updatedAt
     address      Address?
     addressID    String?
-    Organization Organization?
+    Organization Organization  @relation(fields: [OrganizationId], references: [id])
+    OrganizationId  String @unique
 }
 
 model Category {
@@ -145,10 +145,9 @@ model Organization {
     phone                String
     createdAt            DateTime @default(now())
     updatedAt            DateTime @updatedAt
-    vendor               Vendor   @relation(fields: [vendorId], references: [id])
+    vendor               Vendor?
     OrganizationRegister String   @unique
     request              Request  @default(PENDING)
-    vendorId             String   @unique
 }
 
 enum BookingStatus {

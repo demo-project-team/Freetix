@@ -5,3 +5,4 @@ dist
 coverage
 *.js
 migrations
+googleCLient.json

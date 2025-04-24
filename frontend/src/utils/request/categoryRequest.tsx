@@ -1,5 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { categoryInput } from "@/schemas/schemas";
+import { Category } from "@/Types/types";
 
 export const postCategory = async (values: categoryInput) => {
   try {
@@ -9,12 +10,13 @@ export const postCategory = async (values: categoryInput) => {
     console.log(error);
   }
 };
-export const getCategory = async ():Promise<void> => {
+export const getCategory = async ():Promise<Category[]> => {
   try {
     const { data } = await axiosInstance.get("/category");
     return data.data;
   } catch (error) {
     console.log(error);
+    return[]
   }
 };
 export const putCategory = async (id: string, values: categoryInput) => {

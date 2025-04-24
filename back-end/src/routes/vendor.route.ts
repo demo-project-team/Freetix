@@ -8,15 +8,14 @@ import { organizationToken } from '../middleware/auth/vendorJWT';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
-    name : z.string(),
-    description : z.string().optional(),
-    location : z.string(),
-    mapLat : z.string().optional(),
-    mapLng : z.string().optional(),
-    phone : z.string(),
-    email : z.string().email(),
-    imageUrl : z.string().optional(),
-})
-VendorRouter.post('', validate(vendorScema), postVendor )
-VendorRouter.get('/owner/:id',organizationToken, getVendorByOwner)
+  name: z.string(),
+  description: z.string().optional(),
+  mapLat: z.number().optional().nullable(),
+  mapLng: z.number().optional().nullable(),
+  phone: z.string(),
+  email: z.string().email(),
+  imageUrl: z.string().optional(),
+});
+VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
+VendorRouter.get('/owner/:id', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
