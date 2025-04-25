@@ -1,0 +1,102 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useVendor } from "@/provider/VendorProvider";
+import { roomInput, roomschema } from "@/schemas/schemas";
+import { createRoom } from "@/utils/request/vendor";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { X } from "lucide-react";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+
+export function AddRoom() {
+  const { vendor } = useVendor();
+  const [open, setOpen] = useState(false);
+  const form = useForm<roomInput>({
+    resolver: zodResolver(roomschema),
+    values: {
+      type: "STANDART",
+      name: "",
+    },
+  });
+  const addRoom = async (value: roomInput) => {
+    const res = await createRoom(value, vendor.id);
+    if (res) {
+      setOpen(false);
+    }
+  };
+  return (
+    <Dialog open={open}>
+      <DialogTrigger asChild>
+        <Button onClick={() => setOpen(true)} variant="outline">
+          Add room
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] h-fit">
+        <DialogHeader>
+          <DialogTitle className="flex justify-between">
+            Add room{" "}
+            <DialogClose onClick={() => setOpen(false)}>
+              <X />
+            </DialogClose>
+          </DialogTitle>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(addRoom)}>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Room name</Label>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="STANDART">STANDART</SelectItem>
+                      <SelectItem value="VIP">VIP</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Add room</Button>
+          </form>
+        </FormProvider>
+      </DialogContent>
+    </Dialog>
+  );
+}

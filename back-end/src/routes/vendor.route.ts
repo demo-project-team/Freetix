@@ -17,5 +17,5 @@ const vendorScema = z.object({
   imageUrl: z.string().optional(),
 });
 VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
-VendorRouter.get('/owner/:id', organizationToken, getVendorByOwner);
+VendorRouter.get('/owner', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
