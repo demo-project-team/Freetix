@@ -1,22 +1,21 @@
-'use client'
-import { Organization } from "@/Types/types";
-import { getOrg } from "@/utils/request/authRequest";
+"use client";
+import {  Room } from "@/Types/types";
+import { getRoom } from "@/utils/request/vendor";
 import { useQuery } from "@tanstack/react-query";
 import { createContext, ReactNode, useContext } from "react";
 type RoomContextType = {
-  organization: Organization[];
-  refetchorganization: () => void;
+  room: Room;
+  refetch: () => void;
 };
 
 const RoomContex = createContext<RoomContextType | null>(null);
-export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
-  const { data: organization, refetch: refetchorganization } = useQuery({
-    queryKey: ["organization"],
-    queryFn: getOrg,
-    staleTime: 1000 * 60 * 5,
+export const RoomProvider = ({ children }: { children: ReactNode }) => {
+  const { data: room, refetch } = useQuery({
+    queryKey: ["room"],
+    queryFn : getRoom
   });
   return (
-    <RoomContex.Provider value={{ organization, refetchorganization }}>
+    <RoomContex.Provider value={{ room, refetch }}>
       {children}
     </RoomContex.Provider>
   );
