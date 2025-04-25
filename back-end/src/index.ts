@@ -5,9 +5,13 @@ import { VendorRouter } from './routes/vendor.route';
 import cors from 'cors';
 import { ServiceRouter } from './routes/service.route';
 import { OrganizationRouter } from './routes/organiztion.route';
+import 'dotenv/config'
 const app = express();
 app.use(
-  cors(),
+  cors({
+    origin:[process.env.FRONT_URL ? process.env.FRONT_URL : 'http://localhost:3000'],
+    credentials: true,
+  }),
 );
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
