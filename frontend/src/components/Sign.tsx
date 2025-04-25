@@ -33,7 +33,7 @@ export const Sign = () => {
         setLoading(false);
     }
     return(
-        <TabsContent value="password">
+        <TabsContent value="БҮРТГҮҮЛЭХ">
             <FormProvider {...form}>
               <form
                 onSubmit={form.handleSubmit(signUp)}
