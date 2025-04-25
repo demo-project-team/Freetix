@@ -6,11 +6,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { User2 } from "lucide-react";
+import { MapPinHouse, User2 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Sign } from "./Sign";
 import { Loginup } from "./Login";
+import Link from "next/link";
 
 export const OpenUser = () => {
   return (
@@ -53,6 +54,9 @@ export const OpenUser = () => {
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
+        <Link href={'/company/sign-up'}>
+        <div className="flex items-center gap-3 px-6 cursor-pointer hover:underline"><MapPinHouse/> ГАЗАР БҮРТГҮҮЛЭХ</div>
+        </Link>
       </DialogContent>
     </Dialog>
   );

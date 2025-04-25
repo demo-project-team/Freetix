@@ -1,7 +1,6 @@
-
 "use client";
 
-import { ArrowRightLeft, ShoppingCart, Sparkles } from "lucide-react";
+import { ArrowRightLeft, Sparkles } from "lucide-react";
 import { getCategory } from "@/utils/request/categoryRequest";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -36,15 +35,9 @@ const Header = () => {
           <Button className="flex flex-col items-center text-xs px-4 py-3">
             <ArrowRightLeft width={25} height={25} />
             <p className="text-center text-base font-semibold">Trade-In</p>
-
-          </button>
-            <Sparkles width={25} height={25} />
-            <OpenUser />
-          <button className="flex flex-col items-center text-xs">
-
-            <ShoppingCart width={25} height={25} />
-            <p className="text-center text-base font-semibold">Cart</p>
           </Button>
+          <Sparkles width={25} height={25} />
+          <OpenUser />
         </div>
       </div>
       <Carousel>
