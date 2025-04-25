@@ -16,3 +16,9 @@ export const vendorScema = z.object({
   imageUrl : z.string().optional(),
 })
 export type vendorInput = z.infer<typeof vendorScema>;
+
+export const roomschema = z.object({
+  name : z.string(),
+  type : z.enum(['VIP', "STANDART"])
+})
+export type roomInput = z.infer<typeof roomschema>
