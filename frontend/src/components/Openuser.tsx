@@ -6,8 +6,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {  User2 } from "lucide-react";
-import { Tabs,  TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { User2 } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Sign } from "./Sign";
 import { Loginup } from "./Login";
@@ -27,7 +27,6 @@ export const OpenUser = () => {
                 <span className="text-white font-bold text-xl">Freetix</span>
                 <span className="text-white ml-2">Welcome to Freetix</span>
               </div>
-
               <div className="mt-8 border-b border-gray-600">
                 <div className="flex gap-10">
                   <Tabs defaultValue="account">
@@ -45,8 +44,8 @@ export const OpenUser = () => {
                         БҮРТГҮҮЛЭХ
                       </TabsTrigger>
                     </TabsList>
-                    <Loginup/>
-                    <Sign/>
+                    <Loginup />
+                    <Sign />
                   </Tabs>
                 </div>
               </div>
