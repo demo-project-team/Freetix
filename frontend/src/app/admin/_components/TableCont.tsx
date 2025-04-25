@@ -13,7 +13,6 @@ import { FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { statusInput, statusSchema } from "@/schemas/userSchema";
 import { putOrgReq } from "@/utils/request/authRequest";
-import { Value } from "@radix-ui/react-select";
 
 const TableCont = ({ org }: { org: Organization }) => {
   const form = useForm<statusInput>({
