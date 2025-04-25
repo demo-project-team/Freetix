@@ -1,16 +1,15 @@
-'use client'
+"use client";
 import { useOrganization } from "@/provider/OrganizationPrider";
 import TableCont from "./_components/TableCont";
-
 
 export default function Home() {
   const { organization } = useOrganization();
   console.log(organization);
-if (!organization) return
+  if (!organization) return;
   return (
-    <div className="flex flex-col">
+    <div className="flex gap-8 flex-wrap">
       {organization.map((org, i) => (
-        <TableCont key={i} org={org}/>
+        <TableCont key={i} org={org} />
       ))}
     </div>
   );
