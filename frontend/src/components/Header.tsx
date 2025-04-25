@@ -2,11 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import {
-  ArrowRightLeft,
-  ShoppingCart,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRightLeft, ShoppingCart, Sparkles } from "lucide-react";
 import { getCategory } from "@/utils/request/categoryRequest";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -19,13 +15,6 @@ import {
 import { GameOrder } from "./Gameorder";
 import { OpenUser } from "./Openuser";
 
-
-type Category = {
-  name: string;
-  id: string;
-  icon: string;
-};
-
 const Header = () => {
   const { data: category = [] } = useQuery({
     queryKey: ["category"],
@@ -35,7 +24,9 @@ const Header = () => {
     <header className="bg-white border-b text-gray-800 px-10">
       <div className="flex items-center justify-between px-5 lg:px-8 py-4">
         <div className="flex items-center space-x-4">
-          <h3 className="text-4xl font-black  text-transparent bg-clip-text bg-gradient-to-r uppercase from-cyan-400 to-purple-600 drop-shadow-[0_0_15px_rgba(58,150,221,0.5)]">GameStop</h3>
+          <h3 className="text-4xl font-black  text-transparent bg-clip-text bg-gradient-to-r uppercase from-cyan-400 to-purple-600 drop-shadow-[0_0_15px_rgba(58,150,221,0.5)]">
+            GameStop
+          </h3>
         </div>
         <div className="hidden md:flex flex-1 mx-4">
           <input
@@ -49,14 +40,8 @@ const Header = () => {
             <ArrowRightLeft width={25} height={25} />
             <p className="text-center text-base font-semibold">Trade-In</p>
           </button>
-          <button className="flex flex-col items-center text-xs">
             <Sparkles width={25} height={25} />
-            <p className="text-center text-base font-semibold">GameStop Pro</p>
-          </button>
-          <button className="flex flex-col items-center text-xs">
             <OpenUser />
-            <p className="text-center text-base font-semibold">Sign In</p>
-          </button>
           <button className="flex flex-col items-center text-xs">
             <ShoppingCart width={25} height={25} />
             <p className="text-center text-base font-semibold">Cart</p>
@@ -65,7 +50,7 @@ const Header = () => {
       </div>
       <Carousel>
         <CarouselContent className="px-8 bg-gray-300 ">
-          {category.map((category: Category, i) => (
+          {category.map((category, i) => (
             <CarouselItem key={i} className="basis-1/12">
               <div>
                 <h3 className="text-base gap-3 font-semibold mb-2 text-black flex hover:underline">
