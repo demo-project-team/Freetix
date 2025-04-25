@@ -6,8 +6,8 @@ export type Organization = {
   createdAt: Date;
   updatedAt: Date;
   vendor: Vendor[];
-  OrganizationRegister: string
-  request:  "PENDING" | "CANCELLED" | "APPROVED";
+  OrganizationRegister: string;
+  request: "PENDING" | "CANCELLED" | "APPROVED";
 };
 export type Vendor = {
   id: string;
@@ -88,3 +88,40 @@ export type Address = {
   vendorID: string;
   districtId: string;
 };
+export type Room = {
+  id: string;
+  name: string;
+  vendorId: string;
+  tables: Table[];
+  createdAt: Date;
+  updatedAt: Date;
+  type: RoomType
+};
+export type Table = {
+  id: string;
+  name: string;
+  roomId: string;
+  pcs: PC[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+export type PC = {
+  id: string;
+  name: string;
+  tableId: string;
+  row: number;
+  column: number;
+  status: PCStatus;
+  createdAt: Date;
+  updatedAt: Date;
+};
+export enum PCStatus {
+  AVAILABLE = "AVAILABLE",
+  BOOKED = "BOOKED",
+  IN_USE = "IN_USE",
+  MAINTENANCE = "MAINTENANCE",
+}
+export enum RoomType {
+  VIP = "VIP",
+  STANDART = "STANDART"
+}

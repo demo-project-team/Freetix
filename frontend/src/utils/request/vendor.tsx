@@ -74,3 +74,16 @@ export const createRoom = async (values : roomInput, vendorId : string) => {
     console.log(error);
   }
 }
+export const getRoom = async ()=>{
+  const token = Cookies.get('org')
+  try {
+    const {data} = await axiosInstance.get(`/room`, {
+      headers : {
+        Authorization : `Bearer ${token}`
+      }
+    })
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
