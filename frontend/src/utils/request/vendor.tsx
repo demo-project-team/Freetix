@@ -1,5 +1,5 @@
 import axiosInstance from "@/lib/axios";
-import { vendorInput } from "@/schemas/schemas";
+import { roomInput, vendorInput } from "@/schemas/schemas";
 import Cookies from "js-cookie";
 export const getVendor = async (categoryId: string) => {
   try {
@@ -27,10 +27,10 @@ export const getVendorByFilter = async (
     console.log(error);
   }
 };
-export const vendorByOwner = async (id: string) => {
+export const vendorByOwner = async () => {
   const organization = Cookies.get("org");
   try {
-    const { data } = await axiosInstance.get(`/vendor/owner/${id}`, {
+    const { data } = await axiosInstance.get(`/vendor/owner`, {
       headers: {
         Authorization: `Bearer ${organization}`,
       },
@@ -61,3 +61,16 @@ export const postVendor = async (values: vendorInput, category: string[]) => {
     console.log(error);
   }
 };
+export const createRoom = async (values : roomInput, vendorId : string) => {
+  const token = Cookies.get('org')
+  try {
+    const response = await axiosInstance.post(`/room/${vendorId}`, values, {
+      headers : {
+        Authorization : `Bearer ${token}`
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error);
+  }
+}

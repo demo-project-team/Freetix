@@ -3,9 +3,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../../lib/prisma';
 
 export const getVendorByOwner = async (req: Request, res: Response): Promise<void> => {
-    const id = req.user.id
-    console.log(id);
-    
+    const id = req.user.id    
   try {
     const vendor = await prisma.vendor.findFirst({
      where : {
