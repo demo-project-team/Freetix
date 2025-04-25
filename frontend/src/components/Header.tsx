@@ -11,7 +11,10 @@ import {
 import { GameOrder } from "./Gameorder";
 import { OpenUser } from "./Openuser";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+
 const Header = () => {
+  const router = useRouter()
   const { data: category = [] } = useQuery({
     queryKey: ["category"],
     queryFn: getCategory,
@@ -48,7 +51,7 @@ const Header = () => {
             <CarouselItem key={i} className="basis-1/12">
               <div>
                 <h3 className="text-base gap-3 font-semibold mb-2 text-black flex hover:underline">
-                  {category.name}
+                  <p onClick={()=>router.push(`/category/${category.id}`)}>{category.name}</p>
                   <GameOrder />
                 </h3>
               </div>

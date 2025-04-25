@@ -36,7 +36,15 @@ const Maincontent = () => {
                     <Skeleton className="h-10 w-32 mx-auto rounded-full" />
                   </div>
                 ))
-              : null}
+              : <>{category.vendors.map((vendor, i)=>(
+                <div key={i}>
+                  {vendor.name}
+                  <div>{vendor.description}</div>
+                  <div>{vendor.email}</div>
+                  <div>{vendor.phone}</div>
+                  <div>{vendor.address?.street}</div>
+                </div>
+              ))}</>}
           </div>
         </section>
       </main>

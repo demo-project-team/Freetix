@@ -26,7 +26,7 @@ export const OpenUser = () => {
               <div className="flex items-center">
                 <span className="text-orange-500 font-bold text-xl">G-</span>
                 <span className="text-white font-bold text-xl">Freetix</span>
-                <span className="text-white ml-2">Welcome to Freetix</span>
+                <span className="text-white ml-2">Тавтай Морилно уу</span>
               </div>
               <div className="mt-8 border-b border-gray-600">
                 <div className="flex gap-10">
