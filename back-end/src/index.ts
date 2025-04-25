@@ -7,10 +7,7 @@ import { ServiceRouter } from './routes/service.route';
 import { OrganizationRouter } from './routes/organiztion.route';
 const app = express();
 app.use(
-  cors({
-    origin:['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
-    credentials: true,
-  }),
+  cors(),
 );
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
