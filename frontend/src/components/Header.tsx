@@ -16,6 +16,8 @@ const Header = () => {
     queryKey: ["category"],
     queryFn: getCategory,
   });
+  console.log(category);
+  
   return (
     <header className="bg-white border-b text-gray-800 px-10">
       <div className="flex items-center justify-between px-5 lg:px-8 py-4">
