@@ -19,7 +19,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000" || "http://localhost:3001",
+    origin: process.env.CLIENT_URL || "http://localhost:3000" || 'https://freetix-ashy.vercel.app',
     methods: ["GET", "POST"]
   }
 });
