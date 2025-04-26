@@ -4,7 +4,8 @@ import { useTable } from "@/provider/TableProvider";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import AddTable from "./_features/AddTable";
-import PCs from "./_features/pcs";
+import { PCs } from "./_features/pcs";
+
 
 const Home = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const Home = () => {
       <Button className="w-20" onClick={() => router.push("/vendor")}>Back</Button>
       <div>
         <AddTable/>
-        <div className="grid grid-col-3 gap-10">
+        <div className="grid grid-cols-3 gap-10">
           {table.map((tb, i)=>(
             <PCs key={i} pcs={tb.pcs}/>
           ))}

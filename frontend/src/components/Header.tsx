@@ -30,7 +30,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white border-b text-gray-800 px-10">
+    <header className="bg-white border-b text-gray-800 px-10 sticky top-0 z-20">
       <div className="flex items-center justify-between px-5 lg:px-8 py-4">
         <div className="flex items-center space-x-4">
           <h3
