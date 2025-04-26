@@ -18,16 +18,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRoom } from "@/provider/RoomProvider";
 import { useVendor } from "@/provider/VendorProvider";
 import { roomInput, roomschema } from "@/schemas/schemas";
 import { createRoom } from "@/utils/request/vendor";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function AddRoom() {
   const { vendor } = useVendor();
+  const { refetchRoom}= useRoom()
+  const [ isLoading,  setLoading] = useState(false)
   const [open, setOpen] = useState(false);
   const form = useForm<roomInput>({
     resolver: zodResolver(roomschema),
@@ -37,15 +40,19 @@ export function AddRoom() {
     },
   });
   const addRoom = async (value: roomInput) => {
+    setLoading(true)
     const res = await createRoom(value, vendor.id);
     if (res) {
+      await refetchRoom()
       setOpen(false);
+      setLoading(false)
     }
+    setLoading(false)
   };
   return (
     <Dialog open={open}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)} variant="outline">
+        <Button onClick={() => setOpen(true)} className="w-40" variant="outline">
           Add room
         </Button>
       </DialogTrigger>
@@ -93,7 +100,7 @@ export function AddRoom() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Add room</Button>
+            <Button disabled={isLoading} type="submit">{isLoading && <Loader2 className="animate-spin"/>}Add room</Button>
           </form>
         </FormProvider>
       </DialogContent>
