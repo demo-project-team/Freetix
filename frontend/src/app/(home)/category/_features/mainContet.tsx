@@ -4,6 +4,7 @@ import { useCategory } from "@/provider/categoryProvider";
 import { Vendor } from "@/Types/types";
 import { Facebook, Gamepad2, Swords } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 type VendorMapSelectorProps = {
   vendors: Vendor[];
 };
@@ -12,6 +13,7 @@ const VendorMap = dynamic<VendorMapSelectorProps>(
   { ssr: false }
 );
 const Maincontent = () => {
+  const router = useRouter();
   const { category } = useCategory();
   const isLoading = !category?.name;
 
@@ -51,7 +53,10 @@ const Maincontent = () => {
                 {category.vendors.map((vendor, i) => (
                   <div key={i} className="mb-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      <div className="backdrop-blur-md bg-white/5 border border-cyan-500/20 rounded-2xl p-16 w-[500px] shadow-xl hover:shadow-[0_0_20px_#00fff7] transition-shadow duration-300 text-center">
+                      <div
+                        className="backdrop-blur-md bg-white/5 border border-cyan-500/20 rounded-2xl p-16 w-[500px] shadow-xl hover:shadow-[0_0_20px_#00fff7] transition-shadow duration-300 text-center"
+                        onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
+                      >
                         <img
                           src={vendor.imageUrl ? vendor.imageUrl : "/game.jpg"}
                           alt="vendor"
@@ -60,10 +65,12 @@ const Maincontent = () => {
                         <h3 className="text-2xl font-extrabold text-cyan-400 mb-2">
                           {vendor.name}
                         </h3>
-                        <p>{vendor.description}</p>
-                        <p>{vendor.email}</p>
-                        <p>{vendor.phone}</p>
-                        <p>{vendor.address?.street}</p>
+                        <div className="justtify-between">
+                          <p>Description: {vendor.description}</p>
+                          <p>Email: {vendor.email}</p>
+                          <p>Phone: {vendor.phone}</p>
+                          <p>{vendor.address?.street}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -140,7 +147,6 @@ const Maincontent = () => {
           </footer>
         </section>
       </main>
-      
     </div>
   );
 };

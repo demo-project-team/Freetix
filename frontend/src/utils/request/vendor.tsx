@@ -1,6 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { roomInput, tableInput, vendorInput } from "@/schemas/schemas";
-import { Table } from "@/Types/types";
+import { Room, Table } from "@/Types/types";
 import Cookies from "js-cookie";
 export const getVendor = async (categoryId: string) => {
   try {
@@ -118,3 +118,12 @@ export const getTable = async (roomId: string | null):Promise<Table[]> => {
     return []
   }
 };
+export const getRoomUser = async (vendorId: string | null):Promise<Room[]> => {
+  try {
+    const {data} = await axiosInstance.get(`/room/user/${vendorId}`,)
+    return data
+  } catch (error) {
+    console.log(error);
+    return []
+  }
+}
