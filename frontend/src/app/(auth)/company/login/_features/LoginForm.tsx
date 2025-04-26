@@ -28,7 +28,7 @@ const LoginForm = () => {
   const login = async (values:OrganizationLoginInput) => {
     const response =await loginOrg(values)
     if (response) {
-      router.push(`/organization`)
+      router.push(`/vendor`)
     }
   };
   return (

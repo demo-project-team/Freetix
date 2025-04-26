@@ -22,7 +22,7 @@ export const VendorProvider = ({ children}: { children: ReactNode }) => {
   });
   useEffect(()=>{
     if (!isLoading && !vendor && !isError) {
-        router.push(`/organization/createvendor`)
+        router.push(`/createvendor`)
     }
   },[isLoading, vendor, router, isError])
   return (

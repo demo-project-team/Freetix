@@ -140,8 +140,7 @@ const Maincontent = () => {
           </footer>
         </section>
       </main>
-
-      {/* Footer as-is */}
+      
     </div>
   );
 };
