@@ -6,8 +6,6 @@ import { ComputerPc } from "./_components/ComputerPc";
 
 export default function Room() {
 const {table} = useTable() 
-console.log(table);
-
   return(
     <div>
         {table.map((table, index) => (

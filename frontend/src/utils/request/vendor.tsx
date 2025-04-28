@@ -112,6 +112,8 @@ export const getTable = async (roomId: string | null):Promise<Table[]> => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(data);
+    
     return data.table;
   } catch (error) {
     console.log(error);

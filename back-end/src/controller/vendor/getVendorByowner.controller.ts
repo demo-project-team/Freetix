@@ -11,9 +11,7 @@ export const getVendorByOwner = async (req: Request, res: Response): Promise<voi
           id : id
         }
      }
-    });
-    console.log(vendor);
-    
+    });    
     res.status(200).json({ data: vendor, succes: true });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal server error', error });

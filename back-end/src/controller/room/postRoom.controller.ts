@@ -4,9 +4,7 @@ import { prisma } from '../../lib/prisma';
 export const postRoom = async (req: Request, res: Response) => {
   try {
     const vendorId = req.params.vendorId;
-    const { name, type } = req.body;
-    console.log(vendorId);
-    
+    const { name, type } = req.body;    
     const room = await prisma.room.create({
       data: {
         name,

@@ -1,59 +1,31 @@
+
 import { PC } from "@/Types/types";
+import { putPc } from "@/utils/request/pcRequest";
 import { useState } from "react";
 
 export function ComputerPc({ pcs }: { pcs: PC[] }) {
-  const [selectedPcs, setSelectedPcs] = useState<{ name: string; status: string }[]>([]);
+
+  const [selectedPcs, setSelectedPcs] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0); 
 
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
 
-  const togglePcSelection = (pc: { name: string; status: string }) => {
-    const alreadySelected = selectedPcs.find((p) => p.name === pc.name);
+  const togglePcSelection = (pc:string) => {
+    const alreadySelected = selectedPcs.find((p) => p === pc);    
     if (alreadySelected) {
-      setSelectedPcs(selectedPcs.filter((p) => p.name !== pc.name));
+      setSelectedPcs(selectedPcs.filter((p) => p !== pc));
     } else {
       setSelectedPcs([...selectedPcs, pc]);
     }
   };
 
-
-  const calculateTotalPrice = () => {
-    const pricePerPc = 1000; 
-    return selectedPcs.length * pricePerPc; 
-  };
-
-  const handleMoney = () => {
-    if (selectedPcs.length === 0) {
-      alert("Та суудал сонгоно уу!");
-      return;
-    }
-
-    const updatedPcs = pcs.map((pc) => {
-      if (selectedPcs.find((p) => p.name === pc.name)) {
-        return { ...pc, status: "BOOKED" };
-      }
-      return pc;
-    });
-    console.log(updatedPcs);
-
-    const pcNames = selectedPcs.map((pc) => pc.name).join(", ");
-    alert(`${pcNames} суудлуудыг ${selectedTime}-д амжилттай захиаллаа!`);
-
- 
-    const price = calculateTotalPrice();
-    setTotalPrice(price);
-
-    setSelectedPcs([]);
-    setSelectedTime("");
-    setIsModalOpen(true); 
-  };
-
-  const handlePayment = () => {
-    alert(`${totalPrice}₮ төлбөр амжилттай хийгдлээ!`);
-    setIsModalOpen(false); 
+  const bookPC = async () => {
+    const response = await putPc({status : "BOOKED"}, selectedPcs)
+    console.log(response);
+    
+    
   };
 
   return (
@@ -69,10 +41,10 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
               <div key={colIndex} className="relative group">
                 <div
                   onClick={() =>
-                    togglePcSelection({ name: pc.name, status: pc.status })
+                    togglePcSelection(pc.id)
                   }
                   className={`w-24 h-24 flex items-center justify-center rounded-2xl shadow-xl text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
-                    selectedPcs.find((p) => p.name === pc.name)
+                    selectedPcs.find((p) => p === pc.id)
                       ? "bg-gradient-to-br from-yellow-400 to-yellow-500 text-white ring-4 ring-yellow-500/60"
                       : pc.status === "BOOKED"
                       ? "bg-gradient-to-br from-red-400 to-red-500 text-white ring-4 ring-red-500/60"
@@ -94,7 +66,7 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
 
       {selectedPcs.length > 0 && (
         <button
-          onClick={handleMoney}
+          onClick={bookPC}
           className="mt-10 bg-blue-500 hover:bg-blue-600 text-white py-3 px-8 rounded-xl text-lg shadow-lg transition"
         >
           Нэг дор {selectedPcs.length} суудал захиалах
@@ -112,7 +84,7 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
             </button>
             <h2 className="text-2xl font-bold mb-4">Сонгосон суудлууд</h2>
             <div className="text-gray-700 dark:text-gray-300 mb-4">
-              {selectedPcs.map((pc) => pc.name).join(", ")}
+              {selectedPcs.map((pc) => pc).join(", ")}
             </div>
 
             <div className="flex flex-col items-center gap-2 mb-4">
@@ -131,14 +103,9 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
               />
             </div>
 
-            <div className="mt-4 text-xl text-gray-700 dark:text-gray-300">
-              Нийт төлбөр: {totalPrice}₮
-            </div>
+            <div className="mt-4 text-xl text-gray-700 dark:text-gray-300"></div>
 
-            <button
-              onClick={handlePayment}
-              className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg transition"
-            >
+            <button className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg transition">
               Төлбөр хийх
             </button>
           </div>
