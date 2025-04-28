@@ -5,17 +5,12 @@ export const postVendor = async (req: Request, res: Response) => {
   try {
     const { name, description, mapLat, mapLng, phone, email, imageUrl } = req.body;
     const id = req.user?.id;
-    console.log(id);
     if (!id) {
       res.status(401).json({ message: 'Unauthorized: no organization ID found.' });
       return;
     }
 
     const rawCategoryIds = req.query.categoryId;
-    if (!rawCategoryIds && typeof rawCategoryIds !== 'string') {
-      res.status(400).json({ message: 'category required' });
-      return;
-    }
     if (typeof rawCategoryIds === 'string') {
       const categoryIds = rawCategoryIds.split(',');
 

@@ -29,4 +29,10 @@ export const tableSchema = z.object({
   col: z.number().positive(),
 });
 
-export type tableInput = z.infer<typeof tableSchema>
+export type tableInput = z.infer<typeof tableSchema>;
+
+export const pcStatusSchema = z.object({
+  status: z.enum(["AVAILABLE", "BOOKED", "IN_USE", "MAINTENANCE"]),
+});
+
+export type pcStatusInput = z.infer<typeof pcStatusSchema>;
