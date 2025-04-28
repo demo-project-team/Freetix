@@ -183,7 +183,7 @@ model Room {
 model Table {
     id        String   @id @default(uuid())
     name      String
-    room      Room     @relation(fields: [roomId], references: [id])
+    room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
     roomId    String
     pcs       PC[]
     createdAt DateTime @default(now())
@@ -193,7 +193,7 @@ model Table {
 model PC {
     id        String   @id @default(uuid())
     name      String
-    table     Table    @relation(fields: [tableId], references: [id])
+    table     Table    @relation(fields: [tableId], references: [id], onDelete: Cascade)
     tableId   String
     row       Int
     column    Int
