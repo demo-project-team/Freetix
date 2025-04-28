@@ -2,11 +2,10 @@ import { PC } from "@/Types/types";
 import { useState } from "react";
 
 export function ComputerPc({ pcs }: { pcs: PC[] }) {
-  const [selectedPcs, setSelectedPcs] = useState<
-    { name: string; status: string }[]
-  >([]);
+  const [selectedPcs, setSelectedPcs] = useState<{ name: string; status: string }[]>([]);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0); 
 
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
@@ -20,13 +19,15 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
     }
   };
 
-  const handleBooking = () => {
+
+  const calculateTotalPrice = () => {
+    const pricePerPc = 1000; 
+    return selectedPcs.length * pricePerPc; 
+  };
+
+  const handleMoney = () => {
     if (selectedPcs.length === 0) {
       alert("Та суудал сонгоно уу!");
-      return;
-    }
-    if (!selectedTime) {
-      alert("Та цаг сонгоно уу!");
       return;
     }
 
@@ -41,9 +42,18 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
     const pcNames = selectedPcs.map((pc) => pc.name).join(", ");
     alert(`${pcNames} суудлуудыг ${selectedTime}-д амжилттай захиаллаа!`);
 
+ 
+    const price = calculateTotalPrice();
+    setTotalPrice(price);
+
     setSelectedPcs([]);
     setSelectedTime("");
-    setIsModalOpen(false);
+    setIsModalOpen(true); 
+  };
+
+  const handlePayment = () => {
+    alert(`${totalPrice}₮ төлбөр амжилттай хийгдлээ!`);
+    setIsModalOpen(false); 
   };
 
   return (
@@ -84,7 +94,7 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
 
       {selectedPcs.length > 0 && (
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleMoney}
           className="mt-10 bg-blue-500 hover:bg-blue-600 text-white py-3 px-8 rounded-xl text-lg shadow-lg transition"
         >
           Нэг дор {selectedPcs.length} суудал захиалах
@@ -121,11 +131,15 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
               />
             </div>
 
+            <div className="mt-4 text-xl text-gray-700 dark:text-gray-300">
+              Нийт төлбөр: {totalPrice}₮
+            </div>
+
             <button
-              onClick={handleBooking}
+              onClick={handlePayment}
               className="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg transition"
             >
-              Бүгдийг захиалах
+              Төлбөр хийх
             </button>
           </div>
         </div>
