@@ -13,7 +13,7 @@ type VendorContextType = {
 
 const VendorContext = createContext<VendorContextType | null>(null);
 export const VendorProviderUser = ({ children}: { children: ReactNode }) => {
-  const { data: vendors, refetch: refetchvendor, isLoading, isError } = useQuery({
+  const { data: vendors=[], refetch: refetchvendor, isLoading, isError } = useQuery({
     queryKey: ["vendor"],
     queryFn: getVendor,
     staleTime: 1000 * 60 * 5,
