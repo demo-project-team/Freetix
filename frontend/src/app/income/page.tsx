@@ -33,7 +33,7 @@ export default function Home() {
   
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io('http://localhost:4000');
+    const newSocket = io('https://freetix-1.onrender.com');
     setSocket(newSocket);
     
     return () => {
