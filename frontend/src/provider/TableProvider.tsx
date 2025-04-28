@@ -21,6 +21,7 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
   } = useQuery({
     queryKey: ["room", roomId],
     queryFn: () => getTable(roomId),
+    enabled : !! roomId
   });
 
   return (

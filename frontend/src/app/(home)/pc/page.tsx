@@ -5,8 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Pc() {
+  const router = useRouter()
   const [vendorId] = useQueryState("vendorid");
   const { data: rooms = [] } = useQuery({
     queryKey: ["room"],
@@ -93,9 +95,9 @@ export default function Pc() {
                   
                   {/* Room Type Badge */}
                   
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center" onClick={()=>router.push(`/room?roomid=${room.id}`)}>
                       <span className="text-white font-bold text-xl">{room.name}</span>
-                </div>
+                    </div>
                 
                 {/* Room Info */}
                 <div className="bg-gradient-to-br from-indigo-800 to-purple-900 p-4">
@@ -114,10 +116,3 @@ export default function Pc() {
     </div>
   );
 }
-{/* <div>
-      {rooms.map((room, i) => (
-        <div key={i} className="text-red-500 flex items-center justify-center">
-          {room.name}
-        </div>
-      ))}
-    </div> */}
