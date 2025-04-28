@@ -5,10 +5,10 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const token = req.cookies.get("org")?.value;
   if (pathname.includes("vendor") && !token) {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/sign-up", req.url));
   }
   if (pathname.includes("createvendor") && !token) {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/sign-up", req.url));
   }
   return NextResponse.next()
 }

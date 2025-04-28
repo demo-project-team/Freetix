@@ -14,7 +14,7 @@ export default function SignUp() {
         <img src="/image.jpg" className="w-full" />
       </div>
       <div className="w-1/2 h-full flex items-center justify-center relative">
-        <Button onClick={()=>router.push('/company/login')} className="bg-blue-500 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 ... h-10 px-4 py-2 absolute top-8 right-20 cursor-pointer text-lg font-medium text-black-600 italic">
+        <Button onClick={()=>router.push('/login')} className="bg-blue-500 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 ... h-10 px-4 py-2 absolute top-8 right-20 cursor-pointer text-lg font-medium text-black-600 italic">
           Login
         </Button>
 
