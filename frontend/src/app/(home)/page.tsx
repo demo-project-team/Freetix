@@ -7,6 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function Home() {
   return (
@@ -59,7 +60,10 @@ export default function Home() {
       </header>
 
       <section id="home" className="relative w-full h-screen">
-        <Carousel className="w-full h-full">
+        <Carousel
+          className="w-full h-full"
+          plugins={[Autoplay({ delay: 5000 })]}
+        >
           <CarouselContent>
             <CarouselItem className="w-full h-screen">
               <div className="relative w-full h-full">
