@@ -2,10 +2,10 @@ import axiosInstance from "@/lib/axios";
 import { roomInput, tableInput, vendorInput } from "@/schemas/schemas";
 import { Room, Table } from "@/Types/types";
 import Cookies from "js-cookie";
-export const getVendor = async (categoryId: string) => {
+export const getVendor = async () => {
   try {
-    const { data } = await axiosInstance.get(`/vendor/${categoryId}`);
-    return data;
+    const { data } = await axiosInstance.get(`/vendor`);
+    return data.data;
   } catch (error) {
     console.log(error);
   }
