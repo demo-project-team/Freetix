@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { MapPinHouse, User2, X } from "lucide-react";
+import { MapPinHouse,  User2,  X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Sign } from "./Sign";
@@ -21,8 +21,9 @@ export const OpenUser = () => {
   }
   return (
     <Dialog open={open} onOpenChange={Setopen}>
-      <DialogTrigger>
-        <User2 />
+      <DialogTrigger className="flex items-center justify-center">
+        <User2/>
+        НЭВТРЭХ
       </DialogTrigger>
       <DialogContent>
       <X onClick={HandleClose}/>
