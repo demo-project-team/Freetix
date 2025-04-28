@@ -33,7 +33,7 @@ export default function Home() {
   
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io('http://localhost:4000');
+    const newSocket = io('https://freetix-1.onrender.com');
     setSocket(newSocket);
     
     return () => {
@@ -246,11 +246,11 @@ export default function Home() {
   };
   
   return (
-    <div className="max-w-3xl mx-auto p-6 text-black">
+    <div className="max-w-3xl mx-auto p-6 text-white">
       <h1 className="text-3xl font-bold text-center mb-8 text-white">Audio Call App</h1>
       
       {!isRegistered ? (
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="bg-gray-500 text-black p-6 rounded-lg shadow-md ">
           <h2 className="text-xl font-semibold mb-4">Enter Your Name to Join</h2>
           <div className="space-y-4">
             <input
@@ -270,7 +270,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="bg-primary-50 p-4 rounded-lg shadow flex justify-between items-center">
+          <div className="p-4 bg-gray-400 rounded-lg shadow flex justify-between items-center">
             <h2 className="text-lg font-medium">Welcome, <span className="font-bold">{username}</span></h2>
             <button 
               onClick={toggleAudio}
@@ -281,17 +281,17 @@ export default function Home() {
           </div>
           
           {incomingCall && (
-            <div className="bg-amber-50 p-4 rounded-lg shadow border-l-4 border-amber-500 animate-pulse">
-              <h3 className="text-lg font-medium mb-3">Incoming Call from {incomingCall.caller}</h3>
+            <div className="bg-gray-100 p-4 rounded-lg shadow border-l-4 border-amber-500 animate-pulse">
+              <h3 className="text-lg font-medium mb-3 text-black">Incoming Call from {incomingCall.caller}</h3>
               <div className="flex space-x-3">
-                <button onClick={answerCall} className="btn-success flex-1">Answer</button>
-                <button onClick={rejectCall} className="btn-danger flex-1">Reject</button>
+                <button onClick={answerCall} className="btn-success text-green-400 flex-1">Answer</button>
+                <button onClick={rejectCall} className="btn-danger text-red-400 flex-1">Reject</button>
               </div>
             </div>
           )}
           
           {callStatus === 'inCall' && (
-            <div className="bg-green-50 p-4 rounded-lg shadow border-l-4 border-green-500">
+            <div className="bg-green-50 p-4 rounded-lg shadow border-l-4 border-green-500 text-black">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-medium">In Call</h3>
                 <div className="flex items-center space-x-2">
@@ -327,10 +327,10 @@ export default function Home() {
           )}
           
           {callStatus === 'idle' && !incomingCall && (
-            <div className="bg-white p-4 rounded-lg shadow">
+            <div className="bg-gray-500 p-4 rounded-lg shadow text-black">
               <h3 className="text-lg font-medium mb-3">Available Users</h3>
               {users.length === 0 ? (
-                <p className="text-gray-500 py-3 text-center">No other users online</p>
+                <p className="py-3 text-center">No other users online</p>
               ) : (
                 <ul className="divide-y divide-gray-200">
                   {users.map((user) => (

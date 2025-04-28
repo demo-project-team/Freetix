@@ -5,10 +5,15 @@ import { VendorRouter } from './routes/vendor.route';
 import cors from 'cors';
 import { ServiceRouter } from './routes/service.route';
 import { OrganizationRouter } from './routes/organiztion.route';
+import 'dotenv/config'
+import { AddressRouter } from './routes/address.route';
+import { RoomRouter } from './routes/room.route';
+
+
 const app = express();
 app.use(
   cors({
-    origin:['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
+    origin:[process.env.FRONT_URL ? process.env.FRONT_URL : 'http://localhost:3000', 'http://localhost:3000'],
     credentials: true,
   }),
 );
@@ -23,6 +28,11 @@ app.use('/category', CategoryRouter);
 app.use('/vendor', VendorRouter);
 app.use('/service', ServiceRouter)
 app.use('/org', OrganizationRouter)
+app.use('/address', AddressRouter)
+app.use('/room', RoomRouter)
+app.use('/address', AddressRouter)
+
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

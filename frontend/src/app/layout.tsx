@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NuqsAdapter } from "nuqs/adapters/next";
 import { Toaster } from "sonner";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Suspense>
         <NuqsAdapter>
           <QueryClientProvider client={queryClient}>
             <ThemeProvider
@@ -41,6 +43,7 @@ export default function RootLayout({
             </ThemeProvider>
           </QueryClientProvider>
         </NuqsAdapter>
+        </Suspense>
       </body>
     </html>
   );

@@ -1,0 +1,25 @@
+import { Request, Response } from 'express';
+import { prisma } from '../../lib/prisma';
+
+export const postRoom = async (req: Request, res: Response) => {
+  try {
+    const vendorId = req.params.vendorId;
+    const { name, type } = req.body;
+    console.log(vendorId);
+    
+    const room = await prisma.room.create({
+      data: {
+        name,
+        type,
+        vendor: {
+          connect: { id: vendorId },
+        },
+      },
+    });
+    res.status(200).json({ room });
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ error });
+  }
+};

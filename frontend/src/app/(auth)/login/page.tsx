@@ -1,5 +1,4 @@
-
-import { LoginForm } from "./_features/Login";
+import LoginForm from "./_features/LoginForm";
 
 // /* eslint-disable @next/next/no-img-element */
 export default function LoginUp() {

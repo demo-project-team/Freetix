@@ -22,24 +22,25 @@ model User {
 }
 
 model Vendor {
-    id           String        @id @default(uuid())
-    name         String
-    description  String?
-    categories   Category[]
-    mapLat       Float?
-    mapLng       Float?
-    phone        String
-    email        String
-    imageUrl     String?
-    ratingAvg    Float         @default(0)
-    services     Service[]
-    reviews      Review[]
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
-    address      Address?
-    addressID    String?
-    Organization Organization  @relation(fields: [OrganizationId], references: [id])
-    OrganizationId  String @unique
+    id             String       @id @default(uuid())
+    name           String
+    description    String?
+    categories     Category[]
+    mapLat         Float?
+    mapLng         Float?
+    phone          String
+    email          String
+    imageUrl       String?
+    ratingAvg      Float        @default(0)
+    services       Service[]
+    reviews        Review[]
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
+    address        Address?
+    addressID      String?
+    Organization   Organization @relation(fields: [OrganizationId], references: [id])
+    OrganizationId String       @unique
+    rooms          Room[]
 }
 
 model Category {
@@ -166,4 +167,49 @@ enum Request {
     APPROVED
     CANCELLED
     PENDING
+}
+
+model Room {
+    id        String   @id @default(uuid())
+    name      String
+    vendor    Vendor   @relation(fields: [vendorId], references: [id])
+    vendorId  String
+    tables    Table[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    type      RoomType
+}
+
+model Table {
+    id        String   @id @default(uuid())
+    name      String
+    room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+    roomId    String
+    pcs       PC[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model PC {
+    id        String   @id @default(uuid())
+    name      String
+    table     Table    @relation(fields: [tableId], references: [id], onDelete: Cascade)
+    tableId   String
+    row       Int
+    column    Int
+    status    PCStatus @default(AVAILABLE)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum PCStatus {
+    AVAILABLE
+    BOOKED
+    IN_USE
+    MAINTENANCE
+}
+
+enum RoomType {
+    VIP
+    STANDART
 }

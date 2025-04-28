@@ -6,20 +6,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { MapPinHouse, User2 } from "lucide-react";
+import { MapPinHouse, User2, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Sign } from "./Sign";
 import { Loginup } from "./Login";
 import Link from "next/link";
+import { useState } from "react";
 
 export const OpenUser = () => {
+  const [open, Setopen] = useState(false)
+  const HandleClose = () => {
+    Setopen(false)
+  }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={Setopen}>
       <DialogTrigger>
         <User2 />
       </DialogTrigger>
       <DialogContent>
+      <X onClick={HandleClose}/>
         <DialogHeader>
           <DialogTitle>
             <div className="p-6">

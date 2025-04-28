@@ -13,18 +13,18 @@ type VendorContextType = {
 };
 
 const VendorContext = createContext<VendorContextType | null>(null);
-export const VendorProvider = ({ children, id }: { children: ReactNode, id:string }) => {
+export const VendorProvider = ({ children}: { children: ReactNode }) => {
     const router = useRouter()
   const { data: vendor, refetch: refetchvendor, isLoading, isError } = useQuery({
-    queryKey: ["vendor", id],
-    queryFn: ()=>vendorByOwner(id),
+    queryKey: ["vendor"],
+    queryFn: vendorByOwner,
     staleTime: 1000 * 60 * 5,
   });
   useEffect(()=>{
     if (!isLoading && !vendor && !isError) {
-        router.push(`/organization/createvendor?orgId=${id}`)
+        router.push(`/createvendor`)
     }
-  },[isLoading, vendor, router, id, isError])
+  },[isLoading, vendor, router, isError])
   return (
     <VendorContext.Provider value={{ vendor, refetchvendor, isError, isLoading}}>
       {children}
