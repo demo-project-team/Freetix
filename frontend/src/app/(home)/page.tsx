@@ -16,14 +16,14 @@ export default function Home() {
         <div className="flex items-center space-x-2">
           <span className="text-3xl">🎮</span>
           <span className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
-            Meta
+            NameHere!
           </span>
         </div>
 
         <div className="hidden md:flex space-x-6 text-lg">
           <a
             href="#login"
-            className="hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
+            className="hover:scale-110 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
           >
             Нэвтрэх
           </a>
@@ -31,7 +31,7 @@ export default function Home() {
             href="#booking"
             className="hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
           >
-            Ширээ захиалах
+            Захиалга өгөх
           </a>
           <a
             href="#viewed"
@@ -170,14 +170,14 @@ export default function Home() {
                 <span className="font-bold">5,000₮</span>
               </p>
               <p className="mb-6 text-lg text-black">
-                <span>🗓️</span> Бүтэн өдөр:{" "}
+                <span>🌙</span> Night pass:{" "}
                 <span className="font-bold">40,000₮</span>
               </p>
               <a
                 href="#booking"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
               >
-                Ширээ захиалах
+                Захиалга өгөх
               </a>
             </div>
 
@@ -197,14 +197,14 @@ export default function Home() {
                 <span className="font-bold">4,000₮</span>
               </p>
               <p className="mb-6 text-lg text-black">
-                <span>🗓️</span> Бүтэн өдөр:{" "}
+                <span>🌙</span> Night pass:{" "}
                 <span className="font-bold">24,000₮</span>
               </p>
               <a
                 href="#booking"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
               >
-                Ширээ захиалах
+                Захиалга өгөх
               </a>
             </div>
 
@@ -224,14 +224,14 @@ export default function Home() {
                 <span className="font-bold">4,000₮</span>
               </p>
               <p className="mb-6 text-lg text-black">
-                <span>🗓️</span> Бүтэн өдөр:{" "}
+                <span>🌙</span> Night pass:{" "}
                 <span className="font-bold">15,000₮</span>
               </p>
               <a
                 href="#booking"
                 className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
               >
-                Ширээ захиалах
+                Захиалга өгөх
               </a>
             </div>
           </div>
