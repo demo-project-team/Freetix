@@ -14,6 +14,8 @@ export const CategoryProvider = ({
   children: ReactNode;
   id: string;
 }) => {
+  console.log(id);
+  
   const { data: category, refetch: refetchCategory } = useQuery({
     queryKey: ["category", id],
     queryFn: () => getCategoryById(id),
