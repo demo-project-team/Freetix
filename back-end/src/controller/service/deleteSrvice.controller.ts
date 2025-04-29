@@ -7,7 +7,7 @@ export const deleteService = async (req: Request, res: Response): Promise<void> 
   try {
     const service = await prisma.service.delete({
       where: {
-        id
+        id,
       },
     });
     res.status(200).json({ data: service, succes: true });

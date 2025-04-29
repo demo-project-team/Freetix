@@ -4,7 +4,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
-      user: {
+      user1: {
         id: string;
         email: string;
       };
@@ -12,19 +12,19 @@ declare global {
   }
 }
 export const jwtVerifyAdmin = (req: Request, res: Response, next: NextFunction): void => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+  const token = req.cookies.org
   if (!token) {
     res.status(401).json({ success: false, message: 'Access denied. No token provided.' });
     return;
   }
-  try {
+  try {    
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret') as {
       id: string;
       email: string;
     };
-    req.user = decoded;
+    req.user1 = decoded;
     next();
-  } catch (error) {
+  } catch (error) {    
     res.status(401).json({
       success: false,
       message: 'Invalid or expired token',

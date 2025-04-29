@@ -16,9 +16,15 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
         profileImage: profileImage || null,
       },
     });
-    const token = jwt.sign({ user: user }, '1234', { expiresIn: '8h' });
-    res.status(200).json({ success: true, message: 'Sign-in successful', token: token });
-  } catch (error) { 
+    const token = jwt.sign({ user: user }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '8h' });
+    res.cookie('user', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({ success: true, message: 'Sign-in successful' });
+  } catch (error) {
     res.status(500).json({ success: false, message: 'Internal server error', error });
   } finally {
     prisma.$disconnect();

@@ -11,6 +11,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { singUpRequest } from "@/utils/request/authRequest";
 import { TabsContent } from "@radix-ui/react-tabs";
+import GoogleLogo from "./icons/googleLogo";
 
 export const Loginup = () => {
   const [loading, setLoading] = useState(false);
@@ -32,8 +33,11 @@ export const Loginup = () => {
     }
     setLoading(false);
   };
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:5000/auth/google'
+  }
   return (
-    <TabsContent value="НЭВТРЭХ">
+    <TabsContent value="НЭВТРЭХ" className="flex flex-col gap-3">
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(signUp)}
@@ -75,6 +79,7 @@ export const Loginup = () => {
         </Button>
       </form>
     </FormProvider>
+    <Button onClick={handleGoogleLogin} className="flex w-full"> <GoogleLogo/> sign in with google</Button>
     </TabsContent>
   );
 };

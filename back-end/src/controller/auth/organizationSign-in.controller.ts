@@ -4,11 +4,14 @@ import { prisma } from '../../lib/prisma';
 import jwt from 'jsonwebtoken';
 
 export const signInOrg = async (req: Request, res: Response): Promise<void> => {
-  const { phoneOrOrganizationRegister, password} = req.body;
+  const { phoneOrOrganizationRegister, password } = req.body;
   try {
     const user = await prisma.organization.findFirst({
       where: {
-        OR: [{ phone: phoneOrOrganizationRegister }, { OrganizationRegister:phoneOrOrganizationRegister }],
+        OR: [
+          { phone: phoneOrOrganizationRegister },
+          { OrganizationRegister: phoneOrOrganizationRegister },
+        ],
       },
     });
     if (!user) {
@@ -21,11 +24,19 @@ export const signInOrg = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     if (user.request !== 'APPROVED') {
-        res.status(401).json({succes : false, message:"not approved"})
-        return
+      res.status(401).json({ succes: false, message: 'not approved' });
+      return;
     }
-    const token = jwt.sign({ user: user }, '1234', { expiresIn: '8h' });
-    res.status(200).json({ success: true, message: 'Sign-in successful', token: token, id: user.id });
+    const token = jwt.sign({ user: user }, process.env.JWT_SECRET || 'default_secret', {
+      expiresIn: '8h',
+    });
+    res.cookie('org', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({ success: true, message: 'Sign-in successful', id: user.id });
   } catch (error) {
     res.status(500).json({
       success: false,

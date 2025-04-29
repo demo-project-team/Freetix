@@ -4,7 +4,7 @@ import { prisma } from '../../lib/prisma';
 export const postVendor = async (req: Request, res: Response) => {
   try {
     const { name, description, mapLat, mapLng, phone, email, imageUrl } = req.body;
-    const id = req.user?.id;
+    const id = req.user1?.id;
     if (!id) {
       res.status(401).json({ message: 'Unauthorized: no organization ID found.' });
       return;

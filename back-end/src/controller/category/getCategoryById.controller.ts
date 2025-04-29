@@ -1,17 +1,15 @@
 import { Request, Response } from 'express';
-
 import { prisma } from '../../lib/prisma';
-
 export const getCategoryById = async (req: Request, res: Response): Promise<void> => {
-    const id = req.params.id
+  const id = req.params.id;
   try {
     const categories = await prisma.category.findFirst({
-        where : {
-            id
-        },
-        include : {
-            vendors : true
-        }
+      where: {
+        id,
+      },
+      include: {
+        vendors: true,
+      },
     });
     res.status(200).json({ data: categories, succes: true });
   } catch (error) {

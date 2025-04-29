@@ -3,7 +3,7 @@ import { prisma } from '../../lib/prisma';
 
 export const putPc = async (req: Request, res: Response) => {
   try {
-    const rawIds = req.query.ids
+    const rawIds = req.query.ids;
     const { status } = req.body;
     if (typeof rawIds === 'string') {
       const ids = String(rawIds).split(',');

@@ -15,7 +15,7 @@ export const postCategory = async (req: Request, res: Response): Promise<void> =
         icon,
       },
     });
-    res.status(200).json({succes : true, message : 'category created'})
+    res.status(200).json({ succes: true, message: 'category created' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal server error', error });
   } finally {

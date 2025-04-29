@@ -6,11 +6,11 @@ import { Prisma } from '@prisma/client';
 export const getVendor = async (req: Request, res: Response): Promise<void> => {
   const { name, districtId } = req.query;
   const categoryFilter = req.query.category;
-const categoryIds: string[] = Array.isArray(categoryFilter)
-  ? categoryFilter.map((id) => String(id))
-  : categoryFilter
-  ? [String(categoryFilter)]
-  : [];
+  const categoryIds: string[] = Array.isArray(categoryFilter)
+    ? categoryFilter.map((id) => String(id))
+    : categoryFilter
+      ? [String(categoryFilter)]
+      : [];
   const filter: Prisma.VendorWhereInput = {
     ...(name && {
       name: {
@@ -18,11 +18,11 @@ const categoryIds: string[] = Array.isArray(categoryFilter)
         mode: 'insensitive',
       },
     }),
-    ...(categoryIds.length >0 && {
+    ...(categoryIds.length > 0 && {
       categories: {
         some: {
           id: {
-           in : categoryIds
+            in: categoryIds,
           },
         },
       },
@@ -30,7 +30,7 @@ const categoryIds: string[] = Array.isArray(categoryFilter)
     ...(districtId && {
       address: {
         district: {
-          id: districtId as string, 
+          id: districtId as string,
         },
       },
     }),

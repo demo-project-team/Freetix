@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import express from "express";
 import { z } from "zod";
 import { signUp } from "../controller/auth/sign-up.controller";
@@ -7,6 +8,21 @@ import { signIn } from "../controller/auth/sign-in.controller";
 import { signUpOrg } from "../controller/auth/organizationSign-up.controller";
 import { existingOrg } from "../middleware/auth/existingOrg";
 import { signInOrg } from "../controller/auth/organizationSign-in.controller";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import 'dotenv/config'
+import { loginGoogle } from "../controller/auth/signUpWithgoogle.controller";
+
+declare global {
+  namespace Express {
+   interface User {
+    id: string;
+    displayName: string;
+    emails: { value: string }[];
+   }
+  }
+}
+
 const signUpSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
@@ -29,8 +45,39 @@ const organizationSchemaLogin = z.object({
   phoneOrOrganizationRegister : z.string(),
   password : z.string().min(8),
 })
+passport.serializeUser((user: Express.User, done) => {
+  done(null, user.id); 
+});
+passport.deserializeUser((id: string, done) => {
+  const user: Express.User = { id, displayName: 'Sample Name', emails: [{ value: 'sample@example.com' }] }; // Replace with actual user lookup
+  done(null, user);
+});
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.CLIENT_ID!,
+      clientSecret: process.env.CLIENT_SECRET!,
+      callbackURL: 'http://localhost:5000/auth/google/callback',
+    },
+    (accessToken, refreshToken, profile, done) => {
+      console.log(accessToken, refreshToken);
+      const emails = profile.emails?.map(email => ({
+        value: email.value,
+        verified: email.verified ?? false,
+      })) || []; 
+      const user :Express.User= {
+        id: profile.id,
+        displayName: profile.displayName,
+        emails: emails,
+      };
+      return done(null, user);
+    }
+  )
+);
 export const AuthRouter = express.Router()
 AuthRouter.post('/sign-up', validate(signUpSchema), existingUser, signUp)
 AuthRouter.post('/sign-in',validate(loginSchema), signIn)
 AuthRouter.post('/organization/sign-up', validate(organizationSchema), existingOrg, signUpOrg)
 AuthRouter.post('/organization/sign-in', validate(organizationSchemaLogin), signInOrg)
+AuthRouter.get('/google', passport.authenticate('google', {scope:['profile', "email"]}))
+AuthRouter.get('/google/callback', passport.authenticate('google', {failureRedirect : '/'}), loginGoogle)

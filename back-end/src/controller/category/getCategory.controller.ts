@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
-
-import { prisma } from '../../lib/prisma';
-
+import { prisma } from '../../lib/prisma'
 export const getCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const categories = await prisma.category.findMany({
-      include : {
-        vendors : true
-      }
+      include: {
+        vendors: true,
+      },
     });
     res.status(200).json({ data: categories, succes: true });
   } catch (error) {
