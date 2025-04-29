@@ -125,3 +125,16 @@ export enum RoomType {
   VIP = "VIP",
   STANDART = "STANDART"
 }
+export type City = {
+  name : string,
+  district : District[]
+  id : string,
+  Address : Address[]
+
+}
+export type District = {
+  id : string
+  name : string
+  cityId  : string
+  Address : Address[]
+}

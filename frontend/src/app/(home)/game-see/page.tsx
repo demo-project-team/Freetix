@@ -1,12 +1,22 @@
 "use client";
 
 import { useUserVendor } from "@/provider/VendorProvderUser";
+import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info,  } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+type VendorMapSelectorProps = {
+  vendors: Vendor[];
+}; 
+const VendorMap = dynamic<VendorMapSelectorProps>(
+  () => import("./_components/Location"),
+  { ssr: false }
+)
+
 export default function GameSee() {
-  const [filter, setFilter] = useState("all");
+  const [filter] = useState("all");
   const { vendors } = useUserVendor();
 
 const router = useRouter();
@@ -41,23 +51,10 @@ const router = useRouter();
       </div>
 
       <div className="container mx-auto px-4 -mt-6">
-      <div className="container mx-auto px-4 flex flex-wrap justify-center gap-4 mt-[50px]">
-        <button 
-          onClick={() => setFilter('all')}
-          className={`px-4 py-2 rounded-lg ${filter === 'all' ? 'bg-purple-600' : 'bg-gray-700'}`}
-        >
-          Бүгд
-        </button>
-        <button 
-          onClick={() => setFilter('Esports төв')}
-          className={`px-4 py-2 rounded-lg ${filter === 'Esports төв' ? 'bg-purple-600' : 'bg-gray-700'}`}
-        >
-          Esports төв
-        </button>
-      </div>
 
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[30px]">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[60px]">
           {(filteredVendors?.length ? filteredVendors : vendors)?.map(
             (vendor) => (
               <div
@@ -134,6 +131,10 @@ const router = useRouter();
             )
           )}
         </div>
+
+        <div className="overflow-hidden h-[400px] max-w-[4000px] rounded-xl shadow-md mt-[25px]">
+            <VendorMap vendors={vendors} />
+          </div>
 
 
         {filteredVendors?.length === 0 && vendors?.length === 0 && (
