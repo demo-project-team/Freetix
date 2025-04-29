@@ -4,7 +4,7 @@ import { prisma } from '../../lib/prisma';
 export const postRoom = async (req: Request, res: Response) => {
   try {
     const vendorId = req.params.vendorId;
-    const { name, type } = req.body;    
+    const { name, type } = req.body;
     const room = await prisma.room.create({
       data: {
         name,
@@ -17,7 +17,7 @@ export const postRoom = async (req: Request, res: Response) => {
     res.status(200).json({ room });
   } catch (error) {
     console.log(error);
-    
+
     res.status(500).json({ error });
   }
 };

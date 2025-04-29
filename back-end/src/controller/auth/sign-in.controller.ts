@@ -11,7 +11,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
         OR: [{ email: emailOrPhone }, { phone: emailOrPhone }],
       },
     });
-    if (!user) {
+    if (!user || !user?.passwordHash) {
       res.status(404).json({ success: false, message: 'User not found' });
       return;
     }
@@ -20,8 +20,16 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
       res.status(401).json({ success: false, message: 'Invalid credentials' });
       return;
     }
-    const token = jwt.sign({ user: user }, '1234', { expiresIn: '8h' });
-    res.status(200).json({ success: true, message: 'Sign-in successful', token: token });
+    const token = jwt.sign({ user: user }, process.env.JWT_SECRET || 'default_secret', {
+      expiresIn: '8h',
+    });
+    res.cookie('user', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({ success: true, message: 'Sign-in successful' });
   } catch (error) {
     res.status(500).json({
       success: false,

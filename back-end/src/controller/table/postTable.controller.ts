@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { prisma  } from '../../lib/prisma';
+import { prisma } from '../../lib/prisma';
 
 export const postTable = async (req: Request, res: Response) => {
   try {
@@ -20,7 +20,7 @@ export const postTable = async (req: Request, res: Response) => {
     for (let r = 1; r <= row; r++) {
       for (let c = 1; c <= col; c++) {
         pcsData.push({
-          name: `PC-${r}-${c}`, 
+          name: `PC-${r}-${c}`,
           tableId: table.id,
           row: r,
           column: c,
@@ -28,7 +28,7 @@ export const postTable = async (req: Request, res: Response) => {
       }
     }
 
-     await prisma.pC.createMany({
+    await prisma.pC.createMany({
       data: pcsData,
     });
 

@@ -1,7 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { roomInput, tableInput, vendorInput } from "@/schemas/schemas";
 import { Room, Table } from "@/Types/types";
-import Cookies from "js-cookie";
 export const getVendor = async () => {
   try {
     const { data } = await axiosInstance.get(`/vendor`);
@@ -29,36 +28,18 @@ export const getVendorByFilter = async (
   }
 };
 export const vendorByOwner = async () => {
-  const organization = Cookies.get("org");
   try {
-    const { data } = await axiosInstance.get(`/vendor/owner`, {
-      headers: {
-        Authorization: `Bearer ${organization}`,
-      },
-    });
-    console.log(data);
-
+    const { data } = await axiosInstance.get(`/vendor/owner`)
     return data.data;
   } catch (error) {
     console.log(error);
   }
 };
 export const postVendor = async (values: vendorInput, category: string[]) => {
-  const organization = Cookies.get("org");
-  console.log(category);
-  if (!organization) {
-    throw new Error("Organization token not found");
-  }
-
   try {
     const response = await axiosInstance.post(
       `/vendor?categoryId=${category.toString()}`,
-      values,
-      {
-        headers: {
-          Authorization: `Bearer ${organization}`,
-        },
-      }
+      values
     );
     return response;
   } catch (error) {
@@ -66,66 +47,44 @@ export const postVendor = async (values: vendorInput, category: string[]) => {
   }
 };
 export const createRoom = async (values: roomInput, vendorId: string) => {
-  const token = Cookies.get("org");
   try {
-    const response = await axiosInstance.post(`/room/${vendorId}`, values, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.post(`/room/${vendorId}`, values);
     return response;
   } catch (error) {
     console.log(error);
   }
 };
 export const getRoom = async () => {
-  const token = Cookies.get("org");
   try {
-    const { data } = await axiosInstance.get(`/room`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axiosInstance.get(`/room`);
     return data;
   } catch (error) {
     console.log(error);
   }
 };
 export const postTable = async (value: tableInput, roomId: string | null) => {
-  const token = Cookies.get("org");
   try {
-    const response = await axiosInstance.post(`/room/table/${roomId}`, value, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.post(`/room/table/${roomId}`, value);
     return response;
   } catch (error) {
     console.log(error);
   }
 };
-export const getTable = async (roomId: string | null):Promise<Table[]> => {
-  const token = Cookies.get("org");
+export const getTable = async (roomId: string | null): Promise<Table[]> => {
   try {
-    const { data } = await axiosInstance.get(`/room/table/${roomId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(data);
-    
+    const { data } = await axiosInstance.get(`/room/table/${roomId}`);
     return data.table;
   } catch (error) {
     console.log(error);
-    return []
+    return [];
   }
 };
-export const getRoomUser = async (vendorId: string | null):Promise<Room[]> => {
+export const getRoomUser = async (vendorId: string | null): Promise<Room[]> => {
   try {
-    const {data} = await axiosInstance.get(`/room/user/${vendorId}`,)
-    return data
+    const { data } = await axiosInstance.get(`/room/user/${vendorId}`);
+    return data;
   } catch (error) {
     console.log(error);
-    return []
+    return [];
   }
-}
+};

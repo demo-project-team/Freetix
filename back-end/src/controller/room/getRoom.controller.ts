@@ -6,7 +6,7 @@ export const getRoom = async (req: Request, res: Response) => {
     const room = await prisma.room.findMany({
       where: {
         vendor: {
-          OrganizationId: req.user.id,
+          OrganizationId: req.user1?.id,
         },
       },
     });
