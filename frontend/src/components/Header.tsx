@@ -15,8 +15,10 @@ const Header = () => {
       </span>
     </div>
 
+    
+
     <div className="hidden md:flex space-x-6 text-lg">
-      <OpenUser/>
+      <OpenUser/> 
     </div>
     <div className="md:hidden flex items-center space-x-4">
       <a href="#login" className="text-blue-400">

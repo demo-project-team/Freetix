@@ -154,7 +154,7 @@ const CreateVendor = () => {
               form.setValue("mapLng", latLng.lng);
             }}
           />
-          <Button type="submit">submit</Button>
+          <Button type="submit" onClick={()=>router.push(`/address`)}>submit</Button>
         </form>
       </FormProvider>
     </div>

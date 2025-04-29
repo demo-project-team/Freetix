@@ -36,3 +36,12 @@ export const pcStatusSchema = z.object({
 });
 
 export type pcStatusInput = z.infer<typeof pcStatusSchema>;
+
+export const addressSchema = z.object({
+  street: z.string().min(1, "Street is required"),
+  SumOrKhoroo: z.string().min(1, "Sum or Khoroo is required"),
+  districtId : z.string().min(1, "district is required"),
+  cityId : z.string().min(1, "city is required"),
+});
+
+export type addressInput = z.infer<typeof addressSchema>
