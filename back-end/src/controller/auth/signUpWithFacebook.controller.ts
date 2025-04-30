@@ -9,14 +9,13 @@ export const signUpFacebook = async (req: Request, res: Response) => {
        res.status(400).json({ user:user });
        return
     }
-    const email = user.emails[0].value;
     let existingUser = await prisma.user.findUnique({
       where: { name : user.displayName},
     });
     if (!existingUser) {
       existingUser = await prisma.user.create({
         data: {
-          email : email ? email : "facebook uses",
+          email : "facebook uses",
           name: user.displayName,
         },
       });
