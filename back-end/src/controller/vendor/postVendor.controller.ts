@@ -9,11 +9,9 @@ export const postVendor = async (req: Request, res: Response) => {
       res.status(401).json({ message: 'Unauthorized: no organization ID found.' });
       return;
     }
-
     const rawCategoryIds = req.query.categoryId;
     if (typeof rawCategoryIds === 'string') {
       const categoryIds = rawCategoryIds.split(',');
-
       const newVendor = await prisma.vendor.create({
         data: {
           name,
@@ -36,8 +34,6 @@ export const postVendor = async (req: Request, res: Response) => {
       res.status(401).json({ error: 'category type error' });
     }
   } catch (error) {
-    console.log(error);
-
     res.status(500).json({
       error: 'Internal Server Error',
       errorDetail: error instanceof Error ? error.message : error,

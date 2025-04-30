@@ -10,8 +10,10 @@ import { existingOrg } from "../middleware/auth/existingOrg";
 import { signInOrg } from "../controller/auth/organizationSign-in.controller";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import {Strategy as FacebookStrategy} from "passport-facebook"
 import 'dotenv/config'
 import { loginGoogle } from "../controller/auth/signUpWithgoogle.controller";
+import { signUpFacebook } from "../controller/auth/signUpWithFacebook.controller";
 
 declare global {
   namespace Express {
@@ -57,7 +59,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID!,
       clientSecret: process.env.CLIENT_SECRET!,
-      callbackURL: 'http://localhost:5000/auth/google/callback',
+      callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(accessToken, refreshToken);
@@ -74,6 +76,29 @@ passport.use(
     }
   )
 );
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.APP_ID!,
+      clientSecret: process.env.APP_SECRET!,
+      callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
+      profileFields: ['id', 'displayName', 'emails', 'picture.type(large)'],
+    },
+    (accessToken, refreshToken, profile, done) => {
+      const emails = profile.emails?.map(email => ({
+        value: email.value,
+        verified: true,
+      })) || [];
+
+      const user: Express.User = {
+        id: profile.id,
+        displayName: profile.displayName,
+        emails,
+      };
+      return done(null, user);
+    }
+  )
+)
 export const AuthRouter = express.Router()
 AuthRouter.post('/sign-up', validate(signUpSchema), existingUser, signUp)
 AuthRouter.post('/sign-in',validate(loginSchema), signIn)
@@ -81,3 +106,5 @@ AuthRouter.post('/organization/sign-up', validate(organizationSchema), existingO
 AuthRouter.post('/organization/sign-in', validate(organizationSchemaLogin), signInOrg)
 AuthRouter.get('/google', passport.authenticate('google', {scope:['profile', "email"]}))
 AuthRouter.get('/google/callback', passport.authenticate('google', {failureRedirect : '/'}), loginGoogle)
+AuthRouter.get('/facebook', passport.authenticate('facebook', {scope : ['profile', "email"]}))
+AuthRouter.get('/facebook/callback', passport.authenticate('facebook', {failureRedirect : '/'}), signUpFacebook)

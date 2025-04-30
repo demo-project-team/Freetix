@@ -14,7 +14,7 @@ export default [
         sourceType: 'module',
       },
     },
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.ts', '**/*.ts'],
     ignores: ['node_modules/**', '.git/**', 'dist/**'],
     rules: {
       'no-console': 'off',
