@@ -22,8 +22,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
 
 export default function Address() {
+  const router = useRouter()
   const form = useForm<addressInput>({
     resolver: zodResolver(addressSchema),
     values: {
@@ -150,7 +153,7 @@ export default function Address() {
           </div>
   
 
-          <Button type="submit">
+          <Button type="submit" onClick={()=>router.push('/vendor')}>
             {loading && <Loader2 />}
             submit
           </Button>

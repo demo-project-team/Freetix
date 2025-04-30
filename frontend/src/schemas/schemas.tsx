@@ -7,11 +7,11 @@ export const categorySchema = z.object({
 export type categoryInput = z.infer<typeof categorySchema>;
 
 export const vendorScema = z.object({
-  name: z.string(),
+  name: z.string().min(8, "Name must be at least 8 characters"),
   description: z.string().optional(),
-  mapLat: z.number().nullable().optional(),
-  mapLng: z.number().nullable().optional(),
-  phone: z.string(),
+  mapLat: z.number().min(-90, "Latitude must be at least -90").nullable().optional(),
+  mapLng: z.number().min(-180, "Longitude must be at least -180").nullable().optional(),
+  phone: z.string().min(8, "Password must be at least 8 characters"),
   email: z.string().email(),
   imageUrl: z.string().optional(),
 });
