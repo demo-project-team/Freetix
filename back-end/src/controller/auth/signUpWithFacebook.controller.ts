@@ -6,7 +6,7 @@ export const signUpFacebook = async (req: Request, res: Response) => {
   try {
     const user = req.user;
     if (!user || !user.displayName || !user.emails?.length) {
-       res.status(400).json({ message: 'Invalid user data from Google' });
+       res.status(400).json({ message: 'Invalid user data from Facebook' });
        return
     }
     const email = user.emails[0].value;
