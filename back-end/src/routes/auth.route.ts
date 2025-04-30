@@ -82,7 +82,7 @@ passport.use(
       clientID: process.env.APP_ID!,
       clientSecret: process.env.APP_SECRET!,
       callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
-      profileFields: ['id', 'displayName', 'emails', 'picture.type(large)'],
+      profileFields: ['public_profile', 'email'],
     },
     (accessToken, refreshToken, profile, done) => {
       const emails = profile.emails?.map(email => ({
