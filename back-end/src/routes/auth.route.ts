@@ -21,6 +21,7 @@ declare global {
       id: string;
       displayName: string;
       emails: { value: string }[];
+      provider?: string;
     }
   }
 }
@@ -76,6 +77,7 @@ passport.use(
         id: profile.id,
         displayName: profile.displayName,
         emails: emails,
+        provider: 'google',
       };
       return done(null, user);
     },
@@ -87,7 +89,7 @@ passport.use(
       clientID: process.env.APP_ID!,
       clientSecret: process.env.APP_SECRET!,
       callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
-      profileFields: ['id', 'displayName', 'email', 'name'],
+      profileFields: ['id', 'displayName', 'emails', 'name'],
     },
     (accessToken, refreshToken, profile, done) => {
       const emails =
@@ -100,6 +102,7 @@ passport.use(
         id: profile.id,
         displayName: profile.displayName,
         emails,
+        provider: 'facebook',
       };
       return done(null, user);
     },
