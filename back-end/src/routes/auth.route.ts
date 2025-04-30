@@ -63,7 +63,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID!,
       clientSecret: process.env.CLIENT_SECRET!,
-      callbackURL: 'http://localhost:5000/auth/google/callback',
+      callbackURL: 'https://freetix-d0gf.onrender.com/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(accessToken, refreshToken);
@@ -86,10 +86,8 @@ passport.use(
     {
       clientID: process.env.APP_ID!,
       clientSecret: process.env.APP_SECRET!,
-      callbackURL: process.env.NODE_ENV === "production"
-        ? 'https://freetix-d0gf.onrender.com/auth/facebook/callback'
-        : 'http://localhost:5000/auth/facebook/callback',
-      profileFields: ['public_profile', 'email'],
+      callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
+      profileFields: ['id', 'displayName', 'email', 'name'],
     },
     (accessToken, refreshToken, profile, done) => {
       const emails =
@@ -115,10 +113,13 @@ AuthRouter.post('/organization/sign-in', validate(organizationSchemaLogin), sign
 AuthRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 AuthRouter.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/', failureMessage: true }),
   loginGoogle,
 );
-AuthRouter.get('/facebook', passport.authenticate('facebook', { scope: ['profile', 'email'] }));
+AuthRouter.get(
+  '/facebook',
+  passport.authenticate('facebook', { scope: ['email', 'public_profile'] }),
+);
 AuthRouter.get(
   '/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),

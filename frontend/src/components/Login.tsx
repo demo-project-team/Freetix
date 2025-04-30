@@ -6,28 +6,24 @@ import { Input } from "./ui/input";
 import { FacebookIcon, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { signUpSchema } from "@/schemas/userSchema";
-import { z } from "zod";
+import { loginSchema, UserLoginInput } from "@/schemas/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { singUpRequest } from "@/utils/request/authRequest";
 import { TabsContent } from "@radix-ui/react-tabs";
 import GoogleLogo from "./icons/googleLogo";
+import { signInRequest } from "@/utils/request/authRequest";
 
 export const Loginup = () => {
   const [loading, setLoading] = useState(false);
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<UserLoginInput>({
+    resolver: zodResolver(loginSchema),
     values: {
-      email: "",
+      emailOrPhone: "",
       password: "",
-      username: "",
-      phone: "",
-      profileImage: "",
     },
   });
-  const signUp = async (values: z.infer<typeof signUpSchema>) => {
+  const signUp = async (values:UserLoginInput) => {
     setLoading(true);
-    const response = await singUpRequest(values);
+    const response = await signInRequest(values);
     if (response) {
       setLoading(false);
     }
@@ -48,7 +44,7 @@ export const Loginup = () => {
       >
         <FormField
           control={form.control}
-          name="email"
+          name="emailOrPhone"
           render={({ field }) => (
             <FormItem>
               <p>Email</p>

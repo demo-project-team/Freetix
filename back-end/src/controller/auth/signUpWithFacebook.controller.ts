@@ -33,7 +33,7 @@ export const signUpFacebook = async (req: Request, res: Response) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.redirect('https://freetix-ashy.vercel.app/');
+    res.redirect('https://freetix-ashy.vercel.app');
   } catch (error) {
     console.error('Google login error:', error);
     res.status(500).json({ message: 'Internal server error' });

@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import HomeCaruesel from "./_features/HomeCaruesel";
 import { useUserVendor } from "@/provider/VendorProvderUser";
@@ -33,12 +33,10 @@ export default function Home() {
                   key={vendor.id}
                   className="bg-white bg-opacity-10 rounded-2xl shadow-2xl p-8 hover:scale-105 hover:bg-opacity-20 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
                 >
-                  <Image
-                    src={vendor.imageUrl ? vendor.imageUrl : "/pczurag.jpg"}
+                  <img
+                    src={vendor.imageUrl ? vendor.imageUrl : "pczurag.jpg"}
                     alt="Gaming Room 1"
                     className="rounded-xl mb-4 object-cover h-64 w-full"
-                    width={500}
-                    height={300}
                   />
                   <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
                     {vendor.name}
