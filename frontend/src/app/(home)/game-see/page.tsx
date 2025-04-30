@@ -1,5 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info,  } from "lucide-react";
@@ -30,8 +33,9 @@ const router = useRouter();
     }
   }, [vendors]);
 
-  const filteredVendors = vendors?.filter((vendor) =>
-    filter === "all" ? true : vendor.email === filter || vendor.email === filter
+  
+  const filteredVendors2 = vendors?.filter((vendor) =>
+    filter === "all" ? true : vendor.address?.SumOrKhoroo === filter
   );
 
   return (
@@ -39,6 +43,12 @@ const router = useRouter();
       <div className="relative bg-gray-800 overflow-hidden ">
         <div className="absolute inset-0 bg-purple-900 opacity-10"></div>
         <div className="relative z-10 py-16 px-4">
+          <div>
+            <Input
+                    className="w-[500px] h-fit px-2 py-3 "
+                    placeholder="Search enter..."
+                  />
+          </div>
           <div className="container mx-auto text-center">
             <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
               Тоглоомын газрууд
@@ -55,7 +65,7 @@ const router = useRouter();
 
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[60px]">
-          {(filteredVendors?.length ? filteredVendors : vendors)?.map(
+          {(filteredVendors2?.length ? filteredVendors2 : vendors)?.map(
             (vendor) => (
               <div
               onClick={()=>router.push(`/pc?vendorid=${vendor.id}`)}
@@ -66,9 +76,9 @@ const router = useRouter();
                   <div className="flex items-center justify-center h-full text-purple-300">
                     <div className="text-center">
                       <div className="flex justify-center">
-                        <Star size={40} className="opacity-30" />
+                        
                       </div>
-                      <p className="mt-2 font-medium">{vendor.name}</p>
+                      <img src={vendor.imageUrl ? vendor.imageUrl : ''} className="w-[485px] h-[195px]"/>
                     </div>
                   </div>
                   <div className="absolute top-4 right-4 flex items-center bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full">
@@ -137,7 +147,7 @@ const router = useRouter();
           </div>
 
 
-        {filteredVendors?.length === 0 && vendors?.length === 0 && (
+        {filteredVendors2?.length === 0 && vendors?.length === 0 && (
           <div className="text-center py-20">
             <div className="flex justify-center mb-4">
               <Info size={48} className="text-gray-500" />

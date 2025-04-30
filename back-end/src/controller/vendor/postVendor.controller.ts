@@ -29,7 +29,7 @@ export const postVendor = async (req: Request, res: Response) => {
           },
         },
       });
-      res.status(201).json(newVendor.OrganizationId);
+      res.status(201).json(newVendor.id);
     } else {
       res.status(401).json({ error: 'category type error' });
     }

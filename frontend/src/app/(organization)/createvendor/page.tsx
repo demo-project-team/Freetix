@@ -20,6 +20,7 @@ import { uploadImage } from "@/utils/request/uploadImage";
 import { postVendor } from "@/utils/request/vendor";
 import SelectCategory from "./_components/SelectCategory";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 type VendorMapSelectorProps = {
   onLatLngChange: (latLng: { lat: number; lng: number }) => void;
@@ -30,6 +31,7 @@ const VendorMapSelector = dynamic<VendorMapSelectorProps>(
 );
 
 const CreateVendor = () => {
+  const [loading, setLoading] = useState(false)
     const router = useRouter()
   const [image, setImage] = useState<File | null>(null);
   const [category, setCategory] = useState<string[]>([]);
@@ -50,10 +52,12 @@ const CreateVendor = () => {
       if (!image) {
         return;
       }
+      setLoading(true)
       const url = await uploadImage(image);
       form.setValue("imageUrl", url);
     } catch (error) {
       console.log(error);
+      setLoading(false)
     } finally {
       createVendor(values);
     }
@@ -61,17 +65,23 @@ const CreateVendor = () => {
   const createVendor = async (values: vendorInput) => {
     if (!form.getValues("mapLat") || !form.getValues("mapLng")) {
       form.setError("mapLat", { message: "choose location" });
+      setLoading(false)
       return;
     }
     if (!form.watch("imageUrl")) {
+      setLoading(false)
       return;
     }
     console.log(category);
     if (form.getValues("imageUrl")?.length !== 0) {
       const res = await postVendor(values, category);
+      console.log(res);
+      
     if (res) {
-        router.push(`/organization/${res.data}`)
+        router.push(`/address?vendorid=${res.data}`)
+        setLoading(false)
     }
+    setLoading(false)
     }
   };
   return (
@@ -154,7 +164,10 @@ const CreateVendor = () => {
               form.setValue("mapLng", latLng.lng);
             }}
           />
-          <Button type="submit" onClick={()=>router.push(`/address`)}>submit</Button>
+          <Button type="submit">
+          {loading && <Loader2 className="animate-spin"/>}
+            submit
+            </Button>
         </form>
       </FormProvider>
     </div>
