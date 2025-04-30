@@ -32,7 +32,6 @@ app.use(passport.session());
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
-
 app.use('/auth', AuthRouter);
 app.use('/category', CategoryRouter);
 app.use('/vendor', VendorRouter);

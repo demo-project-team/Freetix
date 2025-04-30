@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../../lib/prisma';
 
-export const loginGoogle = async (req: Request, res: Response) => {
+export const signUpFacebook = async (req: Request, res: Response) => {
   try {
     const user = req.user;
     if (!user || !user.displayName || !user.emails?.length) {
