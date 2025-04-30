@@ -5,18 +5,18 @@ import { prisma } from '../../lib/prisma';
 export const signUpFacebook = async (req: Request, res: Response) => {
   try {
     const user = req.user;
-    if (!user || !user.displayName || !user.emails?.length) {
+    if (!user || !user.displayName) {
        res.status(400).json({ user:user });
        return
     }
     const email = user.emails[0].value;
     let existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { name : user.displayName},
     });
     if (!existingUser) {
       existingUser = await prisma.user.create({
         data: {
-          email,
+          email : email ? email : "facebook uses",
           name: user.displayName,
         },
       });
