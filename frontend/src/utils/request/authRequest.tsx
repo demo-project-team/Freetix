@@ -17,7 +17,7 @@ export const singUpRequest = async (values: UserRegisterInput) => {
 };
 export const signInRequest = async (values: UserLoginInput) => {
   try {
-    const response = await axiosInstance.post(`/auth/sing-in`, values);
+    const response = await axiosInstance.post(`/auth/sign-in`, values);
     return response;
   } catch (error) {
     console.log(error);
