@@ -6,12 +6,15 @@ import {
   vendorInput,
 } from "@/schemas/schemas";
 import { City, District, Table, Vendor } from "@/Types/types";
-export const getVendor = async () => {
+export const getVendor = async ():Promise<Vendor[]> => {
   try {
     const { data } = await axiosInstance.get(`/vendor`);
+    console.log("request", data);
+    
     return data.data;
   } catch (error) {
     console.log(error);
+    return []
   }
 };
 export const getVendorByFilter = async (

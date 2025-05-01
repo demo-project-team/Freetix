@@ -28,6 +28,7 @@ export type Vendor = {
   addressID: string | null;
   admin: Organization;
   OrganizationId: string;
+  rooms : Room[]
 };
 export type Category = {
   name: string;

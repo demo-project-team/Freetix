@@ -1,34 +1,35 @@
 "use client";
- 
+
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getRoomUser } from "@/utils/request/vendor";
 import { useQueryState } from "nuqs";
 import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
- 
+
 export default function HotelPage() {
-  const [vendorId] = useQueryState('vendorid')
+  const [vendorId] = useQueryState("vendorid");
+  const router =useRouter()
   const searchParams = useSearchParams();
   const checkIn = searchParams.get("checkIn") || "2025-05-01";
   const checkOut = searchParams.get("checkOut") || "2025-05-02";
- const {data : vendor} = useQuery({
-    queryKey : ['vendor'],
-    queryFn : ()=>getRoomUser(vendorId)
- })
- console.log(vendor);
- type VendorMapSelectorProps = {
-  vendors: Vendor[];
-};
-const VendorMap = dynamic<VendorMapSelectorProps>(
-  () => import("../game-see/_components/Location"),
-  { ssr: false }
-);
-if (!vendor) {
-  return;
-}
+  const { data: vendor } = useQuery({
+    queryKey: ["vendor"],
+    queryFn: () => getRoomUser(vendorId),
+  });
+  console.log(vendor);
+  type VendorMapSelectorProps = {
+    vendors: Vendor[];
+  };
+  const VendorMap = dynamic<VendorMapSelectorProps>(
+    () => import("../game-see/_components/Location"),
+    { ssr: false }
+  );
+  if (!vendor) {
+    return;
+  }
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
@@ -39,12 +40,12 @@ if (!vendor) {
           {checkIn} - {checkOut}
         </div>
       </div>
- 
+
       <div className="flex items-center text-gray-600">
         <MapPin className="mr-2" />
         Улаанбаатар хот, Баянгол дүүрэг 4-р хороо, Жасрайны гудамж, #27а
       </div>
- 
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Image
@@ -69,7 +70,7 @@ if (!vendor) {
             )}
           </div>
         </div>
- 
+
         <div className="space-y-4">
           <div className="bg-yellow-100 text-yellow-700 p-3 rounded-md text-sm font-semibold">
             Баталгаажих хугацаа: 1-3 цаг
@@ -82,16 +83,15 @@ if (!vendor) {
               Захиалах
             </button>
           </div>
- 
-       <VendorMap vendors={[vendor]}/>
- 
+          <VendorMap vendors={[vendor]} />
           <div className="bg-blue-100 text-blue-700 p-4 rounded-md text-center text-lg font-bold">
             Нийт захиалсан тоо: 22
           </div>
         </div>
       </div>
+      {vendor.rooms.map((room)=>(
+        <div key={room.id} className="cursor-pointer" onClick={()=>router.push(`/room?roomid=${room.id}`)}>{room.type}</div>
+      ))}
     </div>
   );
 }
- 
- 
