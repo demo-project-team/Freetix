@@ -61,7 +61,7 @@ export const OpenUser = () => {
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <Link href={'/company/sign-up'}>
+        <Link href={'/sign-up'}>
         <div className="flex items-center gap-3 px-6 cursor-pointer hover:underline"><MapPinHouse/> ГАЗАР БҮРТГҮҮЛЭХ</div>
         </Link>
       </DialogContent>
