@@ -33,7 +33,7 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
 export const useTable = () => {
   const context = useContext(TableContext);
   if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error("useUser must be used within a TableProvider");
   }
   return context;
 };

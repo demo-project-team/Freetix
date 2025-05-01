@@ -9,7 +9,8 @@ import { getTable } from "../controller/table/getTable.controller";
 import { GetUserRoom } from "../controller/room/userGetRoom.controller";
 const roomschema = z.object({
     name : z.string(),
-    type : z.enum(['VIP', "STANDART"])
+    type : z.enum(['VIP', "STANDART"]),
+    pcPricePerHour : z.number()
 })
 const tableSchema = z.object({
     name : z.string(),

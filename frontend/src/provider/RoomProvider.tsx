@@ -26,7 +26,7 @@ export const RoomProvider = ({ children }: { children: ReactNode }) => {
 export const useRoom = () => {
   const context = useContext(RoomContex);
   if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error("useUser must be used within a RoomProvider");
   }
   return context;
 };

@@ -30,7 +30,7 @@ export const CategoryProvider = ({
 export const useCategory = () => {
   const context = useContext(CategoryContext);
   if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error("useUser must be used within a CategoryProvider");
   }
   return context;
 };

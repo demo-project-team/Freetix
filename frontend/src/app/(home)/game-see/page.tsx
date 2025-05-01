@@ -5,24 +5,23 @@
 import { Input } from "@/components/ui/input";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import { Vendor } from "@/Types/types";
-import { Map, Star, Timer, Phone, Info,  } from "lucide-react";
+import { Map, Star, Timer, Phone, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 type VendorMapSelectorProps = {
   vendors: Vendor[];
-}; 
+};
 const VendorMap = dynamic<VendorMapSelectorProps>(
   () => import("./_components/Location"),
   { ssr: false }
-)
-
+);
 export default function GameSee() {
   const [filter] = useState("all");
   const { vendors } = useUserVendor();
 
-const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     if (vendors?.length) {
@@ -33,11 +32,9 @@ const router = useRouter();
     }
   }, [vendors]);
 
-  
   const filteredVendors2 = vendors?.filter((vendor) =>
     filter === "all" ? true : vendor.address?.SumOrKhoroo === filter
   );
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white pb-12">
       <div className="relative bg-gray-800 overflow-hidden ">
@@ -45,9 +42,9 @@ const router = useRouter();
         <div className="relative z-10 py-16 px-4">
           <div>
             <Input
-                    className="w-[500px] h-fit px-2 py-3 "
-                    placeholder="Search enter..."
-                  />
+              className="w-[500px] h-fit px-2 py-3 "
+              placeholder="Search enter..."
+            />
           </div>
           <div className="container mx-auto text-center">
             <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
@@ -61,24 +58,22 @@ const router = useRouter();
       </div>
 
       <div className="container mx-auto px-4 -mt-6">
-
-
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[60px]">
           {(filteredVendors2?.length ? filteredVendors2 : vendors)?.map(
             (vendor) => (
               <div
-              onClick={()=>router.push(`/pc?vendorid=${vendor.id}`)}
+                onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
                 key={vendor.id}
                 className="bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-purple-600/20 hover:scale-105 relative group cursor-pointer"
               >
                 <div className="h-48 bg-gradient-to-r from-purple-900/30 to-pink-900/30 relative">
                   <div className="flex items-center justify-center h-full text-purple-300">
                     <div className="text-center">
-                      <div className="flex justify-center">
-                        
-                      </div>
-                      <img src={vendor.imageUrl ? vendor.imageUrl : ''} className="w-[485px] h-[195px]"/>
+                      <div className="flex justify-center"></div>
+                      <img
+                        src={vendor.imageUrl ? vendor.imageUrl : ""}
+                        className="w-[485px] h-[195px]"
+                      />
                     </div>
                   </div>
                   <div className="absolute top-4 right-4 flex items-center bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full">
@@ -98,8 +93,6 @@ const router = useRouter();
                     </div>
                   )}
                 </div>
-
-
                 <div className="p-5">
                   <div className="flex justify-between items-start mb-3">
                     <h2 className="text-xl font-bold">{vendor.name}</h2>
@@ -131,22 +124,15 @@ const router = useRouter();
                       </p>
                     </div>
                   </div>
-
-
                 </div>
-
-
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
               </div>
             )
           )}
         </div>
-
         <div className="overflow-hidden h-[400px] max-w-[4000px] rounded-xl shadow-md mt-[25px]">
-            <VendorMap vendors={vendors} />
-          </div>
-
-
+          <VendorMap vendors={vendors} />
+        </div>
         {filteredVendors2?.length === 0 && vendors?.length === 0 && (
           <div className="text-center py-20">
             <div className="flex justify-center mb-4">

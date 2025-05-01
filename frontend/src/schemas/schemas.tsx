@@ -31,11 +31,16 @@ export const tableSchema = z.object({
 
 export type tableInput = z.infer<typeof tableSchema>;
 
-export const pcStatusSchema = z.object({
-  status: z.enum(["AVAILABLE", "BOOKED", "IN_USE", "MAINTENANCE"]),
+export const pcSchema = z.object({
+  startTime: z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: 'Invalid startTime',
+  }),
+  endTime: z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: 'Invalid endTime',
+  }),
 });
 
-export type pcStatusInput = z.infer<typeof pcStatusSchema>;
+export type pcInput = z.infer<typeof pcSchema>;
 
 export const addressSchema = z.object({
   street: z.string().min(1, "Street is required"),

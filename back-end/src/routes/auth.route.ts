@@ -14,6 +14,7 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import 'dotenv/config';
 import { loginGoogle } from '../controller/auth/signUpWithgoogle.controller';
 import { signUpFacebook } from '../controller/auth/signUpWithFacebook.controller';
+import { getUserProfile } from '../controller/auth/getUserPorifile.controller';
 
 declare global {
   namespace Express {
@@ -93,7 +94,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(profile);
-      
+
       const emails =
         profile.emails?.map((email) => ({
           value: email.value,
@@ -130,3 +131,4 @@ AuthRouter.get(
   passport.authenticate('facebook', { failureRedirect: '/' }),
   signUpFacebook,
 );
+AuthRouter.get('/profile', getUserProfile);

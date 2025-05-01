@@ -11,8 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TabsContent } from "@radix-ui/react-tabs";
 import GoogleLogo from "./icons/googleLogo";
 import { signInRequest } from "@/utils/request/authRequest";
+import { useUser } from "@/provider/UserProvider";
+import { toast } from "sonner";
 
 export const Loginup = () => {
+  const {refetchUser} =useUser()
   const [loading, setLoading] = useState(false);
   const form = useForm<UserLoginInput>({
     resolver: zodResolver(loginSchema),
@@ -26,6 +29,8 @@ export const Loginup = () => {
     const response = await signInRequest(values);
     if (response) {
       setLoading(false);
+      toast('Login succesful')
+      refetchUser()
     }
     setLoading(false);
   };
@@ -73,7 +78,7 @@ export const Loginup = () => {
           type="submit"
           className="mt-[20px] h-9 px-4 px-3 w-full py-2 cursor-bot-allowed"
         >
-          {loading && <Loader2 />}
+          {loading && <Loader2 className="animate-spin"/>}
           Continue
         </Button>
       </form>
