@@ -31,7 +31,9 @@ export default function GameSee() {
       console.log(uniqueCategories);
     }
   }, [vendors]);
-
+  if (!vendors) {
+    return
+  }
   const filteredVendors2 = vendors?.filter((vendor) =>
     filter === "all" ? true : vendor.address?.SumOrKhoroo === filter
   );

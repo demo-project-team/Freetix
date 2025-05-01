@@ -5,7 +5,7 @@ import {
   tableInput,
   vendorInput,
 } from "@/schemas/schemas";
-import { City, District, Room, Table } from "@/Types/types";
+import { City, District, Table, Vendor } from "@/Types/types";
 export const getVendor = async () => {
   try {
     const { data } = await axiosInstance.get(`/vendor`);
@@ -84,13 +84,13 @@ export const getTable = async (roomId: string | null): Promise<Table[]> => {
     return [];
   }
 };
-export const getRoomUser = async (vendorId: string | null): Promise<Room[]> => {
+export const getRoomUser = async (vendorId: string | null): Promise<Vendor | null> => {
   try {
-    const { data } = await axiosInstance.get(`/room/user/${vendorId}`);
-    return data;
+    const { data } = await axiosInstance.get(`/vendor/getone/${vendorId}`);
+    return data.data;
   } catch (error) {
     console.log(error);
-    return [];
+    return null
   }
 };
 export const postAddress = async (value: addressInput) => {
