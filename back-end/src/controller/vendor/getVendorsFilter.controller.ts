@@ -40,7 +40,6 @@ export const getVendor = async (req: Request, res: Response): Promise<void> => {
       where: filter,
       include: {
         categories: true,
-        services: true,
         reviews: true,
       },
     });

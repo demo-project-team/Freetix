@@ -14,7 +14,6 @@ export type Vendor = {
   name: string;
   description: string | null;
   categories: Category[];
-  location: string;
   mapLat: number | null;
   mapLng: number | null;
   phone: string;
