@@ -1,6 +1,6 @@
-
 import Header from "@/components/Header";
 import { TableProvider } from "@/provider/TableProvider";
+import { UserProvider } from "@/provider/UserProvider";
 import { VendorProviderUser } from "@/provider/VendorProvderUser";
 import { ReactNode } from "react";
 
@@ -8,10 +8,12 @@ export default function HomeLoayout({ children }: { children: ReactNode }) {
   return (
     <TableProvider>
       <VendorProviderUser>
-        <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500 bg-black">
-          <Header />
-          {children}
-        </div>
+        <UserProvider>
+          <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500 bg-black">
+            <Header />
+            {children}
+          </div>
+        </UserProvider>
       </VendorProviderUser>
     </TableProvider>
   );

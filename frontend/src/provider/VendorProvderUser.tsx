@@ -28,7 +28,7 @@ export const VendorProviderUser = ({ children}: { children: ReactNode }) => {
 export const useUserVendor = () => {
   const context = useContext(VendorContext);
   if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error("useUser must be used within a VendorProviderUser");
   }
   return context;
 };

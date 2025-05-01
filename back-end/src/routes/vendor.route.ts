@@ -6,6 +6,7 @@ import { getVendor } from '../controller/vendor/getVendors.controller';
 import { getVendorByOwner } from '../controller/vendor/getVendorByowner.controller';
 import { organizationToken } from '../middleware/auth/vendorJWT';
 import { putPc } from '../controller/pc/putPc.controller';
+import { jwtVerifyMiddleware } from '../middleware/auth/jsonwebtoken';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
@@ -17,10 +18,15 @@ const vendorScema = z.object({
   email: z.string().email(),
   imageUrl: z.string().optional(),
 });
-const pcStatusSchema = z.object({
-  status: z.enum(['AVAILABLE', 'BOOKED', 'IN_USE', 'MAINTENANCE']),
+const pcSchema = z.object({
+  startTime: z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: 'Invalid startTime',
+  }),
+  endTime: z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: 'Invalid endTime',
+  }),
 });
 VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
 VendorRouter.get('/owner', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
-VendorRouter.put('/pc', validate(pcStatusSchema), putPc);
+VendorRouter.put('/pc',jwtVerifyMiddleware, validate(pcSchema), putPc);

@@ -1,9 +1,10 @@
 import axiosInstance from "@/lib/axios";
-import { pcStatusInput } from "@/schemas/schemas";
+import { pcInput } from "@/schemas/schemas";
 
-export const putPc = async (value: pcStatusInput, ids: string[]) => {
+
+export const putPc = async (value: pcInput, ids: string[], roomID:string) => {
   try {
-    const response = await axiosInstance.put(`/vendor/pc?ids=${ids}`, value);
+    const response = await axiosInstance.put(`/vendor/pc/${roomID}?ids=${ids}`, value);
     return response;
   } catch (error) {
     console.log(error);

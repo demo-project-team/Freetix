@@ -4,7 +4,7 @@ import { prisma } from '../../lib/prisma';
 export const postRoom = async (req: Request, res: Response) => {
   try {
     const vendorId = req.params.vendorId;
-    const { name, type } = req.body;
+    const { name, type , pcPricePerHour} = req.body;
     const room = await prisma.room.create({
       data: {
         name,
@@ -12,6 +12,7 @@ export const postRoom = async (req: Request, res: Response) => {
         vendor: {
           connect: { id: vendorId },
         },
+        pcPricePerHour
       },
     });
     res.status(200).json({ room });

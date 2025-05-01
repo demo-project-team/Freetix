@@ -1,14 +1,14 @@
 
 import { PC } from "@/Types/types";
 import { putPc } from "@/utils/request/pcRequest";
+import { useQueryState } from "nuqs";
 import { useState } from "react";
 
 export function ComputerPc({ pcs }: { pcs: PC[] }) {
-
+  const [roomId] = useQueryState("roomid")
   const [selectedPcs, setSelectedPcs] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
 
@@ -22,10 +22,11 @@ export function ComputerPc({ pcs }: { pcs: PC[] }) {
   };
 
   const bookPC = async () => {
-    const response = await putPc({status : "BOOKED"}, selectedPcs)
+    if (!roomId) {
+      return
+    }
+    const response = await putPc({startTime , endTime }, selectedPcs, roomId)
     console.log(response);
-    
-    
   };
 
   return (

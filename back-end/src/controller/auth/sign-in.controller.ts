@@ -21,7 +21,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     const token = jwt.sign({ user: user }, process.env.JWT_SECRET || 'default_secret', {
-      expiresIn: '8h',
+      expiresIn: '24h',
     });
     res.cookie('user', token, {
       httpOnly: true,

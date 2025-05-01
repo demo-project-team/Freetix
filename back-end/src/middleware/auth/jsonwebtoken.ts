@@ -12,19 +12,18 @@ declare global {
   }
 }
 export const jwtVerifyMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  const token = req.cookies.org
+  const token = req.cookies.org;
   if (!token) {
     res.status(401).json({ success: false, message: 'Access denied. No token provided.' });
     return;
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret') as {
-      id: string;
-      email: string;
+      user: { id: string; email: string };
     };
-    req.user1 = decoded;
+    req.user1 = decoded.user;
     next();
-  } catch (error) {    
+  } catch (error) {
     res.status(401).json({
       success: false,
       message: 'Invalid or expired token',

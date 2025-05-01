@@ -2,9 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { OpenUser } from "./Openuser";
+import { useUser } from "@/provider/UserProvider";
+import { User } from "lucide-react";
 
 const Header = () => {
-    const router = useRouter();
+  const router = useRouter();
+  const { user } = useUser();
+  console.log(user);
   return (
     <header className="sticky top-0 left-0 right-0 z-50 flex justify-between items-center p-6 bg-black bg-opacity-50 backdrop-blur-md">
       <div className="flex items-center space-x-2">
@@ -16,14 +20,19 @@ const Header = () => {
           eSlot
         </span>
       </div>
-
-     
       <div className="hidden md:flex space-x-6 text-lg">
-        <OpenUser />
+        {user ? (
+          <div className="flex items-center justify-center">
+            <User /> {user.name}
+          </div>
+        ) : (
+          <OpenUser />
+        )}
       </div>
       <div className="md:hidden flex items-center space-x-4">
         <a href="#login" className="text-blue-400">
           Нэвтрэх
+          {user?.name}
         </a>
         <a href="#viewed" className="text-blue-400">
           Үзсэн

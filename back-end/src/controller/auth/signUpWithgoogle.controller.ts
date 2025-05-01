@@ -22,7 +22,7 @@ export const loginGoogle = async (req: Request, res: Response) => {
       });
     }
     const token = jwt.sign(
-      { userId: existingUser.id },
+      { user: existingUser.id },
       process.env.JWT_SECRET || 'default_secret',
       { expiresIn: '24h' },
     );

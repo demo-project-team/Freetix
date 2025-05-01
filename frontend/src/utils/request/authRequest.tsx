@@ -61,3 +61,13 @@ export const putOrgReq = async (value: statusInput, id: string) => {
     console.log(error);
   }
 };
+
+export const getUserPublicProfile = async() => {
+  try {
+    const {data} = await axiosInstance.get('/auth/profile')
+    return data.data
+  } catch (error) {
+    console.log(error);
+    return null
+  }
+} 

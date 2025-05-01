@@ -24,7 +24,7 @@ export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
 export const useOrganization = () => {
   const context = useContext(OrgContext);
   if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error("useUser must be used within a OrganizationProvider");
   }
   return context;
 };
