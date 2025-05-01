@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
 export default function VendorMap({ vendors }: { vendors: Vendor[] }) {
   if (!vendors) {
     return <Skeleton className="w-full h-full" />;
-  }
+  }  
   return (
     <MapContainer
       center={[47.9188, 106.9177]}
@@ -29,6 +29,9 @@ export default function VendorMap({ vendors }: { vendors: Vendor[] }) {
         .map((vendor, i) => {
           const lat = vendor.mapLat as number;
           const lng = vendor.mapLng as number;
+          if (!lat || !lng) {
+            return
+          }
           return (
             <Marker key={i} position={[lat, lng]}>
               <Popup>

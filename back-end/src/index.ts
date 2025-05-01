@@ -10,6 +10,7 @@ import { RoomRouter } from './routes/room.route';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
+import { PaymentRouter } from './routes/payment.route';
 
 const app = express();
 app.use(
@@ -35,6 +36,7 @@ app.use('/org', OrganizationRouter);
 app.use('/address', AddressRouter);
 app.use('/room', RoomRouter);
 app.use('/address', AddressRouter);
+app.use('/payment', PaymentRouter)
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
