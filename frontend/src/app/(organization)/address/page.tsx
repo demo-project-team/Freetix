@@ -54,6 +54,7 @@ export default function Address() {
     const response = await postAddress(values);
     if (response) {
       setLoading(false);
+      router.push('/vendor')
     }
     setLoading(false);
   };
@@ -153,8 +154,8 @@ export default function Address() {
           </div>
   
 
-          <Button type="submit" onClick={()=>router.push('/vendor')}>
-            {loading && <Loader2 />}
+          <Button type="submit">
+            {loading && <Loader2 className="animate-spin"/>}
             submit
           </Button>
         </form>

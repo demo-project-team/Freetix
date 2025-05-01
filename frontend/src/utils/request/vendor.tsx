@@ -99,7 +99,6 @@ export const postAddress = async (value: addressInput) => {
     return res;
   } catch (error) {
     console.log(error);
-    return [];
   }
 };
 export const getCity = async ():Promise<City[]> => {
