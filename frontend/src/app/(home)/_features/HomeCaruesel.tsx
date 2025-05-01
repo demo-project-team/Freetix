@@ -30,12 +30,6 @@ const HomeCaruesel = ()=>{
                     Улаанбаатар хотын хамгийн шилдэг
                     <br /> компьютер тоглоомын газрууд
                   </h1>
-                  <a
-                    href="#booking"
-                    className="mt-4 inline-block bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-4 px-8 rounded-full text-xl border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
-                  >
-                    Захиалга өгөх
-                  </a>
                 </div>
               </div>
             </CarouselItem>
@@ -53,12 +47,7 @@ const HomeCaruesel = ()=>{
                   <h1 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
                     Цахимаар захиал Цагаа хэмнэ
                   </h1>
-                  <a
-                    href="#booking"
-                    className="mt-4 inline-block bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-4 px-8 rounded-full text-xl border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
-                  >
-                    Захиалга өгөх
-                  </a>
+
                 </div>
               </div>
             </CarouselItem>
@@ -76,12 +65,6 @@ const HomeCaruesel = ()=>{
                   <h1 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
                     Тав тухтай орчин таныг хүлээж байна
                   </h1>
-                  <a
-                    href="#booking"
-                    className="mt-4 inline-block bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-4 px-8 rounded-full text-xl border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
-                  >
-                    Захиалга өгөх
-                  </a>
                 </div>
               </div>
             </CarouselItem>
