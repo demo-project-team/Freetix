@@ -26,7 +26,14 @@ app.use(
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true, sameSite: 'none' },
+  }),
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', AuthRouter);
@@ -36,7 +43,7 @@ app.use('/org', OrganizationRouter);
 app.use('/address', AddressRouter);
 app.use('/room', RoomRouter);
 app.use('/address', AddressRouter);
-app.use('/payment', PaymentRouter)
+app.use('/payment', PaymentRouter);
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
