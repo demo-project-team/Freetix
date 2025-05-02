@@ -10,10 +10,10 @@ import { existingOrg } from '../middleware/auth/existingOrg';
 import { signInOrg } from '../controller/auth/organizationSign-in.controller';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as FacebookStrategy } from 'passport-facebook';
+// import { Strategy as FacebookStrategy } from 'passport-facebook';
 import 'dotenv/config';
 import { loginGoogle } from '../controller/auth/signUpWithgoogle.controller';
-import { signUpFacebook } from '../controller/auth/signUpWithFacebook.controller';
+// import { signUpFacebook } from '../controller/auth/signUpWithFacebook.controller';
 import { getUserProfile } from '../controller/auth/getUserPorifile.controller';
 
 declare global {
@@ -68,7 +68,6 @@ passport.use(
       callbackURL: 'https://freetix-d0gf.onrender.com/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log(accessToken, refreshToken);
       const emails =
         profile.emails?.map((email) => ({
           value: email.value,
@@ -84,33 +83,31 @@ passport.use(
     },
   ),
 );
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.APP_ID!,
-      clientSecret: process.env.APP_SECRET!,
-      callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
-      profileFields: ['id', 'displayName', 'emails', 'name'],
-    },
-    (accessToken : string, refreshToken : string, profile, done) => {
-      console.log(profile);
+// passport.use(
+//   new FacebookStrategy(
+//     {
+//       clientID: process.env.APP_ID!,
+//       clientSecret: process.env.APP_SECRET!,
+//       callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
+//       profileFields: ['id', 'displayName', 'emails', 'name'],
+//     },
+//     (accessToken : string, refreshToken : string, profile, done) => {
+//       const emails =
+//         profile.emails?.map((email) => ({
+//           value: email.value,
+//           verified: true,
+//         })) || [];
 
-      const emails =
-        profile.emails?.map((email) => ({
-          value: email.value,
-          verified: true,
-        })) || [];
-
-      const user: Express.User = {
-        id: profile.id,
-        displayName: profile.displayName,
-        emails,
-        provider: 'facebook',
-      };
-      return done(null, user);
-    },
-  ),
-);
+//       const user: Express.User = {
+//         id: profile.id,
+//         displayName: profile.displayName,
+//         emails,
+//         provider: 'facebook',
+//       };
+//       return done(null, user);
+//     },
+//   ),
+// );
 export const AuthRouter = express.Router();
 AuthRouter.post('/sign-up', validate(signUpSchema), existingUser, signUp);
 AuthRouter.post('/sign-in', validate(loginSchema), signIn);
@@ -122,13 +119,13 @@ AuthRouter.get(
   passport.authenticate('google', { failureRedirect: '/', failureMessage: true }),
   loginGoogle,
 );
-AuthRouter.get(
-  '/facebook',
-  passport.authenticate('facebook', { scope: ['email', 'public_profile'] }),
-);
-AuthRouter.get(
-  '/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/' }),
-  signUpFacebook,
-);
+// AuthRouter.get(
+//   '/facebook',
+//   passport.authenticate('facebook', { scope: ['email', 'public_profile'] }),
+// );
+// AuthRouter.get(
+//   '/facebook/callback',
+//   passport.authenticate('facebook', { failureRedirect: '/' }),
+//   signUpFacebook,
+// );
 AuthRouter.get('/profile', getUserProfile);
