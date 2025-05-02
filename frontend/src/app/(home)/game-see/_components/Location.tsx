@@ -15,12 +15,12 @@ L.Icon.Default.mergeOptions({
 export default function VendorMap({ vendors }: { vendors: Vendor[] }) {
   if (!vendors) {
     return <Skeleton className="w-full h-full" />;
-  }  
+  }
   return (
     <MapContainer
       center={[47.9188, 106.9177]}
       zoom={13}
-      className="rounded-lg flex "
+      className="rounded-lg flex z-10 "
       style={{ height: "100%", width: "100%" }}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -30,7 +30,7 @@ export default function VendorMap({ vendors }: { vendors: Vendor[] }) {
           const lat = vendor.mapLat as number;
           const lng = vendor.mapLng as number;
           if (!lat || !lng) {
-            return
+            return;
           }
           return (
             <Marker key={i} position={[lat, lng]}>

@@ -9,7 +9,7 @@ export default function HomeLoayout({ children }: { children: ReactNode }) {
     <TableProvider>
       <VendorProviderUser>
         <UserProvider>
-          <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500 bg-black">
+          <div className="flex flex-col min-h-screen  bg-gradient-to-b from-indigo-900 via-purple-800   text-blue-400 to-indigo-500 ">
             <Header />
             {children}
           </div>
