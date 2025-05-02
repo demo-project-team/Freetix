@@ -76,7 +76,20 @@ export const getUserPublicProfile = async () => {
     const { data } = await axiosInstance.get("/auth/profile", {
       withCredentials: true,
     });
+    console.log(data);
+    
     return data.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+export const logoutUser = async () => {
+  try {
+    const response = await axiosInstance.post("/auth/logout/user",{}, {
+      withCredentials: true,
+    });
+    console.log(response);
   } catch (error) {
     console.log(error);
     return null;
