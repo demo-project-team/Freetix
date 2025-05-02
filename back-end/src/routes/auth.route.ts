@@ -93,8 +93,6 @@ passport.use(
       profileFields: ['id', 'displayName', 'emails', 'name'],
     },
     (accessToken : string, refreshToken : string, profile, done) => {
-      console.log(profile);
-
       const emails =
         profile.emails?.map((email) => ({
           value: email.value,
