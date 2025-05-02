@@ -50,7 +50,7 @@ export default function Home() {
                     <span className="font-bold">40,000₮</span>
                   </p>
                   <button
-                    onClick={()=>router.push(`/pc?vendorid=${vendor.id}`)}
+                    onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
                     className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
                   >
                     Захиалга өгөх
@@ -75,7 +75,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
