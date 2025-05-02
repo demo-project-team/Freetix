@@ -92,7 +92,7 @@ passport.use(
       callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
       profileFields: ['id', 'displayName', 'emails', 'name'],
     },
-    (accessToken, refreshToken, profile, done) => {
+    (accessToken : string, refreshToken : string, profile, done) => {
       console.log(profile);
 
       const emails =
