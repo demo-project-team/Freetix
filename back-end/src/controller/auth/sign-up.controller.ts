@@ -19,7 +19,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
     const token = jwt.sign({ user: user }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '8h' });
     res.cookie('user', token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
     });
