@@ -27,7 +27,7 @@ export const signUpFacebook = async (req: Request, res: Response) => {
     );
     res.cookie('user', token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
     });

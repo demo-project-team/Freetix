@@ -65,7 +65,10 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID!,
       clientSecret: process.env.CLIENT_SECRET!,
-      callbackURL: 'https://freetix-d0gf.onrender.com/auth/google/callback',
+      callbackURL:
+        process.env.NODE_ENV === 'production'
+          ? 'https://freetix-d0gf.onrender.com/auth/google/callback'
+          : 'http://localhost:5000/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(accessToken, refreshToken);
@@ -92,7 +95,7 @@ passport.use(
       callbackURL: 'https://freetix-d0gf.onrender.com/auth/facebook/callback',
       profileFields: ['id', 'displayName', 'emails', 'name'],
     },
-    (accessToken : string, refreshToken : string, profile, done) => {
+    (accessToken: string, refreshToken: string, profile, done) => {
       const emails =
         profile.emails?.map((email) => ({
           value: email.value,

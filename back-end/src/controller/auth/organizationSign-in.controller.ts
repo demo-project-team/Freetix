@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { prisma } from '../../lib/prisma';
 import jwt from 'jsonwebtoken';
+import "dotenv/config"
 
 export const signInOrg = async (req: Request, res: Response): Promise<void> => {
   const { phoneOrOrganizationRegister, password } = req.body;
@@ -32,7 +33,7 @@ export const signInOrg = async (req: Request, res: Response): Promise<void> => {
     });
     res.cookie('org', token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
     });
