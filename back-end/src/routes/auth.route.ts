@@ -15,6 +15,8 @@ import 'dotenv/config';
 import { loginGoogle } from '../controller/auth/signUpWithgoogle.controller';
 import { signUpFacebook } from '../controller/auth/signUpWithFacebook.controller';
 import { getUserProfile } from '../controller/auth/getUserPorifile.controller';
+import { logoutUser } from '../controller/auth/logoutUser.controller';
+import { logoutVendor } from '../controller/auth/logoutVendor.controller';
 
 declare global {
   namespace Express {
@@ -133,3 +135,5 @@ AuthRouter.get(
   signUpFacebook,
 );
 AuthRouter.get('/profile', getUserProfile);
+AuthRouter.post('/logout/user', logoutUser)
+AuthRouter.post('/logout/vendor', logoutVendor)
