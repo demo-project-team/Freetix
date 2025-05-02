@@ -10,7 +10,13 @@ export const getOneVendor = async (req: Request, res: Response): Promise<void> =
             id
         },
         include : {
-            rooms : true
+            rooms : true,
+            address : {
+              include : {
+                city : true,
+                district : true
+              }
+            }
         }
     });
     res.status(200).json({ data: vendors, succes: true });
