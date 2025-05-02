@@ -33,7 +33,7 @@ export const signInOrg = async (req: Request, res: Response): Promise<void> => {
     res.cookie('org', token, {
       httpOnly: true,
       secure: false,
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.status(200).json({ success: true, message: 'Sign-in successful', id: user.id });

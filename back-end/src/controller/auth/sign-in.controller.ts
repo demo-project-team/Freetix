@@ -26,7 +26,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
     res.cookie('user', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'lax',
+      sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.status(200).json({ success: true, message: 'Sign-in successful' });

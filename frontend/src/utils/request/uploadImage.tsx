@@ -14,7 +14,7 @@ export const uploadImage = async (file: File) => {
       );
       const result = await response.json();
       console.log(result);
-      
+
       return result.secure_url;
     }
   } catch (err) {
