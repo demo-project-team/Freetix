@@ -9,10 +9,11 @@ import { logoutUser } from "@/utils/request/authRequest";
 
 const Header = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, refetchUser } = useUser();
   console.log(user);
   const handlelogOut = async () => {
     await logoutUser()
+    refetchUser()
   }
   return (
     <header className="sticky top-0 left-0 right-0 z-50 flex justify-between items-center p-6 bg-black bg-opacity-50 backdrop-blur-md">

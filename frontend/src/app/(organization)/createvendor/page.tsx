@@ -47,7 +47,7 @@ const CreateVendor = () => {
       name: "",
     },
   });
-  const uploadImg = async (values: vendorInput) => {
+  const uploadImg = async () => {
     try {
       if (!image) {
         return;
@@ -55,14 +55,17 @@ const CreateVendor = () => {
       setLoading(true)
       const url = await uploadImage(image);
       form.setValue("imageUrl", url);
+      const updatedValue = form.getValues()
+      createVendor(updatedValue)
     } catch (error) {
       console.log(error);
       setLoading(false)
     } finally {
-      createVendor(values);
+      setLoading(false)
     }
   };
   const createVendor = async (values: vendorInput) => {
+    setLoading(true)
     if (!form.getValues("mapLat") || !form.getValues("mapLng")) {
       form.setError("mapLat", { message: "choose location" });
       setLoading(false)

@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FormControl, FormField, FormItem } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -37,6 +37,7 @@ export function AddRoom() {
     values: {
       type: "STANDART",
       name: "",
+      pcPricePerHour : 0
     },
   });
   const addRoom = async (value: roomInput) => {
@@ -97,6 +98,19 @@ export function AddRoom() {
                       <SelectItem value="VIP">VIP</SelectItem>
                     </SelectContent>
                   </Select>
+                </FormItem>
+              )}
+            />
+              <FormField
+              control={form.control}
+              name='pcPricePerHour'
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Room name</Label>
+                  <FormControl>
+                    <Input {...field} type='number' onChange={(e)=>field.onChange(Number(e.target.value))}/>
+                  </FormControl>
+                  <FormMessage/>
                 </FormItem>
               )}
             />

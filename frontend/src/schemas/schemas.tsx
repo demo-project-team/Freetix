@@ -20,6 +20,7 @@ export type vendorInput = z.infer<typeof vendorScema>;
 export const roomschema = z.object({
   name: z.string(),
   type: z.enum(["VIP", "STANDART"]),
+  pcPricePerHour : z.number()
 });
 export type roomInput = z.infer<typeof roomschema>;
 

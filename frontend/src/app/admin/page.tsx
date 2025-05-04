@@ -3,17 +3,27 @@ import { useOrganization } from "@/provider/OrganizationPrider";
 import TableCont from "./_components/TableCont";
 import { useState } from "react";
 import { postCategory } from "@/utils/request/categoryRequest";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { addCity, addDistrict } from "@/utils/request/addresReq";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useQuery } from "@tanstack/react-query";
+import { getCity } from "@/utils/request/vendor";
 
 export default function Home() {
   const { organization } = useOrganization();
-  console.log(organization);
   const [category, setCategory] = useState("");
-
+  const [city, setCity] = useState('')
+  const [cityId, setCityId] = useState('')
+  const [district, setDistrict] = useState('')
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setCategory(value);
   };
-
+  const {data :cities= []} = useQuery({
+    queryKey : ['selectCity'],
+    queryFn : getCity
+  })
   const handlePostClick = async () => {
     if (category) {
       await postCategory({ name: category });
@@ -33,7 +43,7 @@ export default function Home() {
           value={category}
           onChange={handleInputChange}
           placeholder="Enter category"
-          className="w-full px-4 py-2 border text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-gray-500"
+          className="w-full px-4 py-2 border text-black rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-gray-500 text-white"
         />
         <button
           onClick={handlePostClick}
@@ -41,6 +51,24 @@ export default function Home() {
         >
           Post
         </button>
+      </div>
+      <div className="flex flex-col gap-4">
+        <Input onChange={(e)=>setCity(e.target.value)} placeholder="enter new city address"/>
+        <Button onClick={()=>addCity(city)}>add city</Button>
+      </div>
+      <div className="flex flex-col gap-4">
+        <Input onChange={(e)=>setDistrict(e.target.value)} placeholder="enter new district address"/>
+        <Select value={cityId} onValueChange={setCityId}>
+          <SelectTrigger>
+            <SelectValue placeholder="enter city"/>
+          </SelectTrigger>
+          <SelectContent>
+            {cities.map((city)=>(
+              <SelectItem key={city.id} value={city.id}>{city.name}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Button onClick={()=>addDistrict(district, cityId)}>add district</Button>
       </div>
     </div>
   );
