@@ -4,21 +4,17 @@ import { prisma } from '../../lib/prisma';
 export const postDistrict = async (req: Request, res: Response) => {
   try {
     const cityId = req.params.id;
-    const districts = req.body;
-    console.log(districts);
-
-    if (!Array.isArray(districts) || districts.length === 0) {
-      res.status(400).json({ success: false, message: 'District list is empty or invalid.' });
-      return;
-    }
-
-    const data = districts.map((district) => ({
-      name: district.name,
-      cityId: cityId,
-    }));
-
-    await prisma.district.createMany({ data });
-
+    const {name} = req.body;
+    await prisma.district.create({
+      data : {
+        name,
+        city : {
+          connect : {
+            id: cityId
+          }
+        }
+      }
+    });
     res.status(200).json({ success: true, message: 'Districts created' });
   } catch (error) {
     console.error(error);
