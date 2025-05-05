@@ -6,23 +6,25 @@ import { useQueryState } from "nuqs";
 import AddTable from "./_features/AddTable";
 import { PCs } from "./_features/pcs";
 
-
 const Home = () => {
   const router = useRouter();
   const [roomId] = useQueryState("roomid");
   console.log(roomId);
-  const {table} = useTable()
+  const { table } = useTable();
   console.log(table);
-  
 
   return (
     <div className="flex flex-col gap-5">
-      <Button className="w-20" onClick={() => router.push("/vendor")}>Back</Button>
+      <Button className="w-20" onClick={() => router.push("/vendor")}>
+        Back
+      </Button>
       <div>
-        <AddTable/>
+        <AddTable />
         <div className="grid grid-cols-3 gap-10">
-          {table.map((tb, i)=>(
-            <PCs key={i} pcs={tb.pcs}/>
+          {table.map((tb, i) => (
+            <div key={i} >
+              <PCs pcs={tb.pcs}  />
+            </div>
           ))}
         </div>
       </div>
