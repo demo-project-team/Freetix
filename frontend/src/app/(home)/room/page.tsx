@@ -13,19 +13,68 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { putPc } from "@/utils/request/pcRequest";
+import { useQueryState } from "nuqs";
+import { useRouter } from "next/navigation";
 
 export default function Room() {
   const { table } = useTable();
+  const [roomId] = useQueryState('roomid')
+  const router = useRouter()
+  function generateNext24HoursEvery30Min() {
+    const result = [];
+    const now = new Date();
+    const minutes = now.getMinutes();
+    const roundedMinutes = minutes < 30 ? 30 : 0;
+    if (roundedMinutes === 0) now.setHours(now.getHours() + 1);
+    now.setMinutes(roundedMinutes, 0, 0);
+    for (let i = 0; i < 24; i++) {
+      const time = new Date(now.getTime() + i * 30 * 60000);
+      const year = time.getFullYear();
+      const month = String(time.getMonth() + 1).padStart(2, "0");
+      const day = String(time.getDate()).padStart(2, "0");
+      const hours = String(time.getHours()).padStart(2, "0");
+      const mins = String(time.getMinutes()).padStart(2, "0");
+      const secs = String(time.getSeconds()).padStart(2, "0");
+      const ms = String(Math.floor(time.getMilliseconds() / 10)).padStart(
+        2,
+        "0"
+      );
+      result.push({
+        fulldate: `${year}-${month}-${day} ${hours}:${mins}:${secs}.${ms}`,
+        hour: `${hours}:${mins}`,
+      });
+    }
+
+    return result;
+  }
+  const hours = generateNext24HoursEvery30Min();
   const [selectedPcs, setSelectedPcs] = useState<string[]>([]);
   const form = useForm<pcInput>({
     resolver: zodResolver(pcSchema),
     values: {
-      endTime: "",
+      duration: 0,
       startTime: "",
     },
   });
-  return (
+  const minutes = [30, 60, 90, 120, 180, 240];
+  const createBooking = async (values : pcInput)=>{
+    if (!roomId) {
+      return
+    }
+    const response = await putPc(values, selectedPcs, roomId)
+    if (response) {
+      router.push(`/payment?bookingid=${response.booking}`)
+    }
+  }
+return(
     <div className="flex">
       {table.map((table, index) => (
         <div key={index} className="flex items-center justify-center">
@@ -38,7 +87,7 @@ export default function Room() {
       ))}
       {selectedPcs.length >= 1 && (
         <FormProvider {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(createBooking)}>
             <FormField
               control={form.control}
               name="startTime"
@@ -46,7 +95,21 @@ export default function Room() {
                 <FormItem>
                   <Label>Start time</Label>
                   <FormControl>
-                    <Input {...field} />
+                    <Select
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="start time" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {hours.map((time) => (
+                          <SelectItem value={time.fulldate} key={time.hour}>
+                            {time.hour}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -54,12 +117,26 @@ export default function Room() {
             />
             <FormField
               control={form.control}
-              name="endTime"
+              name="duration"
               render={({ field }) => (
                 <FormItem>
-                  <Label>End time</Label>
+                  <Label>Dutation (min)</Label>
                   <FormControl>
-                    <Input {...field} />
+                    <Select
+                      defaultValue={String(field.value)}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="start time" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {minutes.map((time) => (
+                          <SelectItem value={String(time)} key={time}>
+                            {time} min
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

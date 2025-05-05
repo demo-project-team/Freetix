@@ -41,13 +41,12 @@ export const putPc = async (req: Request, res: Response) => {
           },
         },
       });
-      await prisma.payment.create({
+      const pay = await prisma.payment.create({
         data: {
           bookingId: booking.id,
           amount: totalAmount,
           method: 'CARD',
           transactionId: `txn_${Date.now()}`,
-          paidAt: new Date(),
         },
       });
       const pc = await prisma.pC.updateMany({
@@ -62,7 +61,7 @@ export const putPc = async (req: Request, res: Response) => {
       });
       console.log(pc);
 
-      res.status(200).json({ message: 'succes', pc });
+      res.status(200).json({ message: 'succes',pay, pc });
     }
   } catch (error) {
     res.status(500).json({ error, message: 'Internal server error' });

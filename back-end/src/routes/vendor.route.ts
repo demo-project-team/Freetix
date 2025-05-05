@@ -19,13 +19,11 @@ const vendorScema = z.object({
   email: z.string().email(),
   imageUrl: z.string().optional(),
 });
-const pcSchema = z.object({
+export const pcSchema = z.object({
   startTime: z.string().refine(val => !isNaN(Date.parse(val)), {
     message: 'Invalid startTime',
   }),
-  endTime: z.string().refine(val => !isNaN(Date.parse(val)), {
-    message: 'Invalid endTime',
-  }),
+  duration: z.number(),
 });
 VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
 VendorRouter.get('/owner', organizationToken, getVendorByOwner);
