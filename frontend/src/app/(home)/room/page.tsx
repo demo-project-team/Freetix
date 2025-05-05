@@ -54,10 +54,10 @@ export default function Room() {
             />
             <FormField
               control={form.control}
-              name="startTime"
+              name="endTime"
               render={({ field }) => (
                 <FormItem>
-                  <Label>Start time</Label>
+                  <Label>End time</Label>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
