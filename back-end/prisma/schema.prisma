@@ -61,15 +61,17 @@ model Booking {
     payment   Payment?      @relation("BookingPayment")
     paymentId String?
 }
-
 model Payment {
-    id            String   @id @default(uuid())
-    booking       Booking  @relation("BookingPayment", fields: [bookingId], references: [id])
-    bookingId     String   @unique
-    amount        Float
-    method        String
-    transactionId String
-    paidAt        DateTime
+    id               String   @id @default(uuid())
+    booking          Booking  @relation("BookingPayment", fields: [bookingId], references: [id])
+    bookingId        String   @unique
+    amount           Float
+    currency         String   @default("usd") 
+    method           String
+    stripePaymentId  String   @unique
+    transactionId    String?
+    paidAt           DateTime?
+    status           PaymentStatus @default(UNPAID)
 }
 
 model Review {
@@ -181,6 +183,7 @@ enum PCStatus {
     BOOKED
     IN_USE
     MAINTENANCE
+    DELETED
 }
 
 enum RoomType {

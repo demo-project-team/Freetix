@@ -36,9 +36,7 @@ export const pcSchema = z.object({
   startTime: z.string().refine(val => !isNaN(Date.parse(val)), {
     message: 'Invalid startTime',
   }),
-  endTime: z.string().refine(val => !isNaN(Date.parse(val)), {
-    message: 'Invalid endTime',
-  }),
+  duration: z.number(),
 });
 
 export type pcInput = z.infer<typeof pcSchema>;
