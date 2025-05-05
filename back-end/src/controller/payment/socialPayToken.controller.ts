@@ -40,11 +40,10 @@ export const createInvoice = async (req: Request, res: Response) => {
       message: 'Invoice үүсгэлт амжилттай',
       data: response.data
     });
-  } catch (error: any) {
-    console.error('Invoice error:', error.response?.data || error.message);
+  } catch (error) {
      res.status(500).json({
       message: 'Нэхэмжлэх үүсгэхэд алдаа гарлаа',
-      error: error.response?.data || error.message
+      error
     });
   }
 };
