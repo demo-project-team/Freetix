@@ -1,0 +1,29 @@
+{
+  "name": "freetix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,ts,jsx,tsx}": "cd frontend && npm run lint",
+    "back-end/**/*.{js,ts}": "cd back-end && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demo-project-team/Freetix.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/demo-project-team/Freetix/issues"
+  },
+  "homepage": "https://github.com/demo-project-team/Freetix#readme",
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^15.5.1"
+  }
+}
