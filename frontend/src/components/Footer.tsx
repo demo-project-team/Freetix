@@ -21,7 +21,7 @@ const Footer = () => {
               </li>
               <li className="mb-2">
                 <span className="font-semibold">📞</span> Утас:{" "}
-                <a className="text-blue-400 hover:text-blue-500">
+                <a className="text-red-400 hover:text-blue-500">
                   +976 7555-5555
                 </a>
               </li>
