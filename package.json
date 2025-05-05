@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "frontend/**/*.{js,ts,jsx,tsx}": "cd frontend && npm run lint",
-    "back-end/**/*.{js,ts}": "cd back-end && npm run lint"
+    "prepare": "husky install",
+    "lint" : "cd frontend && npm run lint",
+    "lint:all" : "npm run lint && npm run lint:backend",
+    "lint:backend" : "cd back-end && npm run lint"
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,6 @@ import LoginForm from "./_features/LoginForm";
 
 // /* eslint-disable @next/next/no-img-element */
 export default function LoginUp() {
-  const a = "a"
   return (
     <div className="flex w-screen h-screen ">
       <div className="w-1/2 h-full  flex items-center justify-center relative">

@@ -60,7 +60,7 @@ export default function Address() {
   };
   useEffect(()=>{
     refetch()
-  },[cities])
+  },[refetch])
   return (
     <div className="min-h-screen w-screen flex items-center justify-center">
       <FormProvider {...form}>
