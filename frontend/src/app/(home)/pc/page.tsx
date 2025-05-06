@@ -9,11 +9,12 @@ import { useQueryState } from "nuqs";
 import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
+import PcLoadingAnimation from "./pcLoadingAnimation";
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
   const router = useRouter();
-  const { data: vendor } = useQuery({
+  const { data: vendor, isLoading } = useQuery({
     queryKey: ["vendor"],
     queryFn: () => getRoomUser(vendorId),
   });
@@ -25,8 +26,8 @@ export default function HotelPage() {
     () => import("../game-see/_components/Location"),
     { ssr: false }
   );
-  if (!vendor) {
-    return;
+  if (isLoading || !vendor) {
+    return <PcLoadingAnimation/>
   }
   return (
     <div>
@@ -37,7 +38,7 @@ export default function HotelPage() {
 
         <div className="flex items-center text-gray-600">
           <MapPin className="mr-2" />
-          Улаанбаатар хот, Баянгол дүүрэг 4-р хороо, Жасрайны гудамж, #27а
+          {vendor.address?.street}{vendor.address?.SumOrKhoroo}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,22 +73,14 @@ export default function HotelPage() {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-yellow-100 text-yellow-700 p-3 rounded-md text-sm font-semibold">
-              Баталгаажих хугацаа: 30 минут
-            </div>
+            
             <div className="flex justify-between items-center">
-              <div className="text-xl font-semibold">
-                5000₮ <span className="text-gray-600 text-sm">/ цаг</span>
-              </div>
               <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded shadow">
                 Захиалах
               </button>
             </div>
-            <div className="relative h-64">
+            <div className="relative h-90">
               <VendorMap vendors={[vendor]} />
-            </div>
-            <div className="bg-blue-100 text-blue-700 p-4 rounded-md text-center text-lg font-bold">
-              Нийт захиалсан тоо: 69
             </div>
           </div>
         </div>
@@ -105,7 +98,9 @@ export default function HotelPage() {
             <p className="text-gray-700">
               Илүү тав тух, өндөр үзүүлэлттэй төхөөрөмж, хувийн орон зай.
             </p>
-            <div className="mt-4 text-green-600 font-semibold">8000₮ / цаг</div>
+            {vendor.rooms.map((room, i) => (
+              <div key={i} className="mt-4 text-green-600 font-semibold">{room.pcPricePerHour}</div>
+            ))}
           </div>
 
           <div
@@ -123,7 +118,9 @@ export default function HotelPage() {
             <p className="text-gray-700">
               Стандарт төхөөрөмжтэй, өдөр тутмын тоглоход тохиромжтой өрөө.
             </p>
-            <div className="mt-4 text-green-600 font-semibold">5000₮ / цаг</div>
+            {vendor.rooms.map((room, i) => (
+              <div key={i} className="mt-4 text-green-600 font-semibold">{room.pcPricePerHour}</div>
+            ))}
           </div>
         </div>
       </div>

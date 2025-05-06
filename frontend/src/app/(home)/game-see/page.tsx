@@ -8,6 +8,7 @@ import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import PcLoadingAnimation from "../pc/pcLoadingAnimation";
 type VendorMapSelectorProps = {
   vendors: Vendor[];
 };
@@ -20,7 +21,7 @@ export default function GameSee() {
   const router = useRouter();
   console.log(vendors);
   if (vendors.length < 1) {
-    return;
+    return <PcLoadingAnimation/>
   }
 
   return (
