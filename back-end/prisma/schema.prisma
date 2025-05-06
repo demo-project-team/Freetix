@@ -66,9 +66,7 @@ model Payment {
     booking          Booking  @relation("BookingPayment", fields: [bookingId], references: [id])
     bookingId        String   @unique
     amount           Float
-    currency         String   @default("usd") 
-    method           String
-    stripePaymentId  String   @unique
+    stripePaymentId  String?   @unique
     transactionId    String?
     paidAt           DateTime?
     status           PaymentStatus @default(UNPAID)

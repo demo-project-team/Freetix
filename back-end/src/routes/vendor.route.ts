@@ -28,5 +28,5 @@ export const pcSchema = z.object({
 VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
 VendorRouter.get('/owner', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
-VendorRouter.put('/pc',jwtVerifyMiddleware, validate(pcSchema), putPc);
+VendorRouter.put('/pc/:roomId',jwtVerifyMiddleware, validate(pcSchema), putPc);
 VendorRouter.get('/getone/:vendorId', getOneVendor)

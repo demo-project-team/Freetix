@@ -23,6 +23,7 @@ import {
 import { putPc } from "@/utils/request/pcRequest";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Room() {
   const { table } = useTable();
@@ -60,8 +61,8 @@ export default function Room() {
   const form = useForm<pcInput>({
     resolver: zodResolver(pcSchema),
     values: {
-      duration: 0,
-      startTime: "",
+      duration: null,
+      startTime :"",
     },
   });
   const minutes = [30, 60, 90, 120, 180, 240];
@@ -70,8 +71,10 @@ export default function Room() {
       return
     }
     const response = await putPc(values, selectedPcs, roomId)
+    console.log(response);
+    
     if (response) {
-      router.push(`/payment?bookingid=${response.booking}`)
+      router.push(`/payment?payid=${response.pay.id}`)
     }
   }
 return(
@@ -124,7 +127,7 @@ return(
                   <FormControl>
                     <Select
                       defaultValue={String(field.value)}
-                      onValueChange={field.onChange}
+                      onValueChange={(val) => field.onChange(val ? Number(val) : null)}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="start time" />
@@ -142,6 +145,7 @@ return(
                 </FormItem>
               )}
             />
+            <Button type='submit'>Төлөх</Button>
           </form>
         </FormProvider>
       )}
