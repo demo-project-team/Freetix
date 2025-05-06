@@ -53,7 +53,6 @@ export const putPc = async (req: Request, res: Response) => {
         data: {
           bookingId: booking.id,
           amount: totalAmount,
-          method: 'CARD',
           transactionId: `txn_${Date.now()}`,
         },
       });
