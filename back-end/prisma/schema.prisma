@@ -68,7 +68,7 @@ model Payment {
     amount           Float
     currency         String   @default("usd") 
     method           String
-    stripePaymentId  String   @unique
+    stripePaymentId  String?   @unique
     transactionId    String?
     paidAt           DateTime?
     status           PaymentStatus @default(UNPAID)

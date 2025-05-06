@@ -22,6 +22,7 @@ export default function PCLayout() {
                 <div
                   key={i}
                   className="border rounded-lg flex items-center justify-center h-40"
+                  onClick={() => router.push(`/vendor/room?roomid=${rm.id}`)}
                 >
                   {rm.name}
                 </div>
