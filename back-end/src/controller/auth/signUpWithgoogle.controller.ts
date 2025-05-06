@@ -21,6 +21,8 @@ export const loginGoogle = async (req: Request, res: Response) => {
         },
       });
     }
+    console.log(existingUser);
+    
     const token = jwt.sign({ user: existingUser }, process.env.JWT_SECRET || 'default_secret', {
       expiresIn: '24h',
     });

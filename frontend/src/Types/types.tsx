@@ -28,7 +28,7 @@ export type Vendor = {
   addressID: string | null;
   admin: Organization;
   OrganizationId: string;
-  rooms : Room[]
+  rooms: Room[];
 };
 export type Category = {
   name: string;
@@ -65,12 +65,13 @@ export type ServiceSchedule = {
 export type Booking = {
   id: string;
   userId: string;
-  serviceScheduleId: string;
-  serviceSchedule: ServiceSchedule;
   status: "PENDING" | "CONFIRMED" | "CANCELLED" | "COMPLETED";
   paymentStatus: "UNPAID" | "PAID";
   notes?: string | null;
   createdAt: Date;
+  pcs : PC[]
+  startTime : Date
+  endTime : Date
 };
 export type Review = {
   id: string;
@@ -97,6 +98,7 @@ export type Room = {
   updatedAt: Date;
   type: RoomType
   pcPricePerHour : number
+
 };
 export type Table = {
   id: string;
@@ -124,18 +126,31 @@ export enum PCStatus {
 }
 export enum RoomType {
   VIP = "VIP",
-  STANDART = "STANDART"
+  STANDART = "STANDART",
 }
 export type City = {
-  name : string,
-  district : District[]
-  id : string,
-  Address : Address[]
-
-}
+  name: string;
+  district: District[];
+  id: string;
+  Address: Address[];
+};
 export type District = {
-  id : string
-  name : string
-  cityId  : string
-  Address : Address[]
+  id: string;
+  name: string;
+  cityId: string;
+  Address: Address[];
+};
+export type Payment = {
+  id: string;
+  status: PaymentStatus;
+  bookingId: string;
+  amount: number;
+  transactionId: string;
+  paidAt: Date | null;
+  method : string
+  booking : Booking
+};
+export enum PaymentStatus {
+  PAID = "PAID",
+  UNPAID = "UNPAID",
 }

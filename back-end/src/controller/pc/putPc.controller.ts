@@ -6,7 +6,7 @@ export const putPc = async (req: Request, res: Response) => {
     const userId = req.user1.id;
     const rawIds = req.query.ids;
     const roomId = req.params.roomId;
-    const { startTime, endTime } = req.body;
+    const { startTime, duration } = req.body;
     if (typeof rawIds === 'string') {
       const ids = String(rawIds).split(',');
       if (!ids.length) {
@@ -23,19 +23,27 @@ export const putPc = async (req: Request, res: Response) => {
         return;
       }
       const start = new Date(startTime);
-      const end = new Date(endTime);
+      const end = new Date(start.getTime() + duration * 60 * 1000);
+      console.log(start, end, userId);
+      const user = await prisma.user.findFirst({
+        where : {id : userId}
+      })
+      if (!user) {
+        res.status(400).json({ message: 'user not found' });
+        return
+      }
       if (isNaN(start.getTime()) || isNaN(end.getTime())) {
         res.status(400).json({ message: 'Invalid start or end time' });
         return;
       }
-      const durationInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+      const durationInHours = duration/60
       const pricePerHour = room?.pcPricePerHour;
       const totalAmount = durationInHours * pricePerHour * ids.length;
       const booking = await prisma.booking.create({
         data: {
-          userId: userId,
-          startTime,
-          endTime,
+          userId : user?.id,
+          startTime: start,
+          endTime: end,
           pcs: {
             connect: ids.map((id: string) => ({ id })),
           },
@@ -61,9 +69,11 @@ export const putPc = async (req: Request, res: Response) => {
       });
       console.log(pc);
 
-      res.status(200).json({ message: 'succes',pay, pc });
+      res.status(200).json({ message: 'succes', pay, pc });
     }
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error, message: 'Internal server error' });
   }
 };
