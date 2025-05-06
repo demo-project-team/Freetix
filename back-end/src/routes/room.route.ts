@@ -7,6 +7,7 @@ import { getRoom } from "../controller/room/getRoom.controller";
 import { postTable } from "../controller/table/postTable.controller";
 import { getTable } from "../controller/table/getTable.controller";
 import { GetUserRoom } from "../controller/room/userGetRoom.controller";
+import { deleteTable } from "../controller/table/delete.controller";
 const roomschema = z.object({
     name : z.string(),
     type : z.enum(['VIP', "STANDART"]),
@@ -23,3 +24,4 @@ RoomRouter.get('/', organizationToken, getRoom)
 RoomRouter.get('/user/:vendorId', GetUserRoom)
 RoomRouter.post('/table/:roomId', organizationToken, validate(tableSchema), postTable)
 RoomRouter.get('/table/:roomId', getTable)
+RoomRouter.delete('/table/:tableId', deleteTable) 

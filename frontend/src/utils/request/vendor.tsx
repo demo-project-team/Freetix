@@ -6,6 +6,7 @@ import {
   vendorInput,
 } from "@/schemas/schemas";
 import { City, District, Table, Vendor } from "@/Types/types";
+import { toast } from "sonner";
 export const getVendor = async (): Promise<Vendor[]> => {
   try {
     const { data } = await axiosInstance.get(`/vendor`);
@@ -135,5 +136,15 @@ export const getDistrict = async (cityId: string): Promise<District[]> => {
   } catch (error) {
     console.log(error);
     return [];
+  }
+};
+export const deleteTable = async (tableId: string): Promise<boolean> => {
+  try {
+    await axiosInstance.delete(`/room/table/${tableId}`);
+    return true;
+  } catch (error) {
+    console.error("Ширээ устгах үед алдаа гарлаа:", error);
+    toast.error("Ширээ устгах үед алдаа гарлаа");
+    return false;
   }
 };
