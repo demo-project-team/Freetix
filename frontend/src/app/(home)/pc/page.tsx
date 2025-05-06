@@ -27,7 +27,7 @@ export default function HotelPage() {
     { ssr: false }
   );
   if (isLoading || !vendor) {
-    return <PcLoadingAnimation/>
+    return <PcLoadingAnimation />;
   }
   return (
     <div>
@@ -36,9 +36,10 @@ export default function HotelPage() {
           <h1 className="text-3xl font-bold">{vendor.name}</h1>
         </div>
 
-        <div className="flex items-center text-gray-600">
+        <div className="flex items-center text-black-600">
           <MapPin className="mr-2" />
-          {vendor.address?.street}{vendor.address?.SumOrKhoroo}
+          {vendor.address?.street}
+          {vendor.address?.SumOrKhoroo}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -73,7 +74,6 @@ export default function HotelPage() {
           </div>
 
           <div className="space-y-4">
-            
             <div className="flex justify-between items-center">
               <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded shadow">
                 Захиалах
@@ -85,43 +85,46 @@ export default function HotelPage() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 ">
-          <div
-            onClick={() => {
-              const vipRoom = vendor.rooms.find((room) => room.type === "VIP");
-              if (vipRoom) router.push(`/room?roomid=${vipRoom.id}`);
-            }}
-            className="cursor-pointer bg-yellow-50 hover:bg-yellow-100 border border-yellow-300 p-6 rounded-xl shadow transition"
-          >
-            <h2 className="text-2xl font-bold text-yellow-700 mb-2">
-              💎 VIP Өрөө
-            </h2>
-            <p className="text-gray-700">
-              Илүү тав тух, өндөр үзүүлэлттэй төхөөрөмж, хувийн орон зай.
-            </p>
-            {vendor.rooms.map((room, i) => (
-              <div key={i} className="mt-4 text-green-600 font-semibold">{room.pcPricePerHour}</div>
-            ))}
-          </div>
+          {vendor.rooms
+            .filter((room) => room.type === "VIP")
+            .map((room) => (
+              <div
+                key={room.id}
+                className="cursor-pointer bg-yellow-50 hover:bg-yellow-100 border border-yellow-300 p-6 rounded-xl shadow transition"
+                onClick={() => router.push(`room?roomid=${room.id}`)}
+              >
+                <h2 className="text-2xl font-bold text-yellow-700 mb-2">
+                  💎 VIP Өрөө
+                </h2>
+                <p className="text-gray-700">
+                  Илүү тав тух, өндөр үзүүлэлттэй төхөөрөмж, хувийн орон зай.
+                </p>
 
-          <div
-            onClick={() => {
-              const stdRoom = vendor.rooms.find(
-                (room) => room.type === "STANDART"
-              );
-              if (stdRoom) router.push(`/room?roomid=${stdRoom.id}`);
-            }}
-            className="cursor-pointer bg-gray-50 hover:bg-gray-100 border border-gray-300 p-6 rounded-xl shadow transition"
-          >
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              💻 Стандарт Өрөө
-            </h2>
-            <p className="text-gray-700">
-              Стандарт төхөөрөмжтэй, өдөр тутмын тоглоход тохиромжтой өрөө.
-            </p>
-            {vendor.rooms.map((room, i) => (
-              <div key={i} className="mt-4 text-green-600 font-semibold">{room.pcPricePerHour}</div>
+                <div className="mt-4 text-green-600 font-semibold">
+                  {room.pcPricePerHour}
+                </div>
+              </div>
             ))}
-          </div>
+
+          {vendor.rooms
+            .filter((room) => room.type === "STANDART")
+            .map((room) => (
+              <div
+                key={room.id}
+                onClick={() => router.push(`room?roomid=${room.id}`)}
+                className="cursor-pointer bg-gray-50 hover:bg-gray-100 border border-gray-300 p-6 rounded-xl shadow transition"
+              >
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  💻 Стандарт Өрөө
+                </h2>
+                <p className="text-gray-700">
+                  Стандарт төхөөрөмжтэй, өдөр тутмын тоглоход тохиромжтой өрөө.
+                </p>
+                <div className="mt-4 text-green-600 font-semibold">
+                  {room.pcPricePerHour}
+                </div>
+              </div>
+            ))}
         </div>
       </div>
       <Footer />
