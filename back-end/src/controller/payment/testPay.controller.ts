@@ -25,3 +25,4 @@ export const testStripe = async (req: Request, res: Response) => {
     res.status(500).json({ error, message: 'Internal server error' });
   }
 };
+

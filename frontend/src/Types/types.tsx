@@ -96,7 +96,9 @@ export type Room = {
   tables: Table[];
   createdAt: Date;
   updatedAt: Date;
-  type: RoomType;
+  type: RoomType
+  pcPricePerHour : number
+
 };
 export type Table = {
   id: string;
