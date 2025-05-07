@@ -20,7 +20,6 @@ function generateReceiptPDF(payment: Payment, filePath: string): Promise<void> {
     doc.text(`Төлбөрийн дугаар: ${payment.id}`);
     doc.text(`Огноо: ${new Date(payment.paidAt || new Date()).toLocaleString()}`);
     doc.text(`Төлбөр: ${payment.amount}₮`);
-    doc.text(`Хэлбэр: ${payment.method}`);
     doc.text(`Гүйлгээ: ${payment.transactionId}`);
     doc.text(`Захиалгын төлөв: CONFIRMED`);
     doc.moveDown();

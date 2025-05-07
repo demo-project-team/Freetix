@@ -61,15 +61,16 @@ model Booking {
     payment   Payment?      @relation("BookingPayment")
     paymentId String?
 }
+
 model Payment {
-    id               String   @id @default(uuid())
-    booking          Booking  @relation("BookingPayment", fields: [bookingId], references: [id])
-    bookingId        String   @unique
-    amount           Float
-    stripePaymentId  String?   @unique
-    transactionId    String?
-    paidAt           DateTime?
-    status           PaymentStatus @default(UNPAID)
+    id            String        @id @default(uuid())
+    booking       Booking       @relation("BookingPayment", fields: [bookingId], references: [id])
+    bookingId     String        @unique
+    amount        Float
+    transactionId String?
+    paidAt        DateTime?
+    method        String
+    status        PaymentStatus @default(UNPAID)
 }
 
 model Review {
@@ -188,4 +189,3 @@ enum RoomType {
     VIP
     STANDART
 }
-
