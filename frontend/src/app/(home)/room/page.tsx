@@ -24,9 +24,10 @@ import { putPc } from "@/utils/request/pcRequest";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import PcLoadingAnimation from "../pc/pcLoadingAnimation";
 
 export default function Room() {
-  const { table } = useTable();
+  const { table , isLoading} = useTable();
   const [roomId] = useQueryState('roomid')
   const router = useRouter()
   function generateNext24HoursEvery30Min() {
@@ -68,7 +69,7 @@ export default function Room() {
   const minutes = [30, 60, 90, 120, 180, 240];
   const createBooking = async (values : pcInput)=>{
     if (!roomId) {
-      return
+      return 
     }
     const response = await putPc(values, selectedPcs, roomId)
     console.log(response);
@@ -76,6 +77,9 @@ export default function Room() {
     if (response) {
       router.push(`/payment?payid=${response.pay.id}`)
     }
+  }
+  if (isLoading) {
+    return <PcLoadingAnimation/>
   }
 return(
     <div className="flex">
