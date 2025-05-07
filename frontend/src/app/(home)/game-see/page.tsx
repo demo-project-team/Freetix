@@ -3,12 +3,15 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import PcLoadingAnimation from "../pc/pcLoadingAnimation";
+import VendorSearch from "./_components/VendorSearch";
+
 type VendorMapSelectorProps = {
   vendors: Vendor[];
 };
@@ -16,9 +19,19 @@ const VendorMap = dynamic<VendorMapSelectorProps>(
   () => import("./_components/Location"),
   { ssr: false }
 );
+
+
 export default function GameSee() {
+  const [searchTerm, setSearchTerm] = useState("");
   const { vendors } = useUserVendor();
   const router = useRouter();
+
+  const filteredVendors = vendors.filter((vendor) =>
+    vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    vendor.address?.street?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    vendor.phone?.includes(searchTerm)
+  );
+
   console.log(vendors);
   if (vendors.length < 1) {
     return <PcLoadingAnimation/>
@@ -29,12 +42,8 @@ export default function GameSee() {
       <div className="relative bg-gray-800 overflow-hidden ">
         <div className="absolute inset-0 bg-purple-900 opacity-10"></div>
         <div className="relative z-10 py-16 px-4">
-          <div>
-            <Input
-              className="w-[500px] h-fit px-2 py-3 "
-              placeholder="Search enter..."
-            />
-          </div>
+        <VendorSearch vendors={vendors} />
+
           <div className="container mx-auto text-center">
             <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
               Тоглоомын газрууд
