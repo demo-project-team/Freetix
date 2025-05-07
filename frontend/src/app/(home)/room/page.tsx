@@ -25,8 +25,10 @@ import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import PcLoadingAnimation from "../pc/pcLoadingAnimation";
+import { Loader2 } from "lucide-react";
 
 export default function Room() {
+  const [loading, setLoading] = useState(false)
   const { table , isLoading} = useTable();
   const [roomId] = useQueryState('roomid')
   const router = useRouter()
@@ -70,13 +72,14 @@ export default function Room() {
   const createBooking = async (values : pcInput)=>{
     if (!roomId) {
       return 
-    }
+    } setLoading(true)
     const response = await putPc(values, selectedPcs, roomId)
     console.log(response);
     
     if (response) {
       router.push(`/payment?payid=${response.pay.id}`)
-    }
+      setLoading(false)
+    } setLoading(false)
   }
   if (isLoading) {
     return <PcLoadingAnimation/>
@@ -149,7 +152,9 @@ return(
                 </FormItem>
               )}
             />
-            <Button type='submit'>Төлөх</Button>
+            <Button type='submit'>
+              {loading && <Loader2 className="animate-spin"/>}Төлөх
+              </Button>
           </form>
         </FormProvider>
       )}
