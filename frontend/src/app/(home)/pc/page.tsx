@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MapPin } from "lucide-react";
+import { MapPin} from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getRoomUser } from "@/utils/request/vendor";
 import { useQueryState } from "nuqs";
@@ -10,6 +10,7 @@ import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import PcLoadingAnimation from "./pcLoadingAnimation";
+import CallComp from "./_components/CallComp";
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
@@ -124,6 +125,7 @@ export default function HotelPage() {
             ))}
         </div>
       </div>
+      <CallComp/>
       <Footer />
     </div>
   );
