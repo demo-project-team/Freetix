@@ -2,8 +2,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+// import { Input } from "@/components/ui/input";
+// import { useState } from "react";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info } from "lucide-react";
@@ -22,15 +22,15 @@ const VendorMap = dynamic<VendorMapSelectorProps>(
 
 
 export default function GameSee() {
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const { vendors } = useUserVendor();
   const router = useRouter();
 
-  const filteredVendors = vendors.filter((vendor) =>
-    vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    vendor.address?.street?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    vendor.phone?.includes(searchTerm)
-  );
+  // const filteredVendors = vendors.filter((vendor) =>
+  //   vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //   vendor.address?.street?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //   vendor.phone?.includes(searchTerm)
+  // );
 
   console.log(vendors);
   if (vendors.length < 1) {
