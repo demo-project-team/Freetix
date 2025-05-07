@@ -75,11 +75,8 @@ export default function HotelPage() {
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded shadow">
-                Захиалах
-              </button>
             </div>
-            <div className="relative h-90">
+            <div className="relative h-150">
               <VendorMap vendors={[vendor]} />
             </div>
           </div>
