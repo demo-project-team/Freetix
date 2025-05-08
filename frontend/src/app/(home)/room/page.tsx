@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import PcLoadingAnimation from "../pc/pcLoadingAnimation";
 import { Loader2 } from "lucide-react";
+// import { LiveComputerPc } from "./_components/LiveTimePc";
 
 export default function Room() {
   const [loading, setLoading] = useState(false)
@@ -93,6 +94,7 @@ return(
             setSelectedPcs={setSelectedPcs}
             selectedPcs={selectedPcs}
           />
+          {/* <LiveComputerPc pc={table.pcs} /> */}
         </div>
       ))}
       {selectedPcs.length >= 1 && (

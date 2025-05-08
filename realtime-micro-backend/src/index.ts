@@ -1,27 +1,36 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { createServer } from "http";
+import fastifySocketIo from "fastify-socket.io";
+import CallRouter from "./routes/chat.route";
 import { Server } from "socket.io";
 import registerSocket from "./socket";
-import CallRouter from "./routes/call.route";
-
+import ChatRouter from "./routes/chat.route";
+declare module "fastify" {
+  interface FastifyInstance {
+    io: Server;
+  }
+}
 const fastify = Fastify();
-const httpServer = createServer(fastify.server);
-
-const io = new Server(httpServer, {
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-    },
-    transports: ['websocket', 'polling'],  // Make sure 'websocket' is enabled here
-  });
-
-registerSocket(io);
 fastify.register(cors, { origin: "*" });
-fastify.register(CallRouter, { prefix: "/api/call" });
+fastify.register(fastifySocketIo, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+  transports: ["websocket"], 
+});
+
+fastify.register(ChatRouter, { prefix: "/api/chat" });
+fastify.ready().then(() => {
+  const io = fastify.io;
+  registerSocket(io)
+});
 
 const PORT = 8080;
-
-httpServer.listen(PORT, () => {
-  console.log(`🚀 Server is running at http://localhost:${PORT}`);
+fastify.listen({port :PORT}, (err, address) => {
+  if (err) {
+    console.log(err);
+    process.exit(1);
+  }
+  console.log(`🚀 Server is running at ${address}`);
 });

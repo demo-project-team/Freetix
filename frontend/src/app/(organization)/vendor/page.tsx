@@ -5,7 +5,8 @@ import { AddRoom } from "./_features/AddRoom";
 import { useRouter } from "next/navigation";
 import SkeletonLoader from "./_features/Loading";
 import { Skeleton } from "@/components/ui/skeleton";
-import CallComp from "./_features/AcceptCall";
+// import ChatComp from "./_features/AcceptCall";
+// import CallComp from "./_features/AcceptCall";
 // import { AcceptUserCall } from "./_features/AcceptCall";
 
 export default function PCLayout() {
@@ -60,7 +61,6 @@ export default function PCLayout() {
           </div>
         )}
       </div>
-      <CallComp/>
     </div>
   );
 }
