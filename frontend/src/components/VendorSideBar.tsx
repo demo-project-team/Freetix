@@ -17,6 +17,7 @@ export default function VendroSidbar() {
         <Link href="#" className="block hover:bg-gray-700 p-2 rounded">Home</Link>
         <Link href="/" className="block hover:bg-gray-700 p-2 rounded">Schedule</Link>
         <Link href="/admin" className="block hover:bg-gray-700 p-2 rounded">Settings</Link>
+        <Link href="/vendor/account" className='block hover:bg-gray-700 p-2 rounded'>Account</Link>
       </div>
     </div>
   );

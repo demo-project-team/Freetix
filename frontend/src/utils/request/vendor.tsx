@@ -40,7 +40,7 @@ export const vendorByOwner = async () => {
   try {
     const { data } = await axiosInstance.get(`/vendor/owner`, {
       withCredentials: true,
-    });
+    });    
     return data.data;
   } catch (error) {
     console.log(error);
@@ -148,3 +148,15 @@ export const deleteTable = async (tableId: string): Promise<boolean> => {
     return false;
   }
 };
+export const putVendor = async () => {
+  try {
+    const {data} = await axiosInstance.put(`/vendor`)
+  console.log("requiest", data);
+
+  return data
+  } catch (error) {
+    console.log(error);
+    return []
+  }
+  
+}
