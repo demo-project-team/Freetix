@@ -148,11 +148,11 @@ export const deleteTable = async (tableId: string): Promise<boolean> => {
     return false;
   }
 };
-export const putVendor = async () => {
+export const putVendor = async (value: vendorInput ) => {
+  console.log(value);
+  
   try {
-    const {data} = await axiosInstance.put(`/vendor`)
-  console.log("requiest", data);
-
+    const {data} = await axiosInstance.put(`/vendor`, value)
   return data
   } catch (error) {
     console.log(error);
