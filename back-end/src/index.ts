@@ -13,18 +13,31 @@ import passport from 'passport';
 import { PaymentRouter } from './routes/payment.route';
 import { Pool } from 'pg';
 import pgSession from 'connect-pg-simple';
+import { startBookingCancelCron } from './jobs/paymentStatusCron';
+import { startBookingStatusCron } from './jobs/bookingStatusCron';
+import http from 'http'
+import { Server } from 'socket.io';
+import { registerSocketHandlers } from './socket';
 const app = express();
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors : {
+    origin : ['http://192.168.20.188:3000', 'http://localhost:3000', process.env.FRONT_URL!],
+    methods: ["GET", "POST"]
+  }
+})
 app.use(
   cors({
     origin: [
       process.env.FRONT_URL ? process.env.FRONT_URL : 'http://localhost:3000',
       'http://localhost:3000',
       'http://localhost:3001',
+      'http://192.168.20.188:3000'
     ],
     credentials: true,
   }),
 );
-const PORT = process.env.PORT || 5000;
+
 const pgStore = pgSession(session);
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 app.use(express.json());
@@ -55,6 +68,11 @@ app.use('/payment', PaymentRouter);
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
-app.listen(PORT, () => {
+startBookingCancelCron()
+startBookingStatusCron()
+registerSocketHandlers(io)
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+

@@ -2,14 +2,14 @@ import { Server, Socket } from "socket.io";
 
 export const connectedUsers = new Map<string, string>();
 
-interface JoinCallPayload {
+interface JoinRoomPayload {
   roomId: string;
   userId: string;
 }
 
-interface CallSignalPayload {
+interface ChatMessagePayload {
   roomId: string;
-  signal: any; // Define a more specific type if possible
+  message: string;
   from: string;
 }
 
@@ -19,41 +19,28 @@ const registerSocket = (socketServer: Server) => {
   io = socketServer;
 
   io.on("connection", (socket: Socket) => {
-    console.log(`⚡ Client connected: ${socket.id}`);
-
+    console.log(`🔌 Connected: ${socket.id}`);
     socket.on("register-user", (userId: string) => {
-      console.log(`👤 User ${userId} registered with socket ${socket.id}`);
       connectedUsers.set(userId, socket.id);
-      socket.join(userId);
+      console.log(`✅ User ${userId} registered with socket ${socket.id}`);
+      socket.join(userId); // private room for DMs if needed
     });
 
-    socket.on("join-call", ({ roomId, userId }: JoinCallPayload) => {
-      const previousRoom = [...socket.rooms][1];
-      if (previousRoom) {
-        socket.leave(previousRoom);
-      }
-
-      console.log(`🔗 User ${userId} joining call room ${roomId}`);
+    socket.on("join-room", ({ roomId, userId }: JoinRoomPayload) => {
+      console.log(`🚪 ${userId} joining room ${roomId}`);
       socket.join(roomId);
       io.to(roomId).emit("user-joined", { userId });
     });
 
-    socket.on("call-signal", ({ roomId, signal, from }: CallSignalPayload) => {
-      console.log(`📡 Signal from ${from} in room ${roomId}`);
-      socket.to(roomId).emit("call-signal", { signal, from });
-    });
-
-    socket.on("message", (data) => {
-      console.log(`📩 Message received: ${data}`);
-      io.emit("message", data);
+    socket.on("chat-message", ({ roomId, message, from }: ChatMessagePayload) => {
+      console.log(`💬 ${from} to ${roomId}: ${message}`);
+      io.to(roomId).emit("chat-message", { from, message });
     });
 
     socket.on("disconnect", () => {
-      console.log(`⚡ Client disconnected: ${socket.id}`);
-
+      console.log(`❌ Disconnected: ${socket.id}`);
       for (const [userId, socketId] of connectedUsers.entries()) {
         if (socketId === socket.id) {
-          console.log(`👤 User ${userId} disconnected`);
           connectedUsers.delete(userId);
           socket.broadcast.emit("user-disconnected", { userId });
           break;

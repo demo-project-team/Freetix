@@ -24,14 +24,6 @@ export const putPc = async (req: Request, res: Response) => {
       }
       const start = new Date(startTime);
       const end = new Date(start.getTime() + duration * 60 * 1000);
-      console.log(start, end, userId);
-      const user = await prisma.user.findFirst({
-        where: { id: userId },
-      });
-      if (!user) {
-        res.status(400).json({ message: 'user not found' });
-        return;
-      }
       if (isNaN(start.getTime()) || isNaN(end.getTime())) {
         res.status(400).json({ message: 'Invalid start or end time' });
         return;
@@ -41,7 +33,7 @@ export const putPc = async (req: Request, res: Response) => {
       const totalAmount = durationInHours * pricePerHour * ids.length;
       const booking = await prisma.booking.create({
         data: {
-          userId: user?.id,
+          userId: userId,
           startTime: start,
           endTime: end,
           pcs: {
@@ -68,7 +60,6 @@ export const putPc = async (req: Request, res: Response) => {
         },
       });
       console.log(pc);
-
       res.status(200).json({ message: 'succes', pay, pc });
     }
   } catch (error) {

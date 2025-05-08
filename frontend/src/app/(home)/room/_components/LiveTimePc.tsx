@@ -1,25 +1,46 @@
-import { PC } from "@/Types/types";
-export function ComputerPc({
-  pcs,
-  selectedPcs,
-  setSelectedPcs,
-}: {
-  pcs: PC[];
-  selectedPcs: string[];
-  setSelectedPcs: (selectedPcs: string[]) => void;
+"use client";
+
+import { PC, PCStatus } from "@/Types/types";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+const socket = io("http://localhost:5000");
+export function LiveComputerPc({
+  pc,
+}: //   selectedPcs,
+{
+  pc: PC[];
+  //   selectedPcs: string[];
 }) {
+  const [pcs, setPcs] = useState(pc);
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
+  console.log(pcs);
+  
+  useEffect(() => {
+    const handleStatusUpdate = ({
+      pcId,
+      status,
+    }: {
+      pcId: string;
+      status: PCStatus;
+    }) => {
+      setPcs((prev) =>
+        prev.map((pc) => (pc.id === pcId ? { ...pc, status } : pc))
+      );
+    };
+    socket.on("pcStatusUpdated", handleStatusUpdate);
+    return () => {
+      socket.off("pcStatusUpdated", handleStatusUpdate);
+    };
+  }, []);
 
-  const togglePcSelection = (pc: string) => {
-    const alreadySelected = selectedPcs.find((p) => p === pc);
-    if (alreadySelected) {
-      setSelectedPcs(selectedPcs.filter((p) => p !== pc));
+  const handleBook = (pc: PC) => {
+    if (pc.status === "AVAILABLE") {
+      socket.emit("bookPC", { pcId: pc.id , status : "AVAILABLE"});
     } else {
-      setSelectedPcs([...selectedPcs, pc]);
+      socket.emit("bookPC", { pcId: pc.id, status: "BOOKED" });
     }
   };
-
   return (
     <div className="flex flex-col items-center gap-8 p-10">
       {Array.from({ length: maxRow }, (_, rowIndex) => (
@@ -32,11 +53,9 @@ export function ComputerPc({
             return pc ? (
               <div key={colIndex} className="relative group">
                 <div
-                  onClick={() => togglePcSelection(pc.id)}
+                  onClick={() => handleBook(pc)}
                   className={`w-24 h-24 flex items-center justify-center rounded-2xl shadow-xl text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
-                    selectedPcs.find((p) => p === pc.id)
-                      ? "bg-gradient-to-br from-yellow-400 to-yellow-500 text-white ring-4 ring-yellow-500/60"
-                      : pc.status === "BOOKED"
+                    pc.status === "BOOKED"
                       ? "bg-gradient-to-br from-red-400 to-red-500 text-white ring-4 ring-red-500/60"
                       : "bg-gradient-to-br from-green-400 to-green-500 text-white ring-4 ring-green-400/50"
                   }`}
@@ -53,7 +72,7 @@ export function ComputerPc({
           })}
         </div>
       ))}
-      {selectedPcs.length > 0 && <div></div>}
+      {/* {selectedPcs.length > 0 && <div></div>} */}
     </div>
   );
 }
