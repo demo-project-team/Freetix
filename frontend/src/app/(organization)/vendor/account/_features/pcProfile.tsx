@@ -36,6 +36,8 @@ export const PcProfile = () => {
   const [uploadImage, setUploadImage] = useState(false);
   const [loading, setLoading] = useState(false)
   const [avatarImage, setAvatarImage] = useState("");
+  console.log(avatarImage);
+  
   const [preview, setPreview] = useState<string | null>(null);
   const { vendor } = useVendor();
   console.log(vendor);
