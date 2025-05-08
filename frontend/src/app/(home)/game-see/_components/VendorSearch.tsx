@@ -1,105 +1,57 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import SearchInput from "@/app/(home)/game-see/_components/SearchInput";
 import { Vendor } from "@/Types/types";
-import { Map, Phone } from "lucide-react";
+import { useState } from "react";
+import { Dot, MapPin, Phone } from "lucide-react";
 
-export default function VendorSearch({ vendors }: { vendors: Vendor[] }) {
+export default function VendorList({ vendors }: { vendors: Vendor[] }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
 
-  const filteredVendors = vendors.filter((vendor) =>
-    vendor.name.toLowerCase().includes(searchTerm.toLowerCase())
-    || vendor.address?.street?.toLowerCase().includes(searchTerm.toLowerCase())
-    || vendor.phone?.includes(searchTerm)
+  const filtered = vendors.filter(
+    (vendor) =>
+      vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vendor.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vendor.phone.includes(searchTerm) ||
+      vendor.address?.street?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="space-y-6">
+    <div className="p-6">
       <SearchInput
         value={searchTerm}
         onChange={setSearchTerm}
-        placeholder="Газар хайх..."
+        placeholder="Газар, нэр, утас хайх..."
       />
 
-      {searchTerm && filteredVendors.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredVendors.map((vendor) => (
-            <Card
-              key={vendor.id}
-              className="bg-muted/60 transition-all hover:scale-[1.02] hover:shadow-lg cursor-pointer"
-              onClick={() => setSelectedVendor(vendor)}
-            >
-              <CardHeader className="flex flex-row items-center gap-4">
-                <Avatar className="w-14 h-14">
-                  <AvatarImage src={vendor.imageUrl || "/next.svg"} />
-                  <AvatarFallback>{vendor.name.slice(0, 2)}</AvatarFallback>
-                </Avatar>
-                <CardTitle className="text-base font-semibold">
-                  {vendor.name}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2 text-sm text-muted-foreground">
-                <p className="flex items-center gap-2">
-                  <Map size={16} className="text-purple-400" />
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2 w-[705px]">
+        {filtered.map((vendor) => (
+          <div
+            key={vendor.id}
+            className="bg-white text-black rounded shadow flex items-center gap-4 h-auto w-full"
+          >
+            <img
+              src={vendor.imageUrl || "/default-image.jpg"}
+              alt={vendor.name || "Vendor image"}
+              className="w-24 h-24 object-cover rounded mb-4"
+            />
+            <div>
+              <h2 className="text-lg font-semibold">{vendor.name}</h2>
+              <div className="flex">
+                <p className="text-sm flex items-center gap-1">
+                  <Phone className="w-4 h-4 stroke-[1.5] align-baseline" />{" "}
+                  {vendor.phone}{" "}
+                </p>
+                <Dot className="w-6 h-6 text-black" />
+                <p className="text-sm flex items-center gap-1">
+                  <MapPin className="w-4 h-4 stroke-[1.5] align-baseline" />{" "}
                   {vendor.address?.street || "Хаяг байхгүй"}
                 </p>
-                <p className="flex items-center gap-2">
-                  <Phone size={16} className="text-purple-400" />
-                  {vendor.phone || "Утасны дугаар байхгүй"}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-
-      {searchTerm && filteredVendors.length === 0 && (
-        <div className="text-center text-sm text-gray-400 mt-10">
-          Хайлтад тохирох газар олдсонгүй.
-        </div>
-      )}
-
-      {/* Dialog for Vendor Detail */}
-      {selectedVendor && (
-        <Dialog open={true} onOpenChange={() => setSelectedVendor(null)}>
-          <DialogContent className="max-w-md">
-            <DialogHeader>
-              <DialogTitle>{selectedVendor.name}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <Avatar className="w-20 h-20 mx-auto">
-                <AvatarImage src={selectedVendor.imageUrl || "/next.svg"} />
-                <AvatarFallback>
-                  {selectedVendor.name.slice(0, 2)}
-                </AvatarFallback>
-              </Avatar>
-              <p className="flex items-center gap-2 text-sm">
-                <Map size={18} className="text-purple-400" />
-                {selectedVendor.address?.street || "Хаяг байхгүй"}
-              </p>
-              <p className="flex items-center gap-2 text-sm">
-                <Phone size={18} className="text-purple-400" />
-                {selectedVendor.phone || "Утасны дугаар байхгүй"}
-              </p>
+              </div>
             </div>
-          </DialogContent>
-        </Dialog>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
