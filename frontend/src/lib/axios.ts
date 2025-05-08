@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   process.env.NODE_ENV === "production" ?
   process.env.NEXT_PUBLIC_API_URL :
   "http://localhost:5000",
+  // 'http://192.168.20.188:5000/',
   withCredentials: true,
 });
 
