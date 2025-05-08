@@ -4,5 +4,5 @@ node_modules/
 dist
 coverage
 *.js
-migrations
 googleCLient.json
+generator/

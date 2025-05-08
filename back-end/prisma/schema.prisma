@@ -40,6 +40,7 @@ model Vendor {
     Organization   Organization @relation(fields: [OrganizationId], references: [id])
     OrganizationId String       @unique
     rooms          Room[]
+    imgaes         Images[]
 }
 
 model Category {
@@ -188,4 +189,20 @@ enum PCStatus {
 enum RoomType {
     VIP
     STANDART
+}
+
+model Images {
+    id       String @id @default(uuid())
+    url      String
+    vendor   Vendor @relation(fields: [vendorId], references: [id])
+    vendorId String
+}
+
+model session {
+  sid    String   @id                    
+  sess   Json                            
+  expire DateTime                         
+
+  @@map("session")                      
+  @@index([expire], name: "IDX_session_expire") 
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import SearchInput from "@/app/(home)/game-see/_components/SearchInput";
