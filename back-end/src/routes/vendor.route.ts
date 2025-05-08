@@ -8,6 +8,7 @@ import { organizationToken } from '../middleware/auth/vendorJWT';
 import { putPc } from '../controller/pc/putPc.controller';
 import { jwtVerifyMiddleware } from '../middleware/auth/jsonwebtoken';
 import { getOneVendor } from '../controller/vendor/getVendor.controller';
+import { putVendor } from '../controller/vendor/putVendor.controller';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
@@ -30,3 +31,4 @@ VendorRouter.get('/owner', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
 VendorRouter.put('/pc/:roomId',jwtVerifyMiddleware, validate(pcSchema), putPc);
 VendorRouter.get('/getone/:vendorId', getOneVendor)
+VendorRouter.put('/', organizationToken,validate(vendorScema) , putVendor)

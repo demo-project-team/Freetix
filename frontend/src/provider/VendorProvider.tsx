@@ -16,7 +16,7 @@ const VendorContext = createContext<VendorContextType | null>(null);
 export const VendorProvider = ({ children}: { children: ReactNode }) => {
     const router = useRouter()
   const { data: vendor, refetch: refetchvendor, isLoading, isError } = useQuery({
-    queryKey: ["vendor"],
+    queryKey: ["vendor", router],
     queryFn: vendorByOwner,
     staleTime: 1000 * 60 * 5,
   });
