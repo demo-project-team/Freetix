@@ -6,41 +6,23 @@ import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/f
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useVendor } from "@/provider/VendorProvider";
+import { vendorInput, vendorScema } from "@/schemas/schemas";
 import { putVendor } from "@/utils/request/vendor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { Camera, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
-
-export const vendorScema = z.object({
-  name: z.string().min(8, "Name must be at least 8 characters"),
-  description: z.string().optional(),
-  mapLat: z
-    .number()
-    .min(-90, "Latitude must be at least -90")
-    .nullable()
-    .optional(),
-  mapLng: z
-    .number()
-    .min(-180, "Longitude must be at least -180")
-    .nullable()
-    .optional(),
-  phone: z.string().min(8, "Password must be at least 8 characters"),
-  email: z.string().email(),
-  imageUrl: z.string().optional(),
-});
 
 export const PcProfile = () => {
   const [uploadImage, setUploadImage] = useState(false);
   const [loading, setLoading] = useState(false)
-  const [avatarImage, setAvatarImage] = useState("");
+  const [,setAvatarImage] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
   const { vendor } = useVendor();
   console.log(vendor);
   
-  const form = useForm<z.infer<typeof vendorScema>>({
+  const form = useForm<vendorInput>({
     resolver: zodResolver(vendorScema),
     values: {
       name: vendor?.name,
@@ -52,11 +34,12 @@ export const PcProfile = () => {
       mapLng: vendor?.mapLng,
     },
   });
-  const updatedAccount = async () => {
+  const updatedAccount = async (value : vendorInput) => {
     setLoading(true)
     try {
-      const response = await putVendor();
+      const response = await putVendor(value);
       console.log(response);
+      setLoading(false)
     } catch (error) {
       console.log(error);
       setLoading(false)
