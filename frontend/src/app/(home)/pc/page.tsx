@@ -10,12 +10,9 @@ import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import PcLoadingAnimation from "./pcLoadingAnimation";
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import Head from "next/head";
-=======
 import VendorHeaderCard from "@/app/(home)/pc/_components/VendorHeaderCard";
->>>>>>> 0b2e06a8417dd15cc6060fe56e1d458332832c89
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
