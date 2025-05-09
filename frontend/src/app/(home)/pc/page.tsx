@@ -10,8 +10,12 @@ import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import PcLoadingAnimation from "./pcLoadingAnimation";
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import Head from "next/head";
+=======
+import VendorHeaderCard from "@/app/(home)/pc/_components/VendorHeaderCard";
+>>>>>>> 0b2e06a8417dd15cc6060fe56e1d458332832c89
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
@@ -86,6 +90,11 @@ export default function HotelPage() {
         <div className="flex items-center text-black-600">
           <MapPin className="mr-2" aria-label="location icon" />
           {vendor.address?.street} {vendor.address?.SumOrKhoroo}
+        </div>
+
+        <div>
+          <VendorHeaderCard vendor={vendor} />
+          {/* Other content... */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,8 +1,13 @@
-'use client'
+"use client";
 
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useVendor } from "@/provider/VendorProvider";
@@ -11,18 +16,19 @@ import { putVendor } from "@/utils/request/vendor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { Camera, Loader2 } from "lucide-react";
+import Image from "next/image";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export const PcProfile = () => {
   const [uploadImage, setUploadImage] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [avatarImage, setAvatarImage] = useState("");
   console.log(avatarImage);
   const [preview, setPreview] = useState<string | null>(null);
   const { vendor } = useVendor();
   console.log(vendor);
-  
+
   const form = useForm<vendorInput>({
     resolver: zodResolver(vendorScema),
     values: {
@@ -35,15 +41,17 @@ export const PcProfile = () => {
       mapLng: vendor?.mapLng,
     },
   });
-  const updatedAccount = async (value : vendorInput) => {
-    setLoading(true)
+  const img = form.getValues("imageUrl")
+  const [image, setImage] =useState<string | undefined>(img) ;
+  const updatedAccount = async (value: vendorInput) => {
+    setLoading(true);
     try {
       const response = await putVendor(value);
       console.log(response);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -54,7 +62,9 @@ export const PcProfile = () => {
       try {
         setUploadImage(true);
         const objecturl = URL?.createObjectURL(file);
+        setImage(undefined)
         setPreview(objecturl);
+
 
         const formData = new FormData();
         formData.append("file", file);
@@ -80,7 +90,6 @@ export const PcProfile = () => {
     }
   };
 
-  
   return (
     <FormProvider {...form}>
       <form
@@ -96,14 +105,27 @@ export const PcProfile = () => {
                 <Label className="flex flex-col gap-[12px] items-center">
                   <p className="font-semibold text-sm">Address image</p>
                   <div className="flex w-[390px] h-[200px] justify-center items-center bg-[#E4E4E7] border-dashed border ">
-                    {preview ? (
-                      <img
-                        src={preview}
-                        alt="Profile preview"
-                        className="w-full h-full object-cover "
+                    {image ? (
+                      <Image
+                        className="w-full h-full"
+                        src={image}
+                        alt="img"
+                        width={390}
+                        height={200}
                       />
                     ) : (
-                      <Camera type="file" />
+                      <>
+                        {" "}
+                        {preview ? (
+                          <img
+                            src={preview}
+                            alt="Profile preview"
+                            className="w-full h-full object-cover "
+                          />
+                        ) : (
+                          <Camera type="file" />
+                        )}
+                      </>
                     )}
                   </div>
                   <input
@@ -118,7 +140,7 @@ export const PcProfile = () => {
           )}
         />
         <div className="flex flex-col gap-[12px]">
-        <FormField
+          <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
@@ -142,7 +164,7 @@ export const PcProfile = () => {
               <FormItem>
                 <Label>Email</Label>
                 <FormControl>
-                <Input
+                  <Input
                     {...field}
                     placeholder="Enter your name here"
                     className="py-2 px-3"
@@ -153,23 +175,23 @@ export const PcProfile = () => {
             )}
           />
           <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <Label>Phone</Label>
-              <FormControl>
-              <Input
-                  {...field}
-                  placeholder="Enter your name here"
-                  className="py-2 px-3"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <Label>Phone</Label>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Enter your name here"
+                    className="py-2 px-3"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
             control={form.control}
             name="description"
             render={({ field }) => (
@@ -189,7 +211,7 @@ export const PcProfile = () => {
         </div>
         <div className="flex  gap-[10px] w-[510px] justify-end">
           <Button type="submit" className="px-20 py-2 " disabled={loading}>
-            {loading ? <Loader2 className="animate-spin" /> : "Save Changes" }
+            {loading ? <Loader2 className="animate-spin" /> : "Save Changes"}
           </Button>
         </div>
       </form>
