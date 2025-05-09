@@ -10,7 +10,7 @@ export type Organization = {
   request: "PENDING" | "CANCELLED" | "APPROVED";
 };
 export type Vendor = {
-  images(images: any): unknown;
+  images : Image[]
   id: string;
   name: string;
   description: string | null;
@@ -153,4 +153,10 @@ export type Payment = {
 export enum PaymentStatus {
   PAID = "PAID",
   UNPAID = "UNPAID",
+}
+export type Image = {
+  id : string
+  url : string
+  vendor : Vendor
+  vendorId : string
 }

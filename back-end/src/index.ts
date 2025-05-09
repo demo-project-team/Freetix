@@ -18,6 +18,7 @@ import { startBookingStatusCron } from './jobs/bookingStatusCron';
 import http from 'http'
 import { Server } from 'socket.io';
 import { registerSocketHandlers } from './socket';
+import { ReviewRouter } from './routes/review.route';
 const app = express();
 const server = http.createServer(app)
 const io = new Server(server, {
@@ -65,6 +66,7 @@ app.use('/address', AddressRouter);
 app.use('/room', RoomRouter);
 app.use('/address', AddressRouter);
 app.use('/payment', PaymentRouter);
+app.use('/review', ReviewRouter)
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });

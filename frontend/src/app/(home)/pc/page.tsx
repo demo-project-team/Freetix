@@ -6,7 +6,7 @@ import { MapPin, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getRoomUser } from "@/utils/request/vendor";
 import { useQueryState } from "nuqs";
-import { Vendor } from "@/Types/types";
+// import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import PcLoadingAnimation from "./pcLoadingAnimation";
@@ -96,14 +96,14 @@ export default function HotelPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative w-full max-w-xl">
-            <Image
-              src={images[imageIndex]}
+            {/* <Image
+              // src={images}
               alt={`Image ${imageIndex + 1} of ${vendor.name}`}
               width={800}
               height={500}
               className="rounded-lg shadow object-cover cursor-pointer"
               onClick={() => setLightboxOpen(true)}
-            />
+            /> */}
             {images.length > 1 && (
               <>
                 <button
@@ -126,7 +126,7 @@ export default function HotelPage() {
               {images.map((src, i) => (
                 <Image
                   key={i}
-                  src={src}
+                  src={src.toString()}
                   alt={`Thumbnail ${i + 1}`}
                   width={100}
                   height={70}
@@ -215,13 +215,13 @@ export default function HotelPage() {
             >
               <ChevronLeft size={48} />
             </button>
-            <Image
+            {/* <Image
               src={images[imageIndex]}
               alt={`Full screen view of ${vendor.name} image ${imageIndex + 1}`}
               width={1000}
               height={700}
               className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-lg"
-            />
+            /> */}
             <button
               onClick={handleNext}
               className="absolute right-6 top-1/2 -translate-y-1/2 text-white z-50"
