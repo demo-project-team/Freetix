@@ -1,3 +1,4 @@
+
 import { z } from "zod";
 
 export const categorySchema = z.object({
@@ -49,3 +50,8 @@ export const addressSchema = z.object({
 });
 
 export type addressInput = z.infer<typeof addressSchema>
+
+export const imageSchema = z.object({
+  url: z.string()
+});
+export type imageInput = z.infer<typeof imageSchema>

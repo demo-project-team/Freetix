@@ -9,6 +9,7 @@ import { putPc } from '../controller/pc/putPc.controller';
 import { jwtVerifyMiddleware } from '../middleware/auth/jsonwebtoken';
 import { getOneVendor } from '../controller/vendor/getVendor.controller';
 import { putVendor } from '../controller/vendor/putVendor.controller';
+import { addImage } from '../controller/vendor/addImage.controller';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
@@ -21,14 +22,18 @@ const vendorScema = z.object({
   imageUrl: z.string().optional(),
 });
 export const pcSchema = z.object({
-  startTime: z.string().refine(val => !isNaN(Date.parse(val)), {
+  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: 'Invalid startTime',
   }),
   duration: z.number(),
 });
+export const imageSchema = z.object({
+  url: z.string(),
+});
 VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
 VendorRouter.get('/owner', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
-VendorRouter.put('/pc/:roomId',jwtVerifyMiddleware, validate(pcSchema), putPc);
-VendorRouter.get('/getone/:vendorId', getOneVendor)
-VendorRouter.put('/', organizationToken,validate(vendorScema) , putVendor)
+VendorRouter.put('/pc/:roomId', jwtVerifyMiddleware, validate(pcSchema), putPc);
+VendorRouter.get('/getone/:vendorId', getOneVendor);
+VendorRouter.put('/', organizationToken, validate(vendorScema), putVendor);
+VendorRouter.post('/image', organizationToken, validate(imageSchema), addImage);

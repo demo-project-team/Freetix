@@ -29,15 +29,17 @@ export default function PayPage() {
         card: elements.getElement(CardElement)!,
       },
     });
-    setIsLoading(false);
     if (result.error) {
+      setIsLoading(false)
       toast(result.error.message);
     } else if (result.paymentIntent?.status === "succeeded") {
       const payment = await paymentSucces(paymentId);
       if (payment) {
+        setIsLoading(false)
         toast("Payment successful!");
         router.push("/");
       }
+      setIsLoading(false)
     }
   };
   return (
