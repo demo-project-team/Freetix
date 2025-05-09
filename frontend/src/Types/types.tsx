@@ -10,6 +10,7 @@ export type Organization = {
   request: "PENDING" | "CANCELLED" | "APPROVED";
 };
 export type Vendor = {
+  images(images: any): unknown;
   id: string;
   name: string;
   description: string | null;
@@ -69,9 +70,9 @@ export type Booking = {
   paymentStatus: "UNPAID" | "PAID";
   notes?: string | null;
   createdAt: Date;
-  pcs : PC[]
-  startTime : Date
-  endTime : Date
+  pcs: PC[];
+  startTime: Date;
+  endTime: Date;
 };
 export type Review = {
   id: string;
@@ -96,9 +97,8 @@ export type Room = {
   tables: Table[];
   createdAt: Date;
   updatedAt: Date;
-  type: RoomType
-  pcPricePerHour : number
-
+  type: RoomType;
+  pcPricePerHour: number;
 };
 export type Table = {
   id: string;
@@ -147,8 +147,8 @@ export type Payment = {
   amount: number;
   transactionId: string;
   paidAt: Date | null;
-  method : string
-  booking : Booking
+  method: string;
+  booking: Booking;
 };
 export enum PaymentStatus {
   PAID = "PAID",
