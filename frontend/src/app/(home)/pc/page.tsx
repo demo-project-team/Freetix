@@ -97,7 +97,7 @@ export default function HotelPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative w-full max-w-xl">
             {/* <Image
-              src={images[imageIndex]}
+              // src={images}
               alt={`Image ${imageIndex + 1} of ${vendor.name}`}
               width={800}
               height={500}
@@ -126,7 +126,7 @@ export default function HotelPage() {
               {/* {images.map((src) => (
                 <Image
                   key={i}
-                  src={src}
+                  src={src.toString()}
                   alt={`Thumbnail ${i + 1}`}
                   width={100}
                   height={70}
