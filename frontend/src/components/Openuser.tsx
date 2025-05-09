@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { MapPinHouse,  User2,  X } from "lucide-react";
+import { MapPinHouse, User2, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Sign } from "./Sign";
@@ -15,25 +15,26 @@ import Link from "next/link";
 import { useState } from "react";
 
 export const OpenUser = () => {
-  const [open, Setopen] = useState(false)
+  const [open, Setopen] = useState(false);
   const HandleClose = () => {
-    Setopen(false)
-  }
+    Setopen(false);
+  };
   return (
     <Dialog open={open} onOpenChange={Setopen}>
       <DialogTrigger className="flex items-center justify-center">
-        <User2/>
-        НЭВТРЭХ
+        <User2 />
+        Login
       </DialogTrigger>
       <DialogContent>
-      <X onClick={HandleClose}/>
+        <X onClick={HandleClose} />
         <DialogHeader>
           <DialogTitle>
             <div className="p-6">
               <div className="flex items-center">
-                <span className="text-orange-500 font-bold text-xl">G-</span>
-                <span className="text-white font-bold text-xl">Freetix</span>
-                <span className="text-white ml-2">Тавтай Морилно уу</span>
+                <p>logohere</p>
+                <span className="text-white font-bold text-xl">Е-СЛОТД</span>
+                <span className="text-white font-bold text-xl">.</span>
+                <span className="text-white ml-2 ">Тавтай Морилно уу.</span>
               </div>
               <div className="mt-8 border-b border-gray-600">
                 <div className="flex gap-10">
@@ -61,8 +62,10 @@ export const OpenUser = () => {
           </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <Link href={'/sign-up'}>
-        <div className="flex items-center gap-3 px-6 cursor-pointer hover:underline"><MapPinHouse/> ГАЗАР БҮРТГҮҮЛЭХ</div>
+        <Link href={"/sign-up"}>
+          <div className="flex items-center gap-3 px-6 cursor-pointer hover:underline">
+            <MapPinHouse /> ГАЗАР БҮРТГҮҮЛЭХ
+          </div>
         </Link>
       </DialogContent>
     </Dialog>
