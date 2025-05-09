@@ -12,9 +12,9 @@ const Header = () => {
   const { user, refetchUser } = useUser();
   console.log(user);
   const handlelogOut = async () => {
-    await logoutUser()
-    refetchUser()
-  }
+    await logoutUser();
+    refetchUser();
+  };
   return (
     <header className="sticky top-0 left-0 right-0 z-50 flex justify-between items-center p-6 bg-black bg-opacity-50 backdrop-blur-md">
       <motion.div
@@ -24,7 +24,8 @@ const Header = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         onClick={() => router.push("/")}
       >
-        <motion.span
+        <img src="eslot-logo.png" alt="" className="w-[195px] h-[45px]" />
+        {/* <motion.span
           className="text-4xl"
           animate={{ rotate: [0, 20, -20, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
@@ -37,7 +38,7 @@ const Header = () => {
           transition={{ type: "spring", stiffness: 300 }}
         >
           eSlot
-        </motion.span>
+        </motion.span> */}
       </motion.div>
       <div className="hidden md:flex space-x-6 text-lg">
         {user ? (
