@@ -30,6 +30,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {vendors.map((vendor) => (
                 <div
+                  onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
                   key={vendor.id}
                   className="bg-white bg-opacity-10 rounded-2xl shadow-2xl p-8 hover:scale-105 hover:bg-opacity-20 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
                 >
@@ -49,10 +50,7 @@ export default function Home() {
                     <span>🌙</span> Night pass:{" "}
                     <span className="font-bold">40,000₮</span>
                   </p>
-                  <button
-                    onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
-                    className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
-                  >
+                  <button className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300">
                     Захиалга өгөх
                   </button>
                 </div>

@@ -3,6 +3,7 @@
 import { Table } from "@/Types/types";
 import { getTable } from "@/utils/request/vendor";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { createContext, ReactNode, useContext } from "react";
 type TableContextType = {
@@ -14,12 +15,13 @@ type TableContextType = {
 const TableContext = createContext<TableContextType | null>(null);
 export const TableProvider = ({ children }: { children: ReactNode }) => {
   const [roomId] = useQueryState("roomid");
+  const router = useRouter()
   const {
     data: table = [],
     refetch: refetchTable,
     isLoading,
   } = useQuery({
-    queryKey: ["room", roomId],
+    queryKey: ["room", roomId, router],
     queryFn: () => getTable(roomId),
     enabled : !! roomId
   });

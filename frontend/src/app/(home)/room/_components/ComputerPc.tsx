@@ -11,12 +11,15 @@ export function ComputerPc({
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
 
-  const togglePcSelection = (pc: string) => {
-    const alreadySelected = selectedPcs.find((p) => p === pc);
+  const togglePcSelection = (pc: PC) => {
+    if (pc.status === "BOOKED") {
+      return
+    }
+    const alreadySelected = selectedPcs.find((p) => p === pc.id);
     if (alreadySelected) {
-      setSelectedPcs(selectedPcs.filter((p) => p !== pc));
+      setSelectedPcs(selectedPcs.filter((p) => p !== pc.id));
     } else {
-      setSelectedPcs([...selectedPcs, pc]);
+      setSelectedPcs([...selectedPcs, pc.id]);
     }
   };
 
@@ -32,13 +35,13 @@ export function ComputerPc({
             return pc ? (
               <div key={colIndex} className="relative group">
                 <div
-                  onClick={() => togglePcSelection(pc.id)}
+                  onClick={() => togglePcSelection(pc)}
                   className={`w-24 h-24 flex items-center justify-center rounded-2xl shadow-xl text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
                     selectedPcs.find((p) => p === pc.id)
                       ? "bg-gradient-to-br from-yellow-400 to-yellow-500 text-white ring-4 ring-yellow-500/60"
                       : pc.status === "BOOKED"
                       ? "bg-gradient-to-br from-red-400 to-red-500 text-white ring-4 ring-red-500/60"
-                      : "bg-gradient-to-br from-green-400 to-green-500 text-white ring-4 ring-green-400/50"
+                      : "bg-gradient-to-br from-green-400 to-green-500 text-white ring-4 ring-green-400/50" 
                   }`}
                 >
                   {pc.name}
