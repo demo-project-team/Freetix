@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MapPin, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -34,6 +33,7 @@ export default function HotelPage() {
     ssr: false,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [imageIndex, setImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -123,7 +123,7 @@ export default function HotelPage() {
               </>
             )}
             <div className="flex space-x-2 mt-4">
-              {images.map((src, i) => (
+              {/* {images.map((src) => (
                 <Image
                   key={i}
                   src={src.toString()}
@@ -135,7 +135,7 @@ export default function HotelPage() {
                   }`}
                   onClick={() => setImageIndex(i)}
                 />
-              ))}
+              ))} */}
             </div>
           </div>
 

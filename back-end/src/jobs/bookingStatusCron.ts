@@ -2,7 +2,7 @@ import cron from 'node-cron';
 import { prisma } from  "../lib/prisma"; // Prisma client замыг тохируулна
 
 export function startBookingStatusCron() {
-  cron.schedule('*/5 * * * *', async () => {
+  cron.schedule('*/1 * * * *', async () => {
     const now = new Date();
 
     try {

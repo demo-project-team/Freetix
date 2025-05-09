@@ -154,9 +154,9 @@ export enum PaymentStatus {
   PAID = "PAID",
   UNPAID = "UNPAID",
 }
-export type Image = {
+export type Image ={
   id : string
   url : string
   vendor : Vendor
   vendorId : string
-}
+

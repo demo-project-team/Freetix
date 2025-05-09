@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -6,6 +7,7 @@ import { useUser } from "@/provider/UserProvider";
 import { User } from "lucide-react";
 import { motion } from "framer-motion";
 import { logoutUser } from "@/utils/request/authRequest";
+import { Notification } from "./NotificationSend";
 
 const Header = () => {
   const router = useRouter();
@@ -66,6 +68,7 @@ const Header = () => {
           Хэтэвч
         </a>
       </div>
+      <Notification />
     </header>
   );
 };
