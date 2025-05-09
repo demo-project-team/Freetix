@@ -2,9 +2,9 @@ import cron from 'node-cron';
 import { prisma } from '../lib/prisma';
 
 export function startBookingCancelCron() {
-  cron.schedule('*/5 * * * *', async () => {
+  cron.schedule('*/1 * * * *', async () => {
     const now = new Date();
-    const cutoff = new Date(now.getTime() - 15 * 60 * 1000);
+    const cutoff = new Date(now.getTime() - 2 * 60 * 1000);
 
     try {
       const expiredBookings = await prisma.booking.findMany({
