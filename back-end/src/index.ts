@@ -20,6 +20,7 @@ import { Server } from 'socket.io';
 import { registerSocketHandlers } from './socket';
 import { ReviewRouter } from './routes/review.route';
 import { nortifcation } from './jobs/notificationCron';
+import { pcStatusCronJob } from './jobs/pcStatusCron';
 
 const app = express();
 const server = http.createServer(app)
@@ -74,8 +75,10 @@ app.get('/', (_req, res) => {
 });
 startBookingCancelCron()
 startBookingStatusCron()
+pcStatusCronJob()
 registerSocketHandlers(io)
 nortifcation(io)
+
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

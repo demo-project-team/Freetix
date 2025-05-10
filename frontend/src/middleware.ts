@@ -3,9 +3,7 @@ import { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get("org")?.value;
-  console.log(`token org : ${token}`, req.cookies);
-  
+  const token = req.cookies.get("org")?.value;  
   if (pathname.includes("vendor") && !token) {
     // return NextResponse.redirect(new URL("/sign-up", req.url)); 
     return NextResponse.next()
