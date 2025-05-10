@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import HomeCaruesel from "./_features/HomeCaruesel";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import VendorCardSkelton from "./_components/VendorCardSkelton";
-import Footer from "@/components/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -73,7 +72,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }
