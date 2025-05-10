@@ -159,4 +159,4 @@ export type Image ={
   url : string
   vendor : Vendor
   vendorId : string
-
+}
