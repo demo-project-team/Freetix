@@ -21,8 +21,8 @@ export const OpenUser = () => {
   };
   return (
     <Dialog open={open} onOpenChange={Setopen}>
-      <DialogTrigger className="flex items-center justify-center">
-        <User2 />
+      <DialogTrigger className="flex items-center justify-center text-black gap-0.5 rounded-sm bg-white cursor-pointer py-0.5 px-2 font-medium hover:opacity-60 transition-all duration-300">
+        <User2 className="" width={14} />
         Login
       </DialogTrigger>
       <DialogContent>
