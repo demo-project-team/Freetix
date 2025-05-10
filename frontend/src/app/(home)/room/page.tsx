@@ -1,7 +1,7 @@
 "use client";
 
 import { useTable } from "@/provider/TableProvider";
-import { ComputerPc } from "./_components/ComputerPc";
+// import { ComputerPc } from "./_components/ComputerPc";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { pcInput, pcSchema } from "@/schemas/schemas";
@@ -26,13 +26,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import PcLoadingAnimation from "../pc/pcLoadingAnimation";
 import { Loader2 } from "lucide-react";
+import PcComp from "./_components/SupabaseRealTime";
 // import { LiveComputerPc } from "./_components/LiveTimePc";
 
 export default function Room() {
-  const [loading, setLoading] = useState(false)
-  const { table , isLoading} = useTable();
-  const [roomId] = useQueryState('roomid')
-  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const { table, isLoading } = useTable();
+  const [roomId] = useQueryState("roomid");
+  const router = useRouter();
   function generateNext24HoursEvery30Min() {
     const result = [];
     const now = new Date();
@@ -66,35 +67,42 @@ export default function Room() {
     resolver: zodResolver(pcSchema),
     values: {
       duration: null,
-      startTime :"",
+      startTime: "",
     },
   });
   const minutes = [30, 60, 90, 120, 180, 240];
-  const createBooking = async (values : pcInput)=>{
+  const createBooking = async (values: pcInput) => {
     if (!roomId) {
-      return 
-    } setLoading(true)
-    const response = await putPc(values, selectedPcs, roomId)
+      return;
+    }
+    setLoading(true);
+    const response = await putPc(values, selectedPcs, roomId);
     console.log(response);
-    
+
     if (response) {
-      router.push(`/payment?payid=${response.pay.id}`)
-      setLoading(false)
-    } setLoading(false)
-  }
+      router.push(`/payment?payid=${response.pay.id}`);
+      setLoading(false);
+    }
+    setLoading(false);
+  };
   if (isLoading) {
-    return <PcLoadingAnimation/>
+    return <PcLoadingAnimation />;
   }
-return(
+  return (
     <div className="flex">
       {table.map((table, index) => (
         <div key={index} className="flex items-center justify-center">
-          <ComputerPc
+          {/* <ComputerPc
             pcs={table.pcs}
             setSelectedPcs={setSelectedPcs}
             selectedPcs={selectedPcs}
-          />
+          /> */}
           {/* <LiveComputerPc pc={table.pcs} /> */}
+          <PcComp
+            tableId={table.id}
+            setSelectedPcs={setSelectedPcs}
+            selectedPcs={selectedPcs}
+          />
         </div>
       ))}
       {selectedPcs.length >= 1 && (
@@ -136,7 +144,9 @@ return(
                   <FormControl>
                     <Select
                       defaultValue={String(field.value)}
-                      onValueChange={(val) => field.onChange(val ? Number(val) : null)}
+                      onValueChange={(val) =>
+                        field.onChange(val ? Number(val) : null)
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="start time" />
@@ -154,9 +164,9 @@ return(
                 </FormItem>
               )}
             />
-            <Button type='submit'>
-              {loading && <Loader2 className="animate-spin"/>}Төлөх
-              </Button>
+            <Button type="submit">
+              {loading && <Loader2 className="animate-spin" />}Төлөх
+            </Button>
           </form>
         </FormProvider>
       )}
