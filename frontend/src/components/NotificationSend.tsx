@@ -1,24 +1,33 @@
-'use client'
+"use client";
 
 import { useSocket } from "@/provider/SocketProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const Notification = () => {
   const socket = useSocket();
-
+  const [message, setMessage] = useState<string[]>([]);
   useEffect(() => {
     if (!socket) {
-      return  
+      return;
     }
     socket.on("notificationSend", (data) => {
-      console.log("🔔 Notification:", data.message);
-      // Жишээ нь: toast(data.message)
+      setMessage([...message, data.message]);
+      toast(data.message, {
+        position: "top-right",
+      });
     });
 
     return () => {
       socket.off("notificationSend");
     };
-  }, [socket]);
+  }, [socket, message]);
 
-  return <div>Realtime Notification listener active</div>;
+  return (
+    <div className="flex flex-col">
+      {message.map((mes, i) => (
+        <div key={i}>{mes}</div>
+      ))}
+    </div>
+  );
 };
