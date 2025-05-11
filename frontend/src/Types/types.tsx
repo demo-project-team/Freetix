@@ -161,13 +161,9 @@ export type Image ={
   vendor : Vendor
   vendorId : string
 }
-<<<<<<< Updated upstream
-
-=======
 export type User ={
   id : string
   email : string
   name : string
   profileImage : string
 }
->>>>>>> Stashed changes
