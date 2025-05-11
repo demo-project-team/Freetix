@@ -11,11 +11,24 @@ export const getOneVendor = async (req: Request, res: Response): Promise<void> =
         },
         include : {
             rooms : true,
+            reviews : {
+              include : {
+                user : {
+                  select : {
+                    profileImage : true,
+                    name : true,
+                    id :true
+                    
+                  }
+                }
+              }
+            } ,
             address : {
               include : {
                 city : true,
-                district : true
+                district : true,
               }
+              
             }
         }
     });
