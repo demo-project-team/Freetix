@@ -78,6 +78,7 @@ export type Review = {
   id: string;
   userId: string;
   vendorId: string;
+  user : User
   rating: number;
   comment?: string | null;
   createdAt: Date;
@@ -160,4 +161,13 @@ export type Image ={
   vendor : Vendor
   vendorId : string
 }
+<<<<<<< Updated upstream
 
+=======
+export type User ={
+  id : string
+  email : string
+  name : string
+  profileImage : string
+}
+>>>>>>> Stashed changes

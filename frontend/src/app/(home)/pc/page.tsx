@@ -12,6 +12,7 @@ import PcLoadingAnimation from "./pcLoadingAnimation";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import VendorHeaderCard from "@/app/(home)/pc/_components/VendorHeaderCard";
+import { Review } from "./_components/Review";
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
@@ -28,6 +29,7 @@ export default function HotelPage() {
     queryFn: () => getRoomUser(vendorId),
     enabled: !!vendorId,
   });
+console.log(vendor);
 
   const VendorMap = dynamic(() => import("../game-see/_components/Location"), {
     ssr: false,
@@ -187,6 +189,8 @@ export default function HotelPage() {
               </div>
             ))}
         </div>
+
+        <Review vendor={vendor}/>
       </div>
 
       <Footer />
