@@ -10,7 +10,8 @@
     "lint:backend": "cd back-end && npm run lint",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
     "frontend": "cd frontend && npm run dev",
-    "backend": "cd back-end && npm run dev"
+    "backend": "cd back-end && npm run dev",
+    "postinstall": "cd back-end && npx prisma generate"
   },
   "repository": {
     "type": "git",
