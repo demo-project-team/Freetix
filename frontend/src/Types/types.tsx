@@ -167,3 +167,12 @@ export type User ={
   name : string
   profileImage : string
 }
+export type Time = {
+  id: string;
+  start: Date;
+  end: Date;
+  vendorId: string;
+  pcId: string;
+  userId: string;
+  bookingId: string;
+};

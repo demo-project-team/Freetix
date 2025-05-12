@@ -1,12 +1,14 @@
-import { PC } from "@/Types/types";
+import { PC, Time } from "@/Types/types";
 export function ComputerPc({
   pcs,
   selectedPcs,
   setSelectedPcs,
+  unavailablePcs
 }: {
   pcs: PC[];
   selectedPcs: string[];
   setSelectedPcs: (selectedPcs: string[]) => void;
+  unavailablePcs : Time[]
 }) {
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
@@ -39,9 +41,9 @@ export function ComputerPc({
                   className={`w-24 h-24 flex items-center justify-center rounded-2xl shadow-xl text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
                     selectedPcs.find((p) => p === pc.id)
                       ? "bg-gradient-to-br from-yellow-400 to-yellow-500 text-white ring-4 ring-yellow-500/60"
-                      : pc.status === "BOOKED"
-                      ? "bg-gradient-to-br from-red-400 to-red-500 text-white ring-4 ring-red-500/60"
-                      : "bg-gradient-to-br from-green-400 to-green-500 text-white ring-4 ring-green-400/50" 
+                      :unavailablePcs.find((p)=>pc.id === p.pcId)
+                      ? "bg-gray-400 cursor-not-allowed text-gray-100"
+                      : "bg-teal-500 hover:bg-teal-600 cursor-pointer text-white" 
                   }`}
                 >
                   {pc.name}

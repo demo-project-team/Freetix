@@ -1,10 +1,10 @@
 import axiosInstance from "@/lib/axios";
-import { pcInput } from "@/schemas/schemas";
+import { pcInput, timeInput } from "@/schemas/schemas";
 
 export const putPc = async (value: pcInput) => {
   try {
     const {data} = await axiosInstance.put(
-      `/vendor`,
+      `/vendor/pc`,
       value,
       {
         withCredentials: true,
@@ -15,3 +15,12 @@ export const putPc = async (value: pcInput) => {
     console.log(error);
   }
 };
+export const getUnavailablePc = async  (value : timeInput) => {
+  try {
+    const {data} = await axiosInstance.post('/vendor/unavailable', value)
+    return data
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

@@ -45,9 +45,9 @@ export default function PayPage() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center flex-col justify-center h-screen"
+      className="flex items-center flex-col bg-white justify-center h-screen"
     >
-      <CardElement className="p-3 border rounded w-[500px]" />
+      <CardElement className="p-3 border rounded w-[500px] text-white" />
       <Button disabled={!stripe || isLoading} className="w-[500px]">
         {isLoading ? "Processing…" : "Pay Now"}
       </Button>

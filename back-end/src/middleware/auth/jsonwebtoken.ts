@@ -13,6 +13,8 @@ declare global {
 }
 export const jwtVerifyMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.cookies.user;
+  console.log(token);
+  
   if (!token) {
     res.status(401).json({ success: false, message: 'Access denied. No token provided.' });
     return;
