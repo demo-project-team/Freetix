@@ -9,8 +9,8 @@ import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import VendorSearch from "./_components/VendorSearch";
-import OptimizedParticlesEffect from "@/components/ParticlesBackground";
+// import VendorSearch from "./_components/VendorSearch";
+// import OptimizedParticlesEffect from "@/components/ParticlesBackground";
 import LoadingScreen from "@/components/LoadingScreen";
 
 type VendorMapSelectorProps = {
@@ -38,19 +38,9 @@ export default function GameSee() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white pb-12">
-      {/*Pracicle Backround эхлэл хэсэг*/}
-
-      <section className="relative h-screen">
-        <OptimizedParticlesEffect className="absolute inset-0" />
-        {/* Бусад UI */}
-      </section>
-      {/* Pracicle Backround төгсгөл хэсэг */}
-      <div className="relative bg-gray-800 overflow-hidden ">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        <div className="relative z-10 bg-black py-16 px-4">
-          <VendorSearch vendors={vendors} />
-
+    <div className="">
+      <div className="relative overflow-hidden ">
+        <div className="relative z-10 py-16 px-4">
           <div className="container mx-auto text-center">
             <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
               Тоглоомын газрууд

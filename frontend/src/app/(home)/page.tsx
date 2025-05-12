@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import HomeCaruesel from "./_features/HomeCaruesel";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import VendorCardSkelton from "./_components/VendorCardSkelton";
+import TerminalCard from "@/components/TerminalCard";
 
 export default function Home() {
   const router = useRouter();
@@ -12,6 +13,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500">
+      <div>
+        <TerminalCard />
+      </div>
       <HomeCaruesel />
       <section
         id="pricing"
