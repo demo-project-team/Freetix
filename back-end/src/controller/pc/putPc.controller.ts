@@ -4,7 +4,7 @@ import { prisma } from '../../lib/prisma';
 export const putPc = async (req: Request, res: Response) => {
   try {
     const userId = req.user1.id;
-    const { pcIds, timeSchedule, roomId } = req.body;
+    const { pcIds, start, end, roomId } = req.body;
     const room = await prisma.room.findUnique({
       where: {
         id: roomId,
@@ -22,25 +22,29 @@ export const putPc = async (req: Request, res: Response) => {
         },
       },
     });
+    const startTime = new Date(start);
+    const endTime = new Date(end);
+    const hours = Math.abs(endTime.getTime() - startTime.getTime())/36e5;
+    const amount = hours * room.pcPricePerHour * pcIds.length;
     const pay = await prisma.payment.create({
       data: {
         bookingId: booking.id,
-        amount: timeSchedule.length,
+        amount,
         transactionId: `txn_${Date.now()}`,
         method: 'card',
       },
     });
 
-    const timeScheduleEntries = pcIds.flatMap((pcId: string) =>
-      timeSchedule.map((time: { start: Date; end: Date }) => ({
+    const timeScheduleEntries = pcIds.map((pcId: string) => {
+      return {
         vendorId: room.vendorId,
         userId,
         bookingId: booking.id,
         pcId,
-        start: new Date(time.start),
-        end: new Date(time.end),
-      })),
-    );
+        start: new Date(start),
+        end: new Date(end),
+      };
+    });
 
     await prisma.timeSchedule.createMany({
       data: timeScheduleEntries,

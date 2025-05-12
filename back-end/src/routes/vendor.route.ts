@@ -10,6 +10,7 @@ import { jwtVerifyMiddleware } from '../middleware/auth/jsonwebtoken';
 import { getOneVendor } from '../controller/vendor/getVendor.controller';
 import { putVendor } from '../controller/vendor/putVendor.controller';
 import { addImage } from '../controller/vendor/addImage.controller';
+import { getUnavailableTime } from '../controller/time/putTime.controller';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
@@ -21,23 +22,26 @@ const vendorScema = z.object({
   email: z.string().email(),
   imageUrl: z.string().optional(),
 });
-const timeSchedule = z.object({
-  start : z.coerce.date(),
-  end : z.coerce.date()
-})
+
 export const pcSchema = z.object({
-  pcIds : z.string().array(),
-  timeSchedule : z.array(timeSchedule),
-  roomId : z.string()
+  pcIds: z.string().array(),
+    start: z.string(),
+  end: z.string(),
+  roomId: z.string(),
 });
 
 export const imageSchema = z.object({
   url: z.string(),
 });
+const timeSchema = z.object({
+  start : z.string(),
+  end : z.string()
+})
 VendorRouter.post('', validate(vendorScema), organizationToken, postVendor);
 VendorRouter.get('/owner', organizationToken, getVendorByOwner);
 VendorRouter.get('', getVendor);
-VendorRouter.put('/pc/:roomId', jwtVerifyMiddleware, validate(pcSchema), putPc);
+VendorRouter.put('/pc', jwtVerifyMiddleware, validate(pcSchema), putPc);
+VendorRouter.post('/unavailable', validate(timeSchema), getUnavailableTime)
 VendorRouter.get('/getone/:vendorId', getOneVendor);
 VendorRouter.put('/', organizationToken, validate(vendorScema), putVendor);
 VendorRouter.post('/image', organizationToken, validate(imageSchema), addImage);

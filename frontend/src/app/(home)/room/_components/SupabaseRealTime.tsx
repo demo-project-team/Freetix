@@ -63,7 +63,7 @@ export default function PcComp({
     };
   }, []);
 
-  const bookPC = async (pc: PC) => {
+  const handleSelect = async (pc: PC) => {
     if (pc.status === "BOOKED") return;
     if (pc.status === "PENDING" && selectedPcs.find((pcId) => pc.id === pcId)) {
       await supabase.from("PC").update({ status: "AVAILABLE" }).eq("id", pc.id);
@@ -74,50 +74,49 @@ export default function PcComp({
     }
   };
 
-  const getStatusClass = (status: "AVAILABLE" | "PENDING" | "BOOKED") => {
-    switch (status) {
-      case "AVAILABLE":
-        return "bg-green-500";
-      case "PENDING":
-        return "bg-yellow-100 ";
-      case "BOOKED":
-        return "bg-red-500";
-      default:
-        return "";
-    }
-  };
 
+const getStatusClass = (status :string) => {
+  switch (status) {
+    case "AVAILABLE":
+      return "bg-teal-500 hover:bg-teal-600 cursor-pointer text-white";
+    case "BOOKED":
+      return "bg-gray-400 cursor-not-allowed text-gray-100";
+    case "UNAVAILABLE":
+      return "bg-red-500 cursor-not-allowed text-white";
+    default:
+      return "bg-gray-200 text-gray-700";
+  }
+};
   return (
     <div className="flex flex-col items-center gap-8 p-10">
-      {Array.from({ length: maxRow }, (_, rowIndex) => (
-        <div key={rowIndex} className="flex justify-center gap-8">
-          {Array.from({ length: maxCol }, (_, colIndex) => {
-            const pc = pcs.find(
-              (pc) => pc.row === rowIndex + 1 && pc.column === colIndex + 1
-            );
+         {Array.from({ length: maxRow }, (_, rowIndex) =>
+        Array.from({ length: maxCol }, (_, colIndex) => {
+          const pc = pcs.find(
+            (pc) => pc.row === rowIndex + 1 && pc.column === colIndex + 1
+          );
 
-            return pc ? (
-              <div key={colIndex} className="relative group">
-                <div
-                  onClick={() => bookPC(pc)}
-                  className={`w-24 h-24 rounded-2xl ${getStatusClass(
-                    pc.status
-                  )} text-white p-4 ${
-                    selectedPcs.find((p)=>p===pc.id) && 'border-2 border-blue-400 bg-yellow-400'
-                  }`}
-                >
-                  {pc.name}
-                </div>
-              </div>
-            ) : (
-              <div
-                key={colIndex}
-                className="w-24 h-24 bg-white/20 dark:bg-gray-700/30 rounded-2xl"
-              ></div>
-            );
-          })}
-        </div>
-      ))}
+          return pc ? (
+            <div
+              key={`${rowIndex}-${colIndex}`}
+              onClick={() => handleSelect(pc)}
+              className={`w-24 h-24 flex items-center justify-center rounded-xl shadow-sm transition-all duration-200 ${getStatusClass(
+                pc.status
+              )} ${
+                selectedPcs.includes(pc.id)
+                  ? "border-2 border-yellow-400 ring-2 ring-yellow-300"
+                  : ""
+              }`}
+            >
+              <span className="font-semibold">{pc.name}</span>
+            </div>
+          ) : (
+            <div
+              key={`${rowIndex}-${colIndex}`}
+              className="w-24 h-24 bg-gray-200 rounded-xl opacity-50"
+            ></div>
+          );
+        })
+      )}
     </div>
   );
 }

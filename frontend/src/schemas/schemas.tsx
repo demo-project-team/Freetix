@@ -40,13 +40,10 @@ export const tableSchema = z.object({
 
 export type tableInput = z.infer<typeof tableSchema>;
 
-const timeSchedule = z.object({
-  start: z.coerce.date(),
-  end: z.coerce.date(),
-});
 export const pcSchema = z.object({
   pcIds: z.string().array(),
-  timeSchedule: z.array(timeSchedule),
+  start: z.string(),
+  end: z.string(),
   roomId: z.string(),
 });
 
@@ -66,3 +63,10 @@ export const imageSchema = z.object({
   url: z.string(),
 });
 export type imageInput = z.infer<typeof imageSchema>;
+
+export const timeSchema = z.object({
+  start : z.string(),
+  end : z.string()
+})
+
+export type timeInput = z.infer<typeof timeSchema>
