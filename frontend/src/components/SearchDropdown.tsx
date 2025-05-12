@@ -87,13 +87,13 @@ export default function SearchDropdown() {
           aria-hidden="true"
         />
 
-        <Dialog.Content className="fixed inset-0 flex items-center justify-center z-50 px-4">
-          <div className="w-full max-w-2xl bg-[#1f1f1f] rounded-xl p-4 shadow-lg relative">
+        <Dialog.Content className="fixed inset-150 flex items-center  justify-center z-50 px-4">
+          <div className="w-full max-w-2xl bg-[#1f1f1f] rounded-xl p-4 shadow-lg absolute fixed top-60">
             <Dialog.Title asChild>
               <VisuallyHidden>Search Dialog</VisuallyHidden>
             </Dialog.Title>
 
-            <div className="relative w-full">
+            <div className="relative  w-full">
               <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
 
               <input
