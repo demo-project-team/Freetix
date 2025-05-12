@@ -40,12 +40,16 @@ export const tableSchema = z.object({
 
 export type tableInput = z.infer<typeof tableSchema>;
 
-export const pcSchema = z.object({
-  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "Invalid startTime",
-  }),
-  duration: z.number().nullable(),
+const timeSchedule = z.object({
+  start: z.coerce.date(),
+  end: z.coerce.date(),
 });
+export const pcSchema = z.object({
+  pcIds: z.string().array(),
+  timeSchedule: z.array(timeSchedule),
+  roomId: z.string(),
+});
+
 
 export type pcInput = z.infer<typeof pcSchema>;
 

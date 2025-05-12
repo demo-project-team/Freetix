@@ -24,7 +24,7 @@ model User {
 }
 
 model Vendor {
-    id             String       @id @default(uuid())
+    id             String         @id @default(uuid())
     name           String
     description    String?
     categories     Category[]
@@ -33,16 +33,17 @@ model Vendor {
     phone          String
     email          String
     imageUrl       String?
-    ratingAvg      Float        @default(0)
+    ratingAvg      Float          @default(0)
     reviews        Review[]
-    createdAt      DateTime     @default(now())
-    updatedAt      DateTime     @updatedAt
+    createdAt      DateTime       @default(now())
+    updatedAt      DateTime       @updatedAt
     address        Address?
     addressID      String?
-    Organization   Organization @relation(fields: [OrganizationId], references: [id])
-    OrganizationId String       @unique
+    Organization   Organization   @relation(fields: [OrganizationId], references: [id])
+    OrganizationId String         @unique
     rooms          Room[]
     images         Images[]
+    TimeSchedule   TimeSchedule[]
 }
 
 model Category {
@@ -52,18 +53,51 @@ model Category {
     vendors Vendor[]
 }
 
+model TimeSchedule {
+    id        String   @id @default(uuid())
+    start     DateTime
+    end       DateTime
+    vendor    Vendor   @relation(fields: [vendorId], references: [id])
+    vendorId  String
+    pcId      PC[]
+    userId    String
+    booking   Booking  @relation(fields: [bookingId], references: [id])
+    bookingId String
+}
+
+// req.body: {
+//     userId: "";
+//     pcId: "";
+//     ComID: ["1", "2", ];
+//     timeSchedule: [{start:"", end: ""}, {start:"", end: ""}]
+// }
+
+//  timeSchedule: [{start:"", end: ""}, {start:"", end: ""}] = >  timeSchedule: [{idstart:"", end: "", pcid:"", comid: "1", userid: ""}, {start:"", end: "", ""}, {start:"", end: "", pcid:"", comid: "2", userid: ""}, {start:"", end: ""},]
+
+//  {
+//     userId: "";
+//     pcId: "";
+//     // ComID: ["1", "2", ];
+//     timeSchedule: ["id1", "id2", "id3", "id4"]
+//        orderedTime TimeSchedule[]
+//     status      BookingStatus @default(PENDING)
+//     createdAt   DateTime      @default(now())
+//     payment     Payment?      @relation("BookingPayment")
+//     paymentId   String?
+//     notifcation Boolean       @default(false)
+// }
+
 model Booking {
-    id          String        @id @default(uuid())
-    user        User          @relation(fields: [userId], references: [id])
+    id          String         @id @default(uuid())
+    user        User           @relation(fields: [userId], references: [id])
     userId      String
-    pcs         PC[]          @relation("BookingPC")
-    startTime   DateTime
-    endTime     DateTime
-    status      BookingStatus @default(PENDING)
-    createdAt   DateTime      @default(now())
-    payment     Payment?      @relation("BookingPayment")
+    pcs         PC[]           @relation("BookingPC")
+    orderedTime TimeSchedule[]
+    status      BookingStatus  @default(PENDING)
+    createdAt   DateTime       @default(now())
+    payment     Payment?       @relation("BookingPayment")
     paymentId   String?
-    notifcation Boolean       @default(false)
+    notifcation Boolean        @default(false)
 }
 
 model Payment {
@@ -169,16 +203,17 @@ model Table {
 }
 
 model PC {
-    id        String    @id @default(uuid())
-    name      String
-    table     Table     @relation(fields: [tableId], references: [id], onDelete: Cascade)
-    tableId   String
-    row       Int
-    column    Int
-    status    PCStatus  @default(AVAILABLE)
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    bookings  Booking[] @relation("BookingPC")
+    id           String         @id @default(uuid())
+    name         String
+    table        Table          @relation(fields: [tableId], references: [id], onDelete: Cascade)
+    tableId      String
+    row          Int
+    column       Int
+    status       PCStatus       @default(AVAILABLE)
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime       @updatedAt
+    bookings     Booking[]      @relation("BookingPC")
+    timeSchedule TimeSchedule[]
 }
 
 enum PCStatus {

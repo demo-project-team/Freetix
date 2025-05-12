@@ -14,13 +14,13 @@ import passport from 'passport';
 import { PaymentRouter } from './routes/payment.route';
 import { Pool } from 'pg';
 import pgSession from 'connect-pg-simple';
-import { startBookingCancelCron } from './jobs/paymentStatusCron';
-import { startBookingStatusCron } from './jobs/bookingStatusCron';
+// import { startBookingCancelCron } from './jobs/paymentStatusCron';
+// import { startBookingStatusCron } from './jobs/bookingStatusCron';
 import http from 'http';
 import { Server } from 'socket.io';
 import { registerSocketHandlers } from './socket';
 import { ReviewRouter } from './routes/review.route';
-import { nortifcation } from './jobs/notificationCron';
+// import { nortifcation } from './jobs/notificationCron';
 import { pcStatusCronJob } from './jobs/pcStatusCron';
 
 const app = express();
@@ -75,11 +75,11 @@ app.use('/review', ReviewRouter);
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
-startBookingCancelCron();
-startBookingStatusCron();
+// startBookingCancelCron();
+// startBookingStatusCron();
 pcStatusCronJob();
 registerSocketHandlers(io);
-nortifcation(io);
+// nortifcation(io);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

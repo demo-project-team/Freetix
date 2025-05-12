@@ -21,12 +21,16 @@ const vendorScema = z.object({
   email: z.string().email(),
   imageUrl: z.string().optional(),
 });
+const timeSchedule = z.object({
+  start : z.coerce.date(),
+  end : z.coerce.date()
+})
 export const pcSchema = z.object({
-  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid startTime',
-  }),
-  duration: z.number(),
+  pcIds : z.string().array(),
+  timeSchedule : z.array(timeSchedule),
+  roomId : z.string()
 });
+
 export const imageSchema = z.object({
   url: z.string(),
 });
