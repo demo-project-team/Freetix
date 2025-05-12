@@ -3,13 +3,14 @@
 "use client";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Vendor } from "@/Types/types";
-import { Star, User } from "lucide-react";
+import { Star, User, } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 
@@ -41,11 +42,13 @@ export const Review = ({ vendor }: { vendor: Vendor }) => {
     setSortOrder(value === "Highest rated" ? "highest" : "lowest");
   };
 
+
   return (
     <Dialog>
       <DialogTrigger className="bg-white px-2 py-3 rounded-xl">
         Open
       </DialogTrigger>
+
       <DialogContent>
         <div className="grid gap-6">
           <DialogHeader>
@@ -96,6 +99,11 @@ export const Review = ({ vendor }: { vendor: Vendor }) => {
             </div>
           ))}
         </div>
+        <DialogClose asChild>
+          <button className="absolute top-0 right-0 p-4 " aria-label="close">
+            x
+          </button>
+        </DialogClose>
       </DialogContent>
     </Dialog>
   );

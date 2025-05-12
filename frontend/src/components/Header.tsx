@@ -8,6 +8,9 @@ import { useUser } from "@/provider/UserProvider";
 import { User, LogOut } from "lucide-react";
 import { logoutUser } from "@/utils/request/authRequest";
 import SearchDropdown from "./SearchDropdown";
+import { SignUp } from "./Admin";
+
+
 
 const Header = () => {
   const router = useRouter();
@@ -61,12 +64,13 @@ const Header = () => {
             </div>
           ) : (
             <>
-              <a
-                href="/sign-up"
+              <div
+                onClick={()=> SignUp}
                 className="text-gray-400 font-medium text-sm tracking-tighter leading-tight hover:text-white transition duration-300"
               >
-                Register Your Business
-              </a>
+                
+                <SignUp/>
+              </div>
               <OpenUser />
             </>
           )}

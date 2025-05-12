@@ -1,40 +1,33 @@
+"use client";
+
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import {  User2, X } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { Sign } from "./Sign";
-import { Loginup } from "./Login";
 import { useState } from "react";
+import {  X } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
+import LoginForm from "./LoginForm";
+import { SignUpForm } from "./SignUpForm";
 
-export const OpenUser = () => {
-  const [open, Setopen] = useState(false);
-  const HandleClose = () => {
-    Setopen(false);
+export const SignUp = () => {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
-    <Dialog open={open} onOpenChange={Setopen}>
-      <DialogTrigger className="flex items-center justify-center text-black gap-0.5 rounded-sm bg-white cursor-pointer py-0.5 px-2 font-medium hover:opacity-60 transition-all duration-300">
-        <User2 className="" width={14} />
-        Login
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger className="flex items-center justify-center text-gray-400 hover:text-white transition duration-300 gap-0.5 rounded-sm py-0.5 px-2 font-medium  hover:bg-white/10 transition cursor-pointer">
+        Register Your Business
       </DialogTrigger>
       <DialogContent>
-        <X onClick={HandleClose} />
+        <X onClick={handleClose} />
         <DialogHeader>
           <DialogTitle>
             <div className="p-6">
-              <div className="flex items-center">
-                <p>logohere</p>
-                <span className="text-white font-bold text-xl">Е-СЛОТД</span>
-                <span className="text-white font-bold text-xl">.</span>
-                <span className="text-white ml-2 ">Тавтай Морилно уу.</span>
-              </div>
               <div className="mt-8 border-b border-gray-600">
                 <div className="flex gap-10">
                   <Tabs defaultValue="account">
@@ -52,8 +45,8 @@ export const OpenUser = () => {
                         БҮРТГҮҮЛЭХ
                       </TabsTrigger>
                     </TabsList>
-                    <Loginup />
-                    <Sign />
+                    <LoginForm />
+                    <SignUpForm />
                   </Tabs>
                 </div>
               </div>

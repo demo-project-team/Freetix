@@ -1,6 +1,9 @@
 "use client";
 
-import { OrganizationLoginInput, organizationSchemaLogin } from "@/schemas/userSchema";
+import {
+  OrganizationLoginInput,
+  organizationSchemaLogin,
+} from "@/schemas/userSchema";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -12,12 +15,15 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { motion } from 'framer-motion'
 import { useRouter } from "next/navigation";
 import { loginOrg } from "@/utils/request/authRequest";
+import { TabsContent } from "@radix-ui/react-tabs";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const LoginForm = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const form = useForm<OrganizationLoginInput>({
     resolver: zodResolver(organizationSchemaLogin),
     values: {
@@ -25,27 +31,27 @@ const LoginForm = () => {
       password: "",
     },
   });
-  const login = async (values:OrganizationLoginInput) => {
-    const response =await loginOrg(values)
+  const login = async (values: OrganizationLoginInput) => {
+    setLoading(true);
+    const response = await loginOrg(values);
     if (response) {
-      router.push(`/vendor`)
+      setLoading(false);
+      router.push(`/vendor`);
     }
+    setLoading(false);
   };
   return (
-    <div className="w-full  bg-black p-10 rounded-xl border border-neutral-800 shadow-lg">
-      <motion.div
-        className="w-[300px]  bg-black p-10 rounded-xl border border-neutral-800 shadow-lg"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.8 }}
-      >
-        <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(login)} >
+    <TabsContent value="НЭВТРЭХ" className="flex flex-col gap-3">
+      <FormProvider {...form}>
+        <form
+          onSubmit={form.handleSubmit(login)}
+          className="mt-[20px] flex flex-col gap-3"
+        >
           <FormField
             control={form.control}
             name="phoneOrOrganizationRegister"
-            render={({ field }) => (    
-              <FormItem >
+            render={({ field }) => (
+              <FormItem>
                 <Label>Email</Label>
                 <FormControl>
                   <Input {...field} />
@@ -68,15 +74,16 @@ const LoginForm = () => {
             )}
           />
           <Button
+            disabled={loading}
             type="submit"
             className="mt-[20px] h-9 px-4 px-3 w-full py-2 cursor-bot-allowed"
           >
+            {loading && <Loader2 className="animate-spin" />}
             Continue
           </Button>
         </form>
       </FormProvider>
-      </motion.div>
-    </div>
+    </TabsContent>
   );
 };
-export default LoginForm
+export default LoginForm;
