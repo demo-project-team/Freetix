@@ -9,7 +9,11 @@ type SearchInputProps = {
   placeholder?: string;
 };
 
-const SearchInput: FC<SearchInputProps> = ({ value, onChange, placeholder }) => (
+const SearchInput: FC<SearchInputProps> = ({
+  value,
+  onChange,
+  placeholder,
+}) => (
   <Input
     className="max-w-md"
     placeholder={placeholder || "Хайлт хийх..."}
