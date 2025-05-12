@@ -11,6 +11,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import PcLoadingAnimation from "../pc/pcLoadingAnimation";
 import VendorSearch from "./_components/VendorSearch";
+import OptimizedParticlesEffect from "@/components/ParticlesBackground";
+import LoadingScreen from "@/components/LoadingScreen";
+import TerminalCard from "@/components/TerminalCard";
 
 type VendorMapSelectorProps = {
   vendors: Vendor[];
@@ -19,7 +22,6 @@ const VendorMap = dynamic<VendorMapSelectorProps>(
   () => import("./_components/Location"),
   { ssr: false }
 );
-
 
 export default function GameSee() {
   // const [searchTerm, setSearchTerm] = useState("");
@@ -34,15 +36,22 @@ export default function GameSee() {
 
   console.log(vendors);
   if (vendors.length < 1) {
-    return <PcLoadingAnimation/>
+    return <LoadingScreen />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white pb-12">
+      {/*Pracicle Backround эхлэл хэсэг*/}
+
+      <section className="relative min-h-screen">
+        <OptimizedParticlesEffect className="absolute inset-0" />
+        {/* Бусад UI */}
+      </section>
+      {/* Pracicle Backround төгсгөл хэсэг */}
       <div className="relative bg-gray-800 overflow-hidden ">
-        <div className="absolute inset-0 bg-purple-900 opacity-10"></div>
-        <div className="relative z-10 py-16 px-4">
-        <VendorSearch vendors={vendors} />
+        <div className="absolute inset-0 bg-black opacity-10"></div>
+        <div className="relative z-10 bg-black py-16 px-4">
+          <VendorSearch vendors={vendors} />
 
           <div className="container mx-auto text-center">
             <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">

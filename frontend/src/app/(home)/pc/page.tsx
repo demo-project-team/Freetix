@@ -8,11 +8,12 @@ import { useQueryState } from "nuqs";
 // import { Vendor } from "@/Types/types";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
-import PcLoadingAnimation from "./pcLoadingAnimation";
+// import PcLoadingAnimation from "./pcLoadingAnimation";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import VendorHeaderCard from "@/app/(home)/pc/_components/VendorHeaderCard";
 import { Review } from "./_components/Review";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
@@ -29,7 +30,7 @@ export default function HotelPage() {
     queryFn: () => getRoomUser(vendorId),
     enabled: !!vendorId,
   });
-console.log(vendor);
+  console.log(vendor);
 
   const VendorMap = dynamic(() => import("../game-see/_components/Location"), {
     ssr: false,
@@ -71,7 +72,7 @@ console.log(vendor);
   }, []);
 
   if (isLoading || !vendor) {
-    return <PcLoadingAnimation />;
+    return <LoadingScreen />;
   }
 
   return (
@@ -190,7 +191,7 @@ console.log(vendor);
             ))}
         </div>
 
-        <Review vendor={vendor}/>
+        <Review vendor={vendor} />
       </div>
 
       <Footer />
