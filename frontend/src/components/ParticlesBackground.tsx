@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 
 type ParticleProps = { className?: string };
@@ -10,9 +12,7 @@ type Particle = {
   vy: number;
 };
 
-const OptimizedParticlesEffect: React.FC<ParticleProps> = ({
-  className = "",
-}) => {
+const OptimizedParticlesEffect = ({ className = "" }: ParticleProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const particlesRef = useRef<Particle[]>([]);
@@ -21,7 +21,7 @@ const OptimizedParticlesEffect: React.FC<ParticleProps> = ({
 
   const config = {
     particles: {
-      number: 130,
+      number: 280,
       color: "#ffffff",
       size: { value: 3, random: true, min: 1 },
       opacity: { value: 0.5, random: true, min: 0.3 },
@@ -63,37 +63,37 @@ const OptimizedParticlesEffect: React.FC<ParticleProps> = ({
     return () => resizeObserver.disconnect();
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      mouseRef.current.x = e.clientX - rect.left;
-      mouseRef.current.y = e.clientY - rect.top;
-    };
-    const handleMouseEnter = () => {
-      mouseRef.current.active = true;
-    };
-    const handleMouseLeave = () => {
-      mouseRef.current.active = false;
-    };
+  // useEffect(() => {
+  //   const handleMouseMove = (e: MouseEvent) => {
+  //     if (!containerRef.current) return;
+  //     const rect = containerRef.current.getBoundingClientRect();
+  //     mouseRef.current.x = e.clientX - rect.left;
+  //     mouseRef.current.y = e.clientY - rect.top;
+  //   };
+  //   const handleMouseEnter = () => {
+  //     mouseRef.current.active = true;
+  //   };
+  //   const handleMouseLeave = () => {
+  //     mouseRef.current.active = false;
+  //   };
 
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("mousemove", handleMouseMove as EventListener);
-      container.addEventListener("mouseenter", handleMouseEnter);
-      container.addEventListener("mouseleave", handleMouseLeave);
-    }
-    return () => {
-      if (container) {
-        container.removeEventListener(
-          "mousemove",
-          handleMouseMove as EventListener
-        );
-        container.removeEventListener("mouseenter", handleMouseEnter);
-        container.removeEventListener("mouseleave", handleMouseLeave);
-      }
-    };
-  }, []);
+  //   const container = containerRef.current;
+  //   if (container) {
+  //     container.addEventListener("mousemove", handleMouseMove as EventListener);
+  //     container.addEventListener("mouseenter", handleMouseEnter);
+  //     container.addEventListener("mouseleave", handleMouseLeave);
+  //   }
+  //   return () => {
+  //     if (container) {
+  //       container.removeEventListener(
+  //         "mousemove",
+  //         handleMouseMove as EventListener
+  //       );
+  //       container.removeEventListener("mouseenter", handleMouseEnter);
+  //       container.removeEventListener("mouseleave", handleMouseLeave);
+  //     }
+  //   };
+  // }, []);
 
   const initParticles = (width: number, height: number) => {
     const particles: Particle[] = [];
@@ -214,7 +214,7 @@ const OptimizedParticlesEffect: React.FC<ParticleProps> = ({
 
   return (
     <div
-      className={`relative h-screen overflow-hidden bg-black ${className}`}
+      className={`h-screen overflow-hidden bg-black ${className}`}
       ref={containerRef}
     >
       <canvas ref={canvasRef} className="absolute inset-0" />

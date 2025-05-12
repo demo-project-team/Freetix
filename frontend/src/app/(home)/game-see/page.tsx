@@ -9,11 +9,9 @@ import { Vendor } from "@/Types/types";
 import { Map, Star, Timer, Phone, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import PcLoadingAnimation from "../pc/pcLoadingAnimation";
 import VendorSearch from "./_components/VendorSearch";
 import OptimizedParticlesEffect from "@/components/ParticlesBackground";
 import LoadingScreen from "@/components/LoadingScreen";
-import TerminalCard from "@/components/TerminalCard";
 
 type VendorMapSelectorProps = {
   vendors: Vendor[];
@@ -43,7 +41,7 @@ export default function GameSee() {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white pb-12">
       {/*Pracicle Backround эхлэл хэсэг*/}
 
-      <section className="relative min-h-screen">
+      <section className="relative h-screen">
         <OptimizedParticlesEffect className="absolute inset-0" />
         {/* Бусад UI */}
       </section>
