@@ -11,11 +11,11 @@ export default function Home() {
   const { vendors, isLoading } = useUserVendor();
 
   return (
-    <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500 bg-black">
+    <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500">
       <HomeCaruesel />
       <section
         id="pricing"
-        className="w-full py-24 bg-gradient-to-b from-indigo-900 via-purple-800 to-blue-900 text-white"
+        className="w-full py-24 from-indigo-900 via-purple-800 to-blue-900 text-white"
       >
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-16">

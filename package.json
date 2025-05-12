@@ -28,5 +28,8 @@
     "concurrently": "^9.1.2",
     "husky": "^8.0.0",
     "lint-staged": "^15.5.1"
+  },
+  "dependencies": {
+    "styled-components": "^6.1.18"
   }
 }

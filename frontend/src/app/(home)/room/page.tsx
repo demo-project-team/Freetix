@@ -24,7 +24,7 @@ import { putPc } from "@/utils/request/pcRequest";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import PcLoadingAnimation from "../pc/pcLoadingAnimation";
+import PcLoadingAnimation from "../pc/_components/pcLoadingAnimation";
 import { Loader2 } from "lucide-react";
 import PcComp from "./_components/SupabaseRealTime";
 // import { LiveComputerPc } from "./_components/LiveTimePc";
