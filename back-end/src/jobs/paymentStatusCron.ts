@@ -2,7 +2,7 @@ import cron from 'node-cron';
 import { prisma } from '../lib/prisma';
 
 export function startBookingCancelCron() {
-  cron.schedule('*/1 * * * *', async () => {
+  cron.schedule('*/2 * * * *', async () => {
     const now = new Date();
     const cutoff = new Date(now.getTime() - 2 * 60 * 1000);
 

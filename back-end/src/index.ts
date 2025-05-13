@@ -74,6 +74,22 @@ app.use('/user', UserRouter)
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
+app.get('/privacy-policy', (req, res) => {
+  res.send(`
+    <h1>Privacy Policy</h1>
+    <p>This app ("eslot") uses Facebook Login only to authenticate users. We do not store, sell, or share personal information.</p>
+    <p>Any data retrieved is used only for authentication and session handling.</p>
+  `);
+});
+app.get('/data-deletion', (req, res) => {
+  res.send(`
+    <h1>Data Deletion Instructions</h1>
+    <p>If you wish to delete your data from the "eslot" app, please contact us at 
+      <a href="mailto:uskhuntdavaa9@gmail.com">uskhuntdavaa9@gmail.com</a> 
+      with your Facebook email, and we will delete your information.</p>
+  `);
+});
+
 registerSocketHandlers(io);
 startBookingCancelCron()
 const PORT = process.env.PORT || 5000;
