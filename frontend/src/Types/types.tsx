@@ -127,8 +127,12 @@ export enum PCStatus {
   MAINTENANCE = "MAINTENANCE",
 }
 export enum RoomType {
+  LOBBY = "LOBBY",
   VIP = "VIP",
-  STANDART = "STANDART",
+  VVIP = "VVIP",
+  STREAMER = "STREAMER",
+  STAGE = "STAGE",
+  FPS = "FPS",
 }
 export type City = {
   name: string;
