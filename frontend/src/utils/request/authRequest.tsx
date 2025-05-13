@@ -6,6 +6,7 @@ import {
   UserLoginInput,
   UserRegisterInput,
 } from "@/schemas/userSchema";
+import { User } from "@/Types/types";
 export const singUpRequest = async (values: UserRegisterInput) => {
   try {
     const response = await axiosInstance.post(`/auth/sign-up`, values, {
@@ -95,3 +96,17 @@ export const logoutUser = async () => {
     return null;
   }
 };
+export const getUser = async ():Promise<User | null> => {
+  try {
+    const {data} = await axiosInstance.get(`/user`, {
+      withCredentials: true
+    })
+    console.log(data);
+    
+    return data.user
+  } catch (error) {
+    console.log(error);
+    return null
+    
+  }
+}

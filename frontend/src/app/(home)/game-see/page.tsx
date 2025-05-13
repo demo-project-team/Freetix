@@ -6,7 +6,7 @@
 // import { useState } from "react";
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import { Vendor } from "@/Types/types";
-import { Map, Star, Timer, Phone, Info, X } from "lucide-react";
+import { Map, Star, Timer, Phone, Info,} from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 // import VendorSearch from "./_components/VendorSearch";
@@ -149,16 +149,20 @@ export default function GameSee() {
           </button>
         </div>
         {showMapModal && (
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
-            <button
-              onClick={() => setShowMapModal(false)}
-              className="absolute top-6 right-6 text-white text-3xl font-bold hover:text-red-400 z-50"
-            >
-              <X />
-            </button>
-            <div className="bg-white w-full max-w-5xl rounded-lg shadow-lg overflow-hidden relative">
-              <div className="h-[90vh] w-full">
+          <div className="fixed inset-0 z-30 bg-black bg-opacity-70 flex items-center justify-center">
+
+            <div className="bg-white w-[95vw] max-w-[1600px] rounded-lg shadow-lg overflow-hidden relative flex flex-col">
+              <div className="h-[85vh] w-full">
                 <VendorMap vendors={vendors} />
+              </div>
+
+              <div className="text-center py-4 bg-white">
+                <button
+                  onClick={() => setShowMapModal(false)}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition"
+                >
+                  Газрын зурагаас гарах
+                </button>
               </div>
             </div>
           </div>

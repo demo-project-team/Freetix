@@ -1,3 +1,5 @@
+
+
 export type Organization = {
   id: string;
   name: string;
@@ -73,6 +75,7 @@ export type Booking = {
   pcs: PC[];
   startTime: Date;
   endTime: Date;
+  user : User[]
 };
 export type Review = {
   id: string;
@@ -159,18 +162,20 @@ export enum PaymentStatus {
   PAID = "PAID",
   UNPAID = "UNPAID",
 }
-export type Image = {
-  id: string;
-  url: string;
-  vendor: Vendor;
-  vendorId: string;
-};
-export type User = {
-  id: string;
-  email: string;
-  name: string;
-  profileImage: string;
-};
+export type Image ={
+  id : string
+  url : string
+  vendor : Vendor
+  vendorId : string
+}
+export type User ={
+  id : string
+  email : string
+  name : string
+  phone: string
+  profileImage : string,
+  booking : Booking[]
+}
 export type Time = {
   id: string;
   start: Date;
