@@ -17,20 +17,17 @@ export function startBookingCancelCron() {
         },
       });
 
-      for (const booking of expiredBookings) {
-        await prisma.pC.updateMany({
-          where: {
-            id: { in: booking.pcs.map((pc) => pc.id) },
-          },
-          data: {
-            status: 'AVAILABLE',
-          },
-        });
-        
+      for (const booking of expiredBookings) {     
         await prisma.booking.update({
           where: { id: booking.id },
           data: { status: 'CANCELLED' },
         });
+        if (booking.id) {
+        await prisma.timeSchedule.deleteMany({
+          where :{
+            bookingId : booking.id
+          }
+        })}
         if (booking.paymentId) {
           await prisma.payment.delete({
             where: { id: booking.paymentId },

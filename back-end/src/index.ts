@@ -14,15 +14,12 @@ import passport from 'passport';
 import { PaymentRouter } from './routes/payment.route';
 import { Pool } from 'pg';
 import pgSession from 'connect-pg-simple';
-// import { startBookingCancelCron } from './jobs/paymentStatusCron';
-// import { startBookingStatusCron } from './jobs/bookingStatusCron';
 import http from 'http';
 import { Server } from 'socket.io';
 import { registerSocketHandlers } from './socket';
 import { ReviewRouter } from './routes/review.route';
-// import { nortifcation } from './jobs/notificationCron';
-import { pcStatusCronJob } from './jobs/pcStatusCron';
 import { UserRouter } from './routes/user.route';
+import { startBookingCancelCron } from './jobs/paymentStatusCron';
 
 const app = express();
 const server = http.createServer(app);
@@ -77,12 +74,8 @@ app.use('/user', UserRouter)
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });
-// startBookingCancelCron();
-// startBookingStatusCron();
-pcStatusCronJob();
 registerSocketHandlers(io);
-// nortifcation(io);
-
+startBookingCancelCron()
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
