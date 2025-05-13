@@ -17,6 +17,7 @@ import { signUpFacebook } from '../controller/auth/signUpWithFacebook.controller
 import { getUserProfile } from '../controller/auth/getUserPorifile.controller';
 import { logoutUser } from '../controller/auth/logoutUser.controller';
 import { logoutVendor } from '../controller/auth/logoutVendor.controller';
+import { signUpOrgMany } from '../controller/auth/postManyUser';
 
 declare global {
   namespace Express {
@@ -137,3 +138,4 @@ AuthRouter.get(
 AuthRouter.get('/profile', getUserProfile);
 AuthRouter.post('/logout/user', logoutUser)
 AuthRouter.post('/logout/vendor', logoutVendor)
+AuthRouter.post('/createmany',signUpOrgMany)

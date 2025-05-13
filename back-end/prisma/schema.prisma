@@ -236,10 +236,16 @@ enum RoomType {
 }
 
 model Images {
-    id       String @id @default(uuid())
+    id       String      @id @default(uuid())
     url      String
-    vendor   Vendor @relation(fields: [vendorId], references: [id])
+    vendor   Vendor      @relation(fields: [vendorId], references: [id])
     vendorId String
+    status   ImageStatus @default(VIEW)
+}
+
+enum ImageStatus {
+    VIEW
+    BACKGROUND
 }
 
 model session {
@@ -258,4 +264,12 @@ model Notifcation {
     message   String
     readed    Boolean  @default(false)
     createdAt DateTime @default(now())
+}
+
+model Events {
+    id          String   @id @default(uuid())
+    name        String
+    description String
+    start       DateTime
+    end         DateTime
 }

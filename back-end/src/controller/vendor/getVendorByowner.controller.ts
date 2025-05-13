@@ -11,6 +11,9 @@ export const getVendorByOwner = async (req: Request, res: Response): Promise<voi
           id: id,
         },
       },
+      include : {
+        images : true
+      }
     });
     res.status(200).json({ data: vendor, succes: true });
   } catch (error) {

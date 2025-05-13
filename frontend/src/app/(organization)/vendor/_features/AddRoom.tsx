@@ -40,7 +40,7 @@ export function AddRoom() {
   const form = useForm<roomInput>({
     resolver: zodResolver(roomschema),
     values: {
-      type: "STANDART",
+      type: "LOBBY",
       name: "",
       pcPricePerHour: 0,
     },
@@ -105,6 +105,7 @@ export function AddRoom() {
                     <SelectContent>
                       <SelectItem value="LOBBY">LOBBY</SelectItem>
                       <SelectItem value="VIP">VIP</SelectItem>
+                      <SelectItem value="VVIP">VVIP</SelectItem>
                       <SelectItem value="STREAMER">STREAMER</SelectItem>
                       <SelectItem value="STAGE">STAGE</SelectItem>
                       <SelectItem value="FPS">FPS</SelectItem>
