@@ -7,7 +7,7 @@ export const categorySchema = z.object({
 export type categoryInput = z.infer<typeof categorySchema>;
 
 export const vendorScema = z.object({
-  name: z.string().min(8, "Name must be at least 8 characters"),
+  name: z.string().min(1, "enter name"),
   description: z.string().optional(),
   mapLat: z
     .number()
@@ -20,14 +20,14 @@ export const vendorScema = z.object({
     .nullable()
     .optional(),
   phone: z.string().min(8, "Password must be at least 8 characters"),
-  email: z.string().email(),
+  email: z.string().email("Invalid email address"),
   imageUrl: z.string().optional(),
 });
 export type vendorInput = z.infer<typeof vendorScema>;
 
 export const roomschema = z.object({
   name: z.string(),
-  type: z.enum(["VIP", "STANDART"]),
+  type: z.enum(["VIP", "LOBBY", "VVIP", 'STREAMER', 'STAGE', 'FPS']),
   pcPricePerHour: z.number(),
 });
 export type roomInput = z.infer<typeof roomschema>;

@@ -3,21 +3,21 @@ export function ComputerPc({
   pcs,
   selectedPcs,
   setSelectedPcs,
-  unavailablePcs
+  unavailablePcs,
 }: {
   pcs: PC[];
   selectedPcs: string[];
   setSelectedPcs: (selectedPcs: string[]) => void;
-  unavailablePcs : Time[]
+  unavailablePcs: Time[];
 }) {
   const maxRow = Math.max(...pcs.map((pc) => pc.row), 0);
   const maxCol = Math.max(...pcs.map((pc) => pc.column), 0);
 
   const togglePcSelection = (pc: PC) => {
-    if (pc.status === "BOOKED") {
+    const alreadySelected = selectedPcs.find((p) => p === pc.id);
+    if (unavailablePcs.find((p)=>p.pcId === pc.id)) {
       return
     }
-    const alreadySelected = selectedPcs.find((p) => p === pc.id);
     if (alreadySelected) {
       setSelectedPcs(selectedPcs.filter((p) => p !== pc.id));
     } else {
@@ -33,7 +33,6 @@ export function ComputerPc({
             const pc = pcs.find(
               (pc) => pc.row === rowIndex + 1 && pc.column === colIndex + 1
             );
-
             return pc ? (
               <div key={colIndex} className="relative group">
                 <div
@@ -41,9 +40,9 @@ export function ComputerPc({
                   className={`w-24 h-24 flex items-center justify-center rounded-2xl shadow-xl text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
                     selectedPcs.find((p) => p === pc.id)
                       ? "bg-gradient-to-br from-yellow-400 to-yellow-500 text-white ring-4 ring-yellow-500/60"
-                      :unavailablePcs.find((p)=>pc.id === p.pcId)
+                      : unavailablePcs.find((p) => pc.id === p.pcId)
                       ? "bg-gray-400 cursor-not-allowed text-gray-100"
-                      : "bg-teal-500 hover:bg-teal-600 cursor-pointer text-white" 
+                      : "bg-teal-500 hover:bg-teal-600 cursor-pointer text-white"
                   }`}
                 >
                   {pc.name}
@@ -58,7 +57,6 @@ export function ComputerPc({
           })}
         </div>
       ))}
-      {selectedPcs.length > 0 && <div></div>}
     </div>
   );
 }

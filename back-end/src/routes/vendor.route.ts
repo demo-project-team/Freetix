@@ -11,6 +11,8 @@ import { getOneVendor } from '../controller/vendor/getVendor.controller';
 import { putVendor } from '../controller/vendor/putVendor.controller';
 import { addImage } from '../controller/vendor/addImage.controller';
 import { getUnavailableTime } from '../controller/time/putTime.controller';
+import { putImage } from '../controller/vendor/putImg.controller';
+import { getImage } from '../controller/vendor/getImage.controller';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
@@ -45,3 +47,6 @@ VendorRouter.post('/unavailable', validate(timeSchema), getUnavailableTime)
 VendorRouter.get('/getone/:vendorId', getOneVendor);
 VendorRouter.put('/', organizationToken, validate(vendorScema), putVendor);
 VendorRouter.post('/image', organizationToken, validate(imageSchema), addImage);
+VendorRouter.put('/image/:id', organizationToken, putImage);
+VendorRouter.get('/image', organizationToken, getImage);
+

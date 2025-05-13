@@ -27,8 +27,6 @@ export const PcProfile = () => {
   console.log(avatarImage);
   const [preview, setPreview] = useState<string | null>(null);
   const { vendor } = useVendor();
-  console.log(vendor);
-
   const form = useForm<vendorInput>({
     resolver: zodResolver(vendorScema),
     values: {

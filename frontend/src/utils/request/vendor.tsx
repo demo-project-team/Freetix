@@ -6,7 +6,7 @@ import {
   tableInput,
   vendorInput,
 } from "@/schemas/schemas";
-import { City, District, Table, Vendor } from "@/Types/types";
+import { City, District, Image, Table, Vendor } from "@/Types/types";
 import { toast } from "sonner";
 export const getVendor = async (): Promise<Vendor[]> => {
   try {
@@ -168,3 +168,20 @@ export const addImage = async (value: imageInput) => {
     console.log(error);
   }
 };
+export const editImage = async (id :string) =>{
+  try {
+    await axiosInstance.put(`/vendor/image/${id}`)
+  } catch (error) {
+    console.log(error);
+  }
+}
+export const getImage = async () :Promise<Image[] | null> => {
+  try {
+    const {data} = await axiosInstance.get(`/vendor/image`)
+    return data.data
+  } catch (error) {
+    console.log(error);
+    return null
+    
+  }
+}

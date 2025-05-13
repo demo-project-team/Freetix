@@ -10,9 +10,6 @@ export type Organization = {
   request: "PENDING" | "CANCELLED" | "APPROVED";
 };
 export type Vendor = {
-  location: any;
-  status: any;
-  type: any;
   images: Image[];
   id: string;
   name: string;
@@ -163,7 +160,8 @@ export type Image ={
   id : string
   url : string
   vendor : Vendor
-  vendorId : string
+  vendorId : string,
+  status : "VIEW" | "BACKGROUND"
 }
 export type User ={
   id : string
