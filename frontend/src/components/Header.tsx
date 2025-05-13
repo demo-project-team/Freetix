@@ -16,7 +16,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Header = () => {
   const router = useRouter();
@@ -27,13 +38,16 @@ const Header = () => {
   });
   const handlelogOut = async () => {
     await logoutUser();
-    refetchUser();
+    await refetchUser();
+    setOpenDialog(false);
   };
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <header
       className="sticky top-4 left-0 right-0 z-50 mx-auto px-4 py-2 flex justify-between items-center
-             max-w-7xl rounded-xl backdrop-blur-md bg-black/80 transition-all duration-300 ease-in-out"
+       max-w-7xl rounded-xl backdrop-blur-md bg-black/80 transition-all duration-300 ease-in-out"
       style={{
         backdropFilter: "blur(8px)",
         backgroundColor: "rgba(8, 8, 8, 0.6)",
@@ -56,6 +70,20 @@ const Header = () => {
         {/* Desktop Items */}
         <div className="hidden md:flex items-center space-x-6 text-sm">
           <SearchDropdown />
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+              <DialogTrigger asChild>
+                <Button variant="outline">View</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogClose>X</DialogClose>
+                <DialogHeader>
+                  <DialogTitle>Edit profile</DialogTitle>
+                </DialogHeader>
+                <div>{user?.bookings?.status}</div>
+                <div>{user?.bookings?.paymentStatus}</div>
+              </DialogContent>
+            </Dialog>
+
 
           {user ? (
             <div className="flex items-center space-x-9">
@@ -67,7 +95,7 @@ const Header = () => {
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-60">
-                  <DropdownMenuItem   >
+                  <DropdownMenuItem>
                     {userData?.profileImage ? (
                       <img
                         src={userData.profileImage}

@@ -1,32 +1,60 @@
+/* eslint-disable @next/next/no-img-element */
 // components/Footer.js
 
+import { useRouter } from "next/navigation";
+import { FaInstagram, FaYoutube, FaFacebook } from "react-icons/fa";
+
 const Footer = () => {
+  const router = useRouter();
   return (
-    <footer className="bg-black text-white py-12 w-screen ">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div>
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
-              Бидэнтэй Холбогдох
-            </h3>
-            <ul>
-              <li className="mb-2">
-                <span className="font-semibold">📧</span> И-мэйл:{" "}
-                <a
-                  href="mailto:metaesport@gmail.com"
-                  className="text-blue-400 hover:text-blue-500"
-                >
-                  metaesport@gmail.com
-                </a>
-              </li>
-              <li className="mb-2">
-                <span className="font-semibold">📞</span> Утас:{" "}
-                <a className="text-red-400 hover:text-blue-500">
-                  +976 7555-5555
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer className="bg-zinc-900 text-white px-4 py-8 w-full shadow-md h-[200px]">
+      <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10 mt-[30px]">
+        {/* Logo хэсэг */}
+        <div className="items-center justify-center flex">
+          <img
+            src="eslot-logo.png"
+            alt="Eslot Logo"
+            className="w-[145px] h-[35px] cursor-pointer"
+            onClick={() => router.push("/")}
+          />
+        </div>
+
+        <div className="text-center md:text-left">
+          <p className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00ffff] to-[#0066ff] drop-shadow-[0_0_25px rgba(0,255,255,0.8)] mb-4">
+            Сошиал хаягууд
+          </p>
+          <ul className="flex flex-col md:flex-row gap-4 text-lg font-medium gap-10">
+            <li>
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#E1306C] hover:text-white transition duration-300 drop-shadow-[0_0_15px_#E1306C]"
+              >
+                <FaInstagram size={34} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#ef233c] hover:text-white transition duration-300 drop-shadow-[0_0_15px_#ef233c]"
+              >
+                <FaYoutube size={34} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#023e8a] hover:text-white transition duration-300 drop-shadow-[0_0_15px_#023e8a]"
+              >
+                <FaFacebook size={34} />
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
