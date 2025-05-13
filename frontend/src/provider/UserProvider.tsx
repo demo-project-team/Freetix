@@ -2,11 +2,12 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUserPublicProfile } from "@/utils/request/authRequest";
+import { Booking } from "@/Types/types";
 type UserContextType = {
   user: User | null;
   refetchUser : () => void
 };
-type User = { id: string; name: string; email?: string };
+type User = { id: string; name: string; email?: string, bookings: Booking } ;
 const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 const {data : user, refetch : refetchUser} = useQuery({

@@ -4,7 +4,7 @@
 
 import { useUserVendor } from "@/provider/VendorProvderUser";
 import { Vendor } from "@/Types/types";
-import { Map, Star, Timer, Phone, Info, X } from "lucide-react";
+import { Map, Star, Timer, Phone, Info,} from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "@/components/LoadingScreen";

@@ -22,6 +22,7 @@ import { registerSocketHandlers } from './socket';
 import { ReviewRouter } from './routes/review.route';
 // import { nortifcation } from './jobs/notificationCron';
 import { pcStatusCronJob } from './jobs/pcStatusCron';
+import { UserRouter } from './routes/user.route';
 
 const app = express();
 const server = http.createServer(app);
@@ -72,6 +73,7 @@ app.use('/room', RoomRouter);
 app.use('/address', AddressRouter);
 app.use('/payment', PaymentRouter);
 app.use('/review', ReviewRouter);
+app.use('/user', UserRouter)
 app.get('/', (_req, res) => {
   res.send('Hello from TypeScript + Express!');
 });

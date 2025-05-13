@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -6,14 +7,24 @@ import { motion } from "framer-motion";
 import { OpenUser } from "./Openuser";
 import { useUser } from "@/provider/UserProvider";
 import { User, LogOut } from "lucide-react";
-import { logoutUser } from "@/utils/request/authRequest";
+import { getUser, logoutUser } from "@/utils/request/authRequest";
 import SearchDropdown from "./SearchDropdown";
 import { SignUp } from "./Admin";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useQuery } from "@tanstack/react-query";
 
 const Header = () => {
   const router = useRouter();
   const { user, refetchUser } = useUser();
-
+  const { data: userData } = useQuery({
+    queryKey: ["userData"],
+    queryFn: getUser,
+  });
   const handlelogOut = async () => {
     await logoutUser();
     refetchUser();
@@ -48,10 +59,31 @@ const Header = () => {
 
           {user ? (
             <div className="flex items-center space-x-9">
-              <div className="text-gray-400 font-medium text-sm tracking-tighter leading-tight hover:text-white transition duration-300 flex items-center space-x-1">
-                <User className="w-5 h-5" />
-                <span>{user.name}</span>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center space-x-2 text-sm text-gray-400 hover:text-white transition">
+                  <div className="flex items-center gap-2 px-2 py-1 rounded-md bg-gray-800 hover:bg-gray-700 transition text-sm text-gray-200">
+                    <User className="w-4 h-4" />
+                    <span>{user.name}</span>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-60">
+                  <DropdownMenuItem   >
+                    {userData?.profileImage ? (
+                      <img
+                        src={userData.profileImage}
+                        className="w-12 h-12 bg-gray-200 rounded-full"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-gray-900 border border-cyan-500 shadow-[0_0_10px_#06b6d4] flex items-center justify-center hover:shadow-[0_0_15px_#06b6d4] transition">
+                        <User className="w-4 h-4 text-cyan-400" />
+                      </div>
+                    )}
+                    <p className="text-sm font-semibold">{user.name}</p>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>email : {user.email}</DropdownMenuItem>
+                  <DropdownMenuItem>{userData?.phone}</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <button
                 onClick={handlelogOut}
                 className="flex items-center justify-center text-white gap-1 rounded-sm bg-red-500 cursor-pointer py-1.5 px-2.5 font-medium hover:opacity-50 transition-all duration-300 "
@@ -83,7 +115,8 @@ const Header = () => {
     </header>
   );
 };
-
+//  className="text-gray-400 font-medium text-sm tracking-tighter leading-tight hover:text-white transition duration-300 flex items-center space-x-1"
+// w-5 h-5
 export default Header;
 
 // "use client";
