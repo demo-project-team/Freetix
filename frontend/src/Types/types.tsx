@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Organization = {
   id: string;
   name: string;
@@ -10,6 +12,9 @@ export type Organization = {
   request: "PENDING" | "CANCELLED" | "APPROVED";
 };
 export type Vendor = {
+  location: any;
+  status: any;
+  type: any;
   images: Image[];
   id: string;
   name: string;
@@ -126,12 +131,8 @@ export enum PCStatus {
   MAINTENANCE = "MAINTENANCE",
 }
 export enum RoomType {
-  LOBBY = "LOBBY",
   VIP = "VIP",
-  VVIP = "VVIP",
-  STREAMER = "STREAMER",
-  STAGE = "STAGE",
-  FPS = "FPS",
+  STANDART = "STANDART",
 }
 export type City = {
   name: string;
