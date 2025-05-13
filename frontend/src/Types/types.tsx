@@ -10,7 +10,7 @@ export type Organization = {
   request: "PENDING" | "CANCELLED" | "APPROVED";
 };
 export type Vendor = {
-  images : Image[]
+  images: Image[];
   id: string;
   name: string;
   description: string | null;
@@ -78,7 +78,7 @@ export type Review = {
   id: string;
   userId: string;
   vendorId: string;
-  user : User
+  user: User;
   rating: number;
   comment?: string | null;
   createdAt: Date;
@@ -126,8 +126,12 @@ export enum PCStatus {
   MAINTENANCE = "MAINTENANCE",
 }
 export enum RoomType {
+  LOBBY = "LOBBY",
   VIP = "VIP",
-  STANDART = "STANDART",
+  VVIP = "VVIP",
+  STREAMER = "STREAMER",
+  STAGE = "STAGE",
+  FPS = "FPS",
 }
 export type City = {
   name: string;
@@ -155,18 +159,18 @@ export enum PaymentStatus {
   PAID = "PAID",
   UNPAID = "UNPAID",
 }
-export type Image ={
-  id : string
-  url : string
-  vendor : Vendor
-  vendorId : string
-}
-export type User ={
-  id : string
-  email : string
-  name : string
-  profileImage : string
-}
+export type Image = {
+  id: string;
+  url: string;
+  vendor: Vendor;
+  vendorId: string;
+};
+export type User = {
+  id: string;
+  email: string;
+  name: string;
+  profileImage: string;
+};
 export type Time = {
   id: string;
   start: Date;

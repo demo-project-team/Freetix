@@ -171,7 +171,7 @@ export default function HotelPage() {
             ))}
 
           {vendor.rooms
-            .filter((room) => room.type === "STANDART")
+            .filter((room) => room.type === "VVIP")
             .map((room) => (
               <div
                 key={room.id}
