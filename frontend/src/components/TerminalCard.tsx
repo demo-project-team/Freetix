@@ -4,7 +4,7 @@ import styled from "styled-components";
 const TerminalCard = () => {
   return (
     <StyledWrapper>
-      <div className="card rotate-25 absolute w-fit right-15 top-30 z-10">
+      <div className="card rotate-25 absolute w-fit right-10 top-20 z-10">
         <div className="wrap">
           <div className="terminal">
             <hgroup className="head">

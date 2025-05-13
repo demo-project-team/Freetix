@@ -10,8 +10,6 @@ import { logoutUser } from "@/utils/request/authRequest";
 import SearchDropdown from "./SearchDropdown";
 import { SignUp } from "./Admin";
 
-
-
 const Header = () => {
   const router = useRouter();
   const { user, refetchUser } = useUser();
@@ -24,7 +22,7 @@ const Header = () => {
   return (
     <header
       className="sticky top-4 left-0 right-0 z-50 mx-auto px-4 py-2 flex justify-between items-center
-             max-w-6xl rounded-xl backdrop-blur-md bg-black/80 transition-all duration-300 ease-in-out"
+             max-w-7xl rounded-xl backdrop-blur-md bg-black/80 transition-all duration-300 ease-in-out"
       style={{
         backdropFilter: "blur(8px)",
         backgroundColor: "rgba(8, 8, 8, 0.6)",
@@ -32,7 +30,7 @@ const Header = () => {
         boxShadow: "0 0 12px rgba(255, 255, 255, 0.3)",
       }}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center w-[1200px]">
+      <div className="max-w-7xl px-4 mx-auto flex justify-between items-center w-full">
         {/* Logo */}
         <motion.div
           className="flex items-center space-x-2 cursor-pointer"
@@ -65,11 +63,10 @@ const Header = () => {
           ) : (
             <>
               <div
-                onClick={()=> SignUp}
+                onClick={() => SignUp}
                 className="text-gray-400 font-medium text-sm tracking-tighter leading-tight hover:text-white transition duration-300"
               >
-                
-                <SignUp/>
+                <SignUp />
               </div>
               <OpenUser />
             </>
