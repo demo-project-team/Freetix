@@ -59,8 +59,8 @@ model TimeSchedule {
     end       DateTime
     vendor    Vendor   @relation(fields: [vendorId], references: [id])
     vendorId  String
-    pc      PC @relation(fields: [pcId], references: [id])
-    pcId String
+    pc        PC       @relation(fields: [pcId], references: [id])
+    pcId      String
     userId    String
     booking   Booking  @relation(fields: [bookingId], references: [id])
     bookingId String
@@ -227,8 +227,12 @@ enum PCStatus {
 }
 
 enum RoomType {
+    LOBBY
     VIP
-    STANDART
+    VVIP
+    STREAMER
+    STAGE
+    FPS
 }
 
 model Images {

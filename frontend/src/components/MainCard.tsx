@@ -1,6 +1,7 @@
+import { Vendor } from "@/Types/types";
 import styled from "styled-components";
 
-const BackCard = ({ name, email, phone, address, imageUrl, createdAt }) => {
+const BackCard = ({ vendor }: { vendor: Vendor }) => {
   return (
     <StyledWrapper>
       <div className="card">
@@ -8,18 +9,26 @@ const BackCard = ({ name, email, phone, address, imageUrl, createdAt }) => {
           <div className="back">
             <div className="back-content">
               <img
-                src={imageUrl || "/next.svg"}
+                src={vendor.imageUrl || "/next.svg"}
                 className="w-[120px] h-[80px] object-cover rounded"
                 alt="vendor"
               />
-              <strong>{name}</strong>
-              <p>{email || "Имэйл байхгүй"}</p>
-              <p>{phone || "Утас байхгүй"}</p>
-              <p>{address?.street || "Хаяг оруулаагүй"}</p>
+              <strong>{vendor.name}</strong>
+              <p>{vendor.email || "Имэйл байхгүй байна."}</p>
+              <p>{vendor.phone || "Утас байхгүй байна."}</p>
+              <p>{vendor.address?.street || "Хаяг оруулаагүй байна."}</p>
               <p>
-                {createdAt
-                  ? `Бүртгэгдсэн: ${createdAt.toString().split("T")[0]}`
-                  : "Бүртгэгдээгүй"}
+                {vendor.createdAt
+                  ? `Бүртгэгдсэн: ${vendor.createdAt.toString().split("T")[0]}`
+                  : "Бүртгэгдээгүй байна."}
+              </p>
+              <p>
+                {vendor.rooms.filter((room) => room.type === "VIP")[0]
+                  ?.pcPricePerHour || "Үнэ оруулаагүй байна."}
+              </p>
+              <p>
+                {vendor.rooms.filter((room) => room.type === "VVIP")[0]
+                  ?.pcPricePerHour || "Үнэ оруулаагүй байна."}
               </p>
             </div>
           </div>

@@ -7,7 +7,8 @@ export const getVendor = async (req: Request, res: Response): Promise<void> => {
     const vendors = await prisma.vendor.findMany({
       include: {
         reviews: true,
-        address : true
+        address : true,
+        rooms :true
       },
     });
     res.status(200).json({ data: vendors, succes: true });

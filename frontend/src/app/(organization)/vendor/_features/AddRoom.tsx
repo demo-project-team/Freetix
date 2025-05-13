@@ -8,7 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -29,31 +34,35 @@ import { FormProvider, useForm } from "react-hook-form";
 
 export function AddRoom() {
   const { vendor } = useVendor();
-  const { refetchRoom}= useRoom()
-  const [ isLoading,  setLoading] = useState(false)
+  const { refetchRoom } = useRoom();
+  const [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const form = useForm<roomInput>({
     resolver: zodResolver(roomschema),
     values: {
       type: "STANDART",
       name: "",
-      pcPricePerHour : 0
+      pcPricePerHour: 0,
     },
   });
   const addRoom = async (value: roomInput) => {
-    setLoading(true)
+    setLoading(true);
     const res = await createRoom(value, vendor.id);
     if (res) {
-      await refetchRoom()
+      await refetchRoom();
       setOpen(false);
-      setLoading(false)
+      setLoading(false);
     }
-    setLoading(false)
+    setLoading(false);
   };
   return (
     <Dialog open={open}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)} className="w-40" variant="outline">
+        <Button
+          onClick={() => setOpen(true)}
+          className="w-40"
+          variant="outline"
+        >
           Add room
         </Button>
       </DialogTrigger>
@@ -94,27 +103,36 @@ export function AddRoom() {
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="STANDART">STANDART</SelectItem>
+                      <SelectItem value="LOBBY">LOBBY</SelectItem>
                       <SelectItem value="VIP">VIP</SelectItem>
+                      <SelectItem value="STREAMER">STREAMER</SelectItem>
+                      <SelectItem value="STAGE">STAGE</SelectItem>
+                      <SelectItem value="FPS">FPS</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />
-              <FormField
+            <FormField
               control={form.control}
-              name='pcPricePerHour'
+              name="pcPricePerHour"
               render={({ field }) => (
                 <FormItem>
                   <Label>Room name</Label>
                   <FormControl>
-                    <Input {...field} type='number' onChange={(e)=>field.onChange(Number(e.target.value))}/>
+                    <Input
+                      {...field}
+                      type="number"
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={isLoading} type="submit">{isLoading && <Loader2 className="animate-spin"/>}Add room</Button>
+            <Button disabled={isLoading} type="submit">
+              {isLoading && <Loader2 className="animate-spin" />}Add room
+            </Button>
           </form>
         </FormProvider>
       </DialogContent>

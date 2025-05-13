@@ -135,13 +135,7 @@ export default function GameSee() {
                 onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
                 className="cursor-pointer"
               >
-                <BackCard
-                  name={vendor.name}
-                  email={vendor.email}
-                  phone={vendor.phone}
-                  address={vendor.address}
-                  imageUrl={vendor.imageUrl}
-                />
+                <BackCard vendor={vendor} />
               </div>
             ))}
           </div>
