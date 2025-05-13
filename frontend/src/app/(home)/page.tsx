@@ -7,6 +7,7 @@ import { useUserVendor } from "@/provider/VendorProvderUser";
 import VendorCardSkelton from "./_components/VendorCardSkelton";
 import TerminalCard from "@/components/TerminalCard";
 import FunnyEye from "@/components/FunnyEye";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -28,9 +29,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-16">
             <span>💸</span>{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
-              Компьютер Тоглоомын Газрууд
-            </span>
+           <span className="bg-gradient-to-r from-[#00ffff] to-[#0066ff] drop-shadow-[0_0_25px_rgba(0,255,255,0.8)] bg-clip-text text-transparent">
+  Компьютер Тоглоомын Газрууд
+</span>
+
           </h2>
 
           {!isLoading ? (
@@ -73,13 +75,14 @@ export default function Home() {
           <div className="text-center mt-12">
             <button
               onClick={() => router.push("/game-see")}
-              className="inline-block bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-4 px-8 rounded-full text-xl border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
+              className="inline-block bg-gradient-to-r from-[#00ffff] to-[#0066ff] drop-shadow-[0_0_25px_rgba(0,255,255,0.8)] bg-clip-text text-transparent font-bold py-4 px-8 rounded-full text-xl border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
             >
               Бүх тоглоомын газрыг харах
             </button>
           </div>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }
