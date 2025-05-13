@@ -21,7 +21,7 @@ const OptimizedParticlesEffect = ({ className = "" }: ParticleProps) => {
 
   const config = {
     particles: {
-      number: 280,
+      number: 180,
       color: "#ffffff",
       size: { value: 3, random: true, min: 1 },
       opacity: { value: 0.5, random: true, min: 0.3 },

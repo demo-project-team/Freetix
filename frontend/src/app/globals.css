@@ -120,3 +120,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*TopGlowCard styles/globals.css */
+
+@keyframes subtle-white-glow {
+  0% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 1px white);
+  }
+  50% {
+    opacity: 0.6;
+    filter: drop-shadow(0 0 3px white);
+  }
+  100% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 1px white);
+  }
+}
+
+.animate-subtle-white-glow {
+  animation: subtle-white-glow 4s ease-in-out infinite;
+}
