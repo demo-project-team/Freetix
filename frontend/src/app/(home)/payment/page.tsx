@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useBooking } from "@/provider/BookingProvider";
 
 export default function PayPage() {
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [paymentId] = useQueryState("payid");
+  const {refetchBooking} = useBooking()
   const { data: payment } = useQuery({
     queryKey: ["payment", paymentId],
     queryFn: () => getPayment(paymentId),
@@ -35,6 +37,7 @@ export default function PayPage() {
     } else if (result.paymentIntent?.status === "succeeded") {
       const payment = await paymentSucces(paymentId);
       if (payment) {
+        refetchBooking()
         setIsLoading(false)
         toast("Payment successful!");
         router.push("/");

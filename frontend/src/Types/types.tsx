@@ -74,6 +74,9 @@ export type Booking = {
   startTime: Date;
   endTime: Date;
   user : User[]
+  orderedTime : Time[]
+  payment : Payment
+
 };
 export type Review = {
   id: string;
@@ -109,6 +112,7 @@ export type Table = {
   pcs: PC[];
   createdAt: Date;
   updatedAt: Date;
+  room : Room
 };
 export type PC = {
   id: string;
@@ -119,6 +123,7 @@ export type PC = {
   status: PCStatus;
   createdAt: Date;
   updatedAt: Date;
+  table : Table
 };
 export enum PCStatus {
   AVAILABLE = "AVAILABLE",
@@ -177,10 +182,11 @@ export type User ={
 }
 export type Time = {
   id: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   vendorId: string;
   pcId: string;
   userId: string;
   bookingId: string;
+  vendor : Vendor
 };
