@@ -13,6 +13,7 @@ export const putPc = async (value: pcInput) => {
     return data;
   } catch (error) {
     console.log(error);
+    return error 
   }
 };
 export const getUnavailablePc = async  (value : timeInput) => {
@@ -21,6 +22,5 @@ export const getUnavailablePc = async  (value : timeInput) => {
     return data
   } catch (error) {
     console.log(error);
-    
   }
 }

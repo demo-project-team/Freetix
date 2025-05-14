@@ -10,6 +10,7 @@ export const getTable = async (req: Request, res: Response) => {
       },
       include: {
         pcs: true,
+        room : true
       },
     });
     res.status(200).json({ table });

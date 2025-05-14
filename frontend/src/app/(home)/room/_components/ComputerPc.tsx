@@ -28,7 +28,7 @@ export function ComputerPc({
   return (
     <div className="flex flex-col items-center gap-8 p-10">
       {Array.from({ length: maxRow }, (_, rowIndex) => (
-        <div key={rowIndex} className="flex justify-center gap-8">
+        <div key={rowIndex} className="flex justify-center gap-2">
           {Array.from({ length: maxCol }, (_, colIndex) => {
             const pc = pcs.find(
               (pc) => pc.row === rowIndex + 1 && pc.column === colIndex + 1
@@ -37,7 +37,7 @@ export function ComputerPc({
               <div key={colIndex} className="relative group">
                 <div
                   onClick={() => togglePcSelection(pc)}
-                  className={`w-24 h-24 flex items-center justify-center rounded-2xl shadow-xl text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
+                  className={`w-10 h-10 lg:w-20 lg:h-20 flex items-center justify-center rounded-md shadow-xl text-sm text-base font-bold transition-all duration-300 transform group-hover:scale-110 cursor-pointer backdrop-blur-md ${
                     selectedPcs.find((p) => p === pc.id)
                       ? "bg-gradient-to-br from-yellow-400 to-yellow-500 text-white ring-4 ring-yellow-500/60"
                       : unavailablePcs.find((p) => pc.id === p.pcId)
