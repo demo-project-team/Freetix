@@ -70,7 +70,7 @@ const Header = () => {
         </motion.div>
 
         {/* Desktop Items */}
-        <div className="hidden md:flex items-center space-x-6 text-sm">
+        <div className="md:flex items-center space-x-6 text-sm">
           <SearchDropdown />
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
@@ -161,13 +161,6 @@ const Header = () => {
               <OpenUser />
             </>
           )}
-        </div>
-
-        {/* Mobile Menu */}
-        <div className="md:hidden flex items-center space-x-4 text-sm text-blue-400">
-          <a href="#login">Login {user?.name && `(${user.name})`}</a>
-          <a href="#viewed">Sign up</a>
-          <a href="/sign-up">Register Your Business</a>
         </div>
       </div>
     </header>

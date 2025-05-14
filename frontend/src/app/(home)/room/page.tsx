@@ -10,7 +10,7 @@ import { Time } from "@/Types/types";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import GlowGlassCard from "@/components/TopGlowCard";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { memo } from "react";
 import {
   Select,
   SelectContent,
@@ -20,26 +20,32 @@ import {
 } from "@/components/ui/select";
 import { generateTimeOptions } from "@/utils/getTime";
 import { useBooking } from "@/provider/BookingProvider";
+import { useUser } from "@/provider/UserProvider";
+import { Loader, Loader2 } from "lucide-react";
 
-const isTimeBefore = (time1:string, time2:string) => {
+const isTimeBefore = (time1: string, time2: string) => {
   if (!time1 || !time2) return false;
-  const [hour1] = time1.split(':').map(Number);
-  const [hour2] = time2.split(':').map(Number);
+  const [hour1] = time1.split(":").map(Number);
+  const [hour2] = time2.split(":").map(Number);
   return hour1 < hour2;
 };
 
-
 export default function Room() {
+  const MemoizedComputerPc = memo(ComputerPc);
+  const { setOpen } = useUser();
   const { table, isLoading } = useTable();
-  const {refetchBooking} = useBooking()
+  const { refetchBooking } = useBooking();
   const [roomId] = useQueryState("roomid");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [selectedPcs, setSelectedPcs] = useState<string[]>([]);
-  const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [date, setDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
   const [unavailablePc, setUnavailablePc] = useState<Time[]>();
+  const [timeLoad, setTimeLoad] = useState(false);
   const timeOptions = generateTimeOptions();
   const handleStartTimeChange = (newStartTime: string) => {
     setStartTime(newStartTime);
@@ -51,7 +57,7 @@ export default function Room() {
   if (isLoading) {
     return <PcLoadingAnimation />;
   }
-  
+
   const createBooking = async () => {
     if (!roomId || !startTime || !endTime) {
       return;
@@ -59,7 +65,7 @@ export default function Room() {
     const startUTC = new Date(`${date}T${startTime}:00Z`).toISOString();
     const endUTC = new Date(`${date}T${endTime}:00Z`).toISOString();
     setLoading(true);
-    
+
     try {
       const response = await putPc({
         pcIds: selectedPcs,
@@ -67,41 +73,52 @@ export default function Room() {
         start: startUTC,
         end: endUTC,
       });
-      
+      if (
+        response.response.data.message === "Access denied. No token provided."
+      ) {
+        console.log(response.response.data);
+        setOpen(true);
+        setLoading(false);
+        return;
+      }
       if (response) {
-        refetchBooking()
+        refetchBooking();
         router.push(`/payment?payid=${response.pay.id}`);
       }
-    } catch (error) {
-      console.error("Error creating booking:", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error.response);
     } finally {
       setLoading(false);
     }
   };
-  
+
   const checkTime = async () => {
     if (!date || !startTime || !endTime) {
       console.log("Date, Start Time, and End Time are required.");
       return;
     }
-    
+    setTimeLoad(true);
     const startUTC = new Date(`${date}T${startTime}:00Z`).toISOString();
     const endUTC = new Date(`${date}T${endTime}:00Z`).toISOString();
-    
+
     try {
       const response = await getUnavailablePc({
         start: startUTC,
         end: endUTC,
       });
-      
+
       setUnavailablePc(response);
     } catch (error) {
       console.error("Error checking availability:", error);
+    } finally {
+      setTimeLoad(false);
     }
   };
-  
+
   return (
     <div className="flex flex-col gap-4 p-4">
+      <div className="h-40"></div>
       <GlowGlassCard>
         <div className="flex gap-2 lg:flex-row flex-col">
           <div className="flex gap-2 items-center flex-col">
@@ -111,88 +128,108 @@ export default function Room() {
               onChange={(e) => setDate(e.target.value)}
               className="border p-2 rounded"
             />
-            
+
             <div className="flex flex-col gap-1 w-full">
               <label className="text-sm font-medium">Start</label>
-              <Select
-                value={startTime}
-                onValueChange={handleStartTimeChange}
-              >
+              <Select value={startTime} onValueChange={handleStartTimeChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select start time" />
                 </SelectTrigger>
                 <SelectContent>
-                  {timeOptions.map((time) => (
-                    <SelectItem key={time} value={time}>
-                      {time}
-                    </SelectItem>
-                  ))}
+                  {timeOptions
+                    .filter((time) => {
+                      if (date === new Date().toISOString().split("T")[0]) {
+                        const currentTime = new Date().toLocaleTimeString(
+                          "en-GB",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        );
+                        return isTimeBefore(currentTime, time);
+                      }
+                      return true;
+                    })
+                    .map((time) => (
+                      <SelectItem key={time} value={time}>
+                        {time}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="flex flex-col gap-1 w-full">
               <label className="text-sm font-medium">End</label>
-              <Select
-                value={endTime}
-                onValueChange={setEndTime}
-              >
+              <Select value={endTime} onValueChange={setEndTime}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select end time" />
                 </SelectTrigger>
                 <SelectContent>
-                  {timeOptions.map((time) => (
-                    <SelectItem 
-                      key={time} 
-                      value={time}
-                      disabled={!isTimeBefore(startTime, time)}
-                    >
-                      {time}
-                    </SelectItem>
-                  ))}
+                  {timeOptions
+                    .filter((time) => {
+                      if (date === new Date().toISOString().split("T")[0]) {
+                        const currentTime = new Date().toLocaleTimeString(
+                          "en-GB",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        );
+                        return isTimeBefore(currentTime, time);
+                      }
+                      return true;
+                    })
+                    .map((time) => (
+                      <SelectItem
+                        key={time}
+                        value={time}
+                        disabled={!isTimeBefore(startTime, time)}
+                      >
+                        {time}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
-            
-            <Button 
-              onClick={checkTime} 
+
+            <Button
+              onClick={checkTime}
               disabled={!date || !startTime || !endTime || loading}
               className="w-full mt-2"
             >
-              {loading ? "Checking..." : "Check time"}
+              {timeLoad ? (
+                <div className="flex">
+                  <Loader2 className="animate-spin" /> Checking...
+                </div>
+              ) : (
+                "Check time"
+              )}
             </Button>
           </div>
-        
-          <div className="flex items-center overflow-hidden h-[600px] w-[300px] lg:w-[800px]">
-            {unavailablePc ? (
-              <TransformWrapper
-                initialScale={0.4}
-                minScale={0.1}
-                maxScale={2}
-                doubleClick={{ disabled: true }}
-              >
-                <TransformComponent
-                  wrapperStyle={{ width: "100%", height: "fit" }}
-                >
-                  <div className="grid grid-cols-1 gap-4">
-                    {table.map((table, index) => (
-                      <ComputerPc
-                        key={index}
-                        pcs={table.pcs}
-                        setSelectedPcs={setSelectedPcs}
-                        selectedPcs={selectedPcs}
-                        unavailablePcs={unavailablePc}
-                      />
-                    ))}
-                  </div>
-                </TransformComponent>
-              </TransformWrapper>
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                цагаа сонгон уу
-              </div>
-            )}
-          </div>
+
+          {unavailablePc ? (
+            <div className="grid grid-cols-1 gap-4">
+              {table.map((table, index) => (
+                <MemoizedComputerPc
+                  key={index || table.id}
+                  pcs={table.pcs}
+                  setSelectedPcs={setSelectedPcs}
+                  selectedPcs={selectedPcs}
+                  unavailablePcs={unavailablePc}
+                />
+              ))}
+              {timeLoad && (
+                <div className="absolute z-10 w-full h-full bg-black/40 flex items-center justify-center">
+                  <Loader className="animate-spin mb-30" />
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              цагаа сонгон уу
+            </div>
+          )}
         </div>
 
         {selectedPcs.length > 0 && (
@@ -206,8 +243,12 @@ export default function Room() {
               <span>⏰ Дуусах цаг:</span>
               <span>{endTime}</span>
             </div>
-            <Button 
-              onClick={createBooking} 
+            <div className="flex gap-2">
+              <span>нийт дүн:</span>
+              <span>{selectedPcs.length * table[0].room.pcPricePerHour}</span>
+            </div>
+            <Button
+              onClick={createBooking}
               disabled={loading}
               className="w-full"
             >
