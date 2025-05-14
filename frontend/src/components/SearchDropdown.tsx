@@ -89,7 +89,7 @@ export default function SearchDropdown() {
 
         <Dialog.Content className="fixed inset-150 flex items-center  justify-center z-50 px-4">
           <div
-            className="w-full max-w-2xl bg-[#1f1f1f] rounded-xl p-4 shadow-lg absolute fixed top-60"
+            className="w-[95%] sm:w-full max-w-2xl bg-[#1f1f1f] rounded-xl p-4 shadow-lg fixed top-32 left-1/2 transform -translate-x-1/2 "
             style={{ boxShadow: "0 0 12px rgba(255, 255, 255, 0.3)" }}
           >
             <Dialog.Title asChild>

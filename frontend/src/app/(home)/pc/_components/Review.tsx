@@ -45,7 +45,7 @@ export const Review = ({ vendor }: { vendor: Vendor }) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="bg-white px-2 py-3 rounded-xl">
+      <DialogTrigger className="bg-white px-2 py-3 rounded-xl text-black">
         Open
       </DialogTrigger>
 

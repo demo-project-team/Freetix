@@ -7,7 +7,7 @@ import { FaInstagram, FaYoutube, FaFacebook } from "react-icons/fa";
 const Footer = () => {
   const router = useRouter();
   return (
-    <footer className="bg-zinc-900 text-white px-4 py-8 w-full shadow-md h-[200px]">
+    <footer className="bg-zinc-900 text-white px-4 py-8 w-full shadow-md h-auto">
       <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10 mt-[30px]">
         {/* Logo хэсэг */}
         <div className="items-center justify-center flex">
@@ -20,9 +20,6 @@ const Footer = () => {
         </div>
 
         <div className="text-center md:text-left">
-          <p className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00ffff] to-[#0066ff] drop-shadow-[0_0_25px rgba(0,255,255,0.8)] mb-4">
-            Сошиал хаягууд
-          </p>
           <ul className="flex flex-col md:flex-row gap-4 text-lg font-medium gap-10">
             <li>
               <a
