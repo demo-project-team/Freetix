@@ -14,7 +14,7 @@ export default function Home() {
   const { vendors, isLoading } = useUserVendor();
 
   return (
-    <div className="flex flex-col min-h-screen text-blue-400 to-indigo-500">
+    <div className="flex flex-col min-h-screen items-center text-blue-400 to-indigo-500">
       <div>
         <TerminalCard />
         <div className="absolute w-fit left-15 top-30 z-10 -rotate-25">
