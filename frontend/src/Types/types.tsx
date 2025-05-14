@@ -139,6 +139,7 @@ export enum RoomType {
   STAGE = "STAGE",
   FPS = "FPS",
 }
+ 
 export type City = {
   name: string;
   district: District[];

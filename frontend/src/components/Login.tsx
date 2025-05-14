@@ -29,7 +29,7 @@ export const Loginup = () => {
     const response = await signInRequest(values);
     if (response) {
       setLoading(false);
-      toast("Login succesful");
+      toast.success("Login succesful");
       refetchUser();
     }
     setLoading(false);

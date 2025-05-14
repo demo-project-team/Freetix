@@ -7,6 +7,7 @@ import {
   UserRegisterInput,
 } from "@/schemas/userSchema";
 import { Booking, User } from "@/Types/types";
+import { toast } from "sonner";
 export const singUpRequest = async (values: UserRegisterInput) => {
   try {
     const response = await axiosInstance.post(`/auth/sign-up`, values, {
@@ -16,6 +17,7 @@ export const singUpRequest = async (values: UserRegisterInput) => {
     return response;
   } catch (error) {
     console.log(error);
+    toast.error("Бүртгүүлэлт амжилтгүй")
   }
 };
 export const signInRequest = async (values: UserLoginInput) => {

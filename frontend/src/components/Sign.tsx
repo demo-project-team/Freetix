@@ -11,6 +11,7 @@ import { signUpSchema } from "@/schemas/userSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { singUpRequest } from "@/utils/request/authRequest"
 import { z } from "zod"
+import { toast } from "sonner"
 
 export const Sign = () => {
       const [loading, setLoading] = useState(false);
@@ -28,6 +29,7 @@ export const Sign = () => {
         setLoading(true);
         const response = await singUpRequest(values);
         if (response) {
+          toast('✅ Бүртгүүлэлт амжиллатай')
           setLoading(false);
         }
         setLoading(false);
@@ -96,7 +98,7 @@ export const Sign = () => {
                   type="submit"
                   className="mt-[20px] h-9 px-4 px-3 w-full py-2 cursor-bot-allowed"
                 >
-                  {loading && <Loader2 />}
+                  {loading && <Loader2 className="animate-spin"/>}
                   Continue
                 </Button>
               </form>
