@@ -28,10 +28,12 @@ import {
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useBooking } from "@/provider/BookingProvider";
 
 const Header = () => {
   const router = useRouter();
   const { user, refetchUser } = useUser();
+  const { booking } = useBooking();
   const { data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: getUser,
@@ -70,20 +72,48 @@ const Header = () => {
         {/* Desktop Items */}
         <div className="hidden md:flex items-center space-x-6 text-sm">
           <SearchDropdown />
-            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-              <DialogTrigger asChild>
-                <Button variant="outline">View</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogClose>X</DialogClose>
-                <DialogHeader>
-                  <DialogTitle>Edit profile</DialogTitle>
-                </DialogHeader>
-                <div>{user?.bookings?.status}</div>
-                <div>{user?.bookings?.paymentStatus}</div>
-              </DialogContent>
-            </Dialog>
-
+          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="relative">
+                Booking{" "}
+                {booking?.find((book) => book.status === "CONFIRMED") && (
+                  <div className="absolute flex items-center justify-center top-2 right-2 w-2 h-2 bg-green-400 text-sm rounded-full animate-pulse"></div>
+                )}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogClose>X</DialogClose>
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+              </DialogHeader>
+              {booking?.map((book) => (
+                <div
+                  key={book.id}
+                  className={`border ${
+                    book.status === "CANCELLED" && "border-red-400"
+                  } ${book.status === "CONFIRMED" && "border-green-400"} ${
+                    book.status === "COMPLETED" && "border-gray-400 bg-gray-300"
+                  } ${book.status === "PENDING" && "border-yellow-400"}`}
+                >
+                  <div>{book.status}</div>
+                  <div className="flex gap-2">
+                    Эхлэх:
+                    <div>{book.orderedTime[0].start}</div>
+                  </div>
+                  <div className="flex gap-2">
+                    Дуусах:
+                    <div>{book.orderedTime[0].end}</div>
+                  </div>
+                  <div>нийт дүн: {book.payment.amount}</div>
+                  <div>pcs : {book.pcs.length}</div>
+                  <div>
+                    <div>{book.orderedTime[0].vendor.name}</div>
+                    <div>{book.pcs[0].table.room.type}</div>
+                  </div>
+                </div>
+              ))}
+            </DialogContent>
+          </Dialog>
 
           {user ? (
             <div className="flex items-center space-x-9">

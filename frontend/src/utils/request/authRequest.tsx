@@ -6,7 +6,7 @@ import {
   UserLoginInput,
   UserRegisterInput,
 } from "@/schemas/userSchema";
-import { User } from "@/Types/types";
+import { Booking, User } from "@/Types/types";
 export const singUpRequest = async (values: UserRegisterInput) => {
   try {
     const response = await axiosInstance.post(`/auth/sign-up`, values, {
@@ -108,5 +108,14 @@ export const getUser = async ():Promise<User | null> => {
     console.log(error);
     return null
     
+  }
+}
+export const getBookings = async ():Promise<Booking[]> =>{
+  try {
+    const {data} = await axiosInstance.get('/user/booking')
+    return data.data
+  } catch (error) {
+    console.log(error);
+    return []
   }
 }

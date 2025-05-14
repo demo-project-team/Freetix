@@ -81,7 +81,9 @@ export const getRoom = async () => {
 };
 export const postTable = async (value: tableInput, roomId: string | null) => {
   try {
-    const response = await axiosInstance.post(`/room/table/${roomId}`, value);
+    const response = await axiosInstance.post(`/room/table/${roomId}`, value, {
+      withCredentials : true
+    });
     return response;
   } catch (error) {
     console.log(error);
@@ -89,7 +91,9 @@ export const postTable = async (value: tableInput, roomId: string | null) => {
 };
 export const getTable = async (roomId: string | null): Promise<Table[]> => {
   try {
-    const { data } = await axiosInstance.get(`/room/table/${roomId}`);
+    const { data } = await axiosInstance.get(`/room/table/${roomId}`, {
+      withCredentials : true
+    });
     return data.table;
   } catch (error) {
     console.log(error);

@@ -1,35 +1,32 @@
-// import cron from 'node-cron';
-// import { prisma } from  "../lib/prisma"; // Prisma client замыг тохируулна
+import cron from 'node-cron';
+import { prisma } from '../lib/prisma'; // Prisma client замыг тохируулна
 
-// export function startBookingStatusCron() {
-//   cron.schedule('*/1 * * * *', async () => {
-//     const now = new Date();
+export function startBookingStatusCron() {
+  cron.schedule('*/1 * * * *', async () => {
+    const now = new Date();
 
-//     try {
-//       const completedBookings = await prisma.booking.findMany({
-//         where: {
-//           endTime: { lt: now },
-//           status: { in: ['PENDING', 'CONFIRMED'] },
-//         },
-//         include: { pcs: true },
-//       });
+    try {
+      await prisma.$transaction(async (tx) => {
+        const timeSchedules = await tx.timeSchedule.findMany({
+          where: {
+            end: { lt: now },
+          },
+        });
+        const bookingIds = timeSchedules.map((t) => t.bookingId);
+        if (bookingIds.length > 0) {
+          await tx.booking.updateMany({
+            where: {
+              id: { in: bookingIds },
+            },
+            data: { status: 'COMPLETED' },
+          });
+        }
+        console.log(`✔ Updated ${bookingIds.length} bookings and their PCs.`);
+      });
+    } catch (err) {
+      console.error('❌ Cron job error:', err);
+    }
+  });
 
-//       for (const booking of completedBookings) {
-//         await prisma.pC.updateMany({
-//           where: { id: { in: booking.pcs.map((pc) => pc.id) } },
-//           data: { status: 'AVAILABLE' },
-//         });
-
-//         await prisma.booking.update({
-//           where: { id: booking.id },
-//           data: { status: 'COMPLETED' },
-//         });
-//       }
-
-//       console.log(`✔ Updated ${completedBookings.length} bookings and their PCs.`);
-//     } catch (err) {
-//       console.log('❌Cron job error:', err);
-//     }
-//   });
-//   console.log('🔁 Booking status cron started.');
-// }
+  console.log('🔁 Booking status cron started.');
+}

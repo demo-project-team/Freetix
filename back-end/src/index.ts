@@ -20,6 +20,7 @@ import { registerSocketHandlers } from './socket';
 import { ReviewRouter } from './routes/review.route';
 import { UserRouter } from './routes/user.route';
 import { startBookingCancelCron } from './jobs/paymentStatusCron';
+import { startBookingStatusCron } from './jobs/bookingStatusCron';
 
 const app = express();
 const server = http.createServer(app);
@@ -92,6 +93,7 @@ app.get('/data-deletion', (req, res) => {
 
 registerSocketHandlers(io);
 startBookingCancelCron()
+startBookingStatusCron()
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

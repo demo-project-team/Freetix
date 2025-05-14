@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { generateTimeOptions } from "@/utils/getTime";
+import { useBooking } from "@/provider/BookingProvider";
 
 const isTimeBefore = (time1:string, time2:string) => {
   if (!time1 || !time2) return false;
@@ -30,6 +31,7 @@ const isTimeBefore = (time1:string, time2:string) => {
 
 export default function Room() {
   const { table, isLoading } = useTable();
+  const {refetchBooking} = useBooking()
   const [roomId] = useQueryState("roomid");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -67,6 +69,7 @@ export default function Room() {
       });
       
       if (response) {
+        refetchBooking()
         router.push(`/payment?payid=${response.pay.id}`);
       }
     } catch (error) {

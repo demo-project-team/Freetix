@@ -12,6 +12,7 @@ export const signInOrg = async (req: Request, res: Response): Promise<void> => {
         OR: [
           { phone: phoneOrOrganizationRegister },
           { OrganizationRegister: phoneOrOrganizationRegister },
+          { email : phoneOrOrganizationRegister}
         ],
       },
     });
