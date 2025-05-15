@@ -1,6 +1,6 @@
 import axiosInstance from "@/lib/axios";
-import { addressInput } from "@/schemas/schemas";
 import {
+  adminInput,
   OrganizationInput,
   OrganizationLoginInput,
   statusInput,
@@ -125,7 +125,7 @@ export const getBookings = async (): Promise<Booking[]> => {
     return [];
   }
 };
-export const adminLogin = async (value: addressInput) => {
+export const adminLogin = async (value: adminInput) => {
   try {
     const { data } = await axiosInstance.post("/auth/admin", value);
     return data;
