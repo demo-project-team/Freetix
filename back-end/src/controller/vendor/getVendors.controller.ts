@@ -8,7 +8,8 @@ export const getVendor = async (req: Request, res: Response): Promise<void> => {
       include: {
         reviews: true,
         address : true,
-        rooms :true
+        rooms :true,
+        images : true
       },
     });
     res.status(200).json({ data: vendors, succes: true });

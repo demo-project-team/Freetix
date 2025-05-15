@@ -21,6 +21,7 @@ model User {
     createdAt    DateTime      @default(now())
     updatedAt    DateTime      @updatedAt
     notifcations Notifcation[]
+    role         Role          @default(USER)
 }
 
 model Vendor {
@@ -272,4 +273,9 @@ model Events {
     description String
     start       DateTime
     end         DateTime
+}
+
+enum Role {
+    ADMIN
+    USER
 }

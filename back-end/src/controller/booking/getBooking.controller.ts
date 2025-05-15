@@ -7,6 +7,10 @@ export const getBooking = async (req: Request, res: Response) => {
     const booking = await prisma.booking.findMany({
       where: {
         userId,
+        orderedTime: { some: {} },
+        NOT : {
+          status : "PENDING" 
+        }
       },
       include: {
         payment: {

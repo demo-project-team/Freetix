@@ -18,6 +18,8 @@ import { getUserProfile } from '../controller/auth/getUserPorifile.controller';
 import { logoutUser } from '../controller/auth/logoutUser.controller';
 import { logoutVendor } from '../controller/auth/logoutVendor.controller';
 import { signUpOrgMany } from '../controller/auth/postManyUser';
+import { admin, adminLogin} from '../controller/auth/adminLogin.controller';
+import { adminMiddleware } from '../middleware/auth/admin';
 
 declare global {
   namespace Express {
@@ -139,3 +141,5 @@ AuthRouter.get('/profile', getUserProfile);
 AuthRouter.post('/logout/user', logoutUser)
 AuthRouter.post('/logout/vendor', logoutVendor)
 AuthRouter.post('/createmany',signUpOrgMany)
+AuthRouter.get('/admin', adminMiddleware, admin)
+AuthRouter.post('/admin', adminLogin)

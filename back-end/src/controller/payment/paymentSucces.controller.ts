@@ -48,9 +48,7 @@ export const paymentSuccess = async (req: Request, res: Response) => {
         },
       },
     });
-    
     await sendEmail(payment.booking.user.email, `${payment.amount}₮ төлбөр амжилттай.`);
-
     res.status(200).json({ data: payment });
   } catch (error) {
     console.error(error);

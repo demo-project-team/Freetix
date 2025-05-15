@@ -1,8 +1,10 @@
 'use client'
+import axiosInstance from "@/lib/axios";
 import { Organization } from "@/Types/types";
 import { getOrg } from "@/utils/request/authRequest";
 import { useQuery } from "@tanstack/react-query";
-import { createContext, ReactNode, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 type OrgContextType = {
   organization: Organization[];
   refetchorganization: () => void;
@@ -10,6 +12,20 @@ type OrgContextType = {
 
 const OrgContext = createContext<OrgContextType | null>(null);
 export const OrganizationProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter()
+  const getAdminAuth = async () => {
+    try {
+         const res = await axiosInstance.get('/auth/admin')
+    return res 
+    } catch (error) {
+      console.log(error);
+      router.push('/login')
+    }
+  }
+  useEffect(()=>{
+    getAdminAuth()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const { data: organization, refetch: refetchorganization } = useQuery({
     queryKey: ["organization"],
     queryFn: getOrg,
