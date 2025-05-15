@@ -39,3 +39,9 @@ export const statusSchema = z.object({
 });
 
 export type statusInput = z.infer<typeof statusSchema>
+
+export const adminSchema = z.object({
+  email : z.string().email(),
+  password : z.string()
+})
+export type adminInput = z.infer<typeof adminSchema>
