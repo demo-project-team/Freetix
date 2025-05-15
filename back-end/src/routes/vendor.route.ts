@@ -13,6 +13,7 @@ import { addImage } from '../controller/vendor/addImage.controller';
 import { getUnavailableTime } from '../controller/time/putTime.controller';
 import { putImage } from '../controller/vendor/putImg.controller';
 import { getImage } from '../controller/vendor/getImage.controller';
+import { getBookingVendor } from '../controller/booking/getBookingVendor.controller';
 
 export const VendorRouter = express.Router();
 const vendorScema = z.object({
@@ -49,4 +50,5 @@ VendorRouter.put('/', organizationToken, validate(vendorScema), putVendor);
 VendorRouter.post('/image', organizationToken, validate(imageSchema), addImage);
 VendorRouter.put('/image/:id', organizationToken, putImage);
 VendorRouter.get('/image', organizationToken, getImage);
+VendorRouter.get('/booking', organizationToken, getBookingVendor)
 

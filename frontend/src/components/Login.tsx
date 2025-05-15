@@ -3,7 +3,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { FacebookIcon, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { loginSchema, UserLoginInput } from "@/schemas/userSchema";
@@ -40,9 +40,9 @@ export const Loginup = () => {
         ? "https://freetix-d0gf.onrender.com/auth/google"
         : "http://localhost:5000/auth/google";
   };
-  const handleFacebookLogin = () => {
-    window.location.href = "https://freetix-d0gf.onrender.com/auth/facebook";
-  };
+  // const handleFacebookLogin = () => {
+  //   window.location.href = "https://freetix-d0gf.onrender.com/auth/facebook";
+  // };
   return (
     <TabsContent value="НЭВТРЭХ" className="flex flex-col gap-3">
       <FormProvider {...form}>
@@ -90,9 +90,9 @@ export const Loginup = () => {
         {" "}
         <GoogleLogo /> sign in with google
       </Button>
-      <Button onClick={handleFacebookLogin} className="flex w-full">
+      {/* <Button onClick={handleFacebookLogin} className="flex w-full">
         <FacebookIcon /> sign in with facebook
-      </Button>
+      </Button> */}
     </TabsContent>
   );
 };

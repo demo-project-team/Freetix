@@ -6,7 +6,7 @@ import {
   tableInput,
   vendorInput,
 } from "@/schemas/schemas";
-import { City, District, Image, Table, Vendor } from "@/Types/types";
+import { Booking, City, District, Image, Table, Vendor } from "@/Types/types";
 import { toast } from "sonner";
 export const getVendor = async (): Promise<Vendor[]> => {
   try {
@@ -186,6 +186,16 @@ export const getImage = async () :Promise<Image[] | null> => {
   } catch (error) {
     console.log(error);
     return null
+    
+  }
+}
+export const getBookingVendor = async () :Promise<Booking[]> => {
+  try {
+    const {data} = await axiosInstance.get(`/vendor/booking`)
+    return data.data
+  } catch (error) {
+    console.log(error);
+    return []
     
   }
 }

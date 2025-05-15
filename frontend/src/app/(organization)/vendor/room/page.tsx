@@ -20,7 +20,7 @@ const Home = () => {
       </Button>
       <div>
         <AddTable />
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 gap-10">
           {table.map((tb, i) => (
             <div key={i} >
               <PCs pcs={tb.pcs}  />
