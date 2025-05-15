@@ -3,14 +3,17 @@ import React from "react";
 type GlowGlassCardProps = {
   children: React.ReactNode;
   className?: string;
+  onClick? : () => void
 };
 
 const GlowGlassCard: React.FC<GlowGlassCardProps> = ({
   children,
   className = "",
+  onClick 
 }) => {
   return (
     <div
+    onClick={onClick}
       className={`relative rounded-xl border border-white/10 text-white overflow-hidden 
         bg-white/5 backdrop-blur-md p-6 
         shadow-[inset_1px_1px_2px_rgba(255,255,255,0.05),_8px_8px_30px_rgba(0,0,0,0.4)]

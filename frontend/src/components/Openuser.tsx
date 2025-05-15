@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Dialog,
   DialogContent,
@@ -20,25 +21,23 @@ export const OpenUser = () => {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex items-center justify-center text-black gap-0.5 rounded-sm bg-white cursor-pointer py-0.5 px-2 font-medium hover:opacity-60 transition-all duration-300">
+      <DialogTrigger className="flex items-centerjustify-center text-black gap-0.5 rounded-sm bg-white cursor-pointer py-0.5 px-2 font-medium hover:opacity-60 transition-all duration-300">
         <User2 className="" width={14} />
         Login
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-full">
         <X onClick={HandleClose} />
         <DialogHeader>
           <DialogTitle>
-            <div className="p-6">
-              <div className="flex items-center">
-                <p>logohere</p>
-                <span className="text-white font-bold text-xl">Е-СЛОТД</span>
-                <span className="text-white font-bold text-xl">.</span>
+            <div className="p-6 w-full">
+              <div className="flex items-center justify-center">
+                 <img src="eslot-logo.png" alt="" className="w-[125px] h-[25px]" />
                 <span className="text-white ml-2 ">Тавтай Морилно уу.</span>
               </div>
-              <div className="mt-8 border-b border-gray-600">
-                <div className="flex gap-10">
-                  <Tabs defaultValue="account">
-                    <TabsList className="w-[420px]">
+              <div className="mt-8 border-b w-full border-gray-600">
+                <div className="flex w-full gap-10">
+                  <Tabs defaultValue="account" className="w-full">
+                    <TabsList className="w-full">
                       <TabsTrigger
                         value="НЭВТРЭХ"
                         className="pb-1 px-1 text-orange-500 border-b-2  flex items-center"

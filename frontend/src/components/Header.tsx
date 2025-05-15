@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { OpenUser } from "./Openuser";
 import { useUser } from "@/provider/UserProvider";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, X } from "lucide-react";
 import { getUser, logoutUser } from "@/utils/request/authRequest";
 import SearchDropdown from "./SearchDropdown";
 import { SignUp } from "./Admin";
@@ -33,7 +33,7 @@ import { useBooking } from "@/provider/BookingProvider";
 const Header = () => {
   const router = useRouter();
   const { user, refetchUser } = useUser();
-  const { booking } = useBooking();
+  const { booking, refetchBooking } = useBooking();
   const { data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: getUser,
@@ -41,6 +41,7 @@ const Header = () => {
   const handlelogOut = async () => {
     await logoutUser();
     await refetchUser();
+    refetchBooking();
     setOpenDialog(false);
   };
 
@@ -58,7 +59,6 @@ const Header = () => {
       }}
     >
       <div className="max-w-7xl px-4 mx-auto flex justify-between items-center w-full">
-        {/* Logo */}
         <motion.div
           className="flex items-center space-x-2 cursor-pointer"
           initial={{ opacity: 0, y: -10 }}
@@ -68,52 +68,56 @@ const Header = () => {
         >
           <img src="eslot-logo.png" alt="" className="w-[145px] h-[35px]" />
         </motion.div>
-
-        {/* Desktop Items */}
         <div className="md:flex items-center space-x-6 text-sm">
           <SearchDropdown />
-          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="relative">
-                Booking{" "}
-                {booking?.find((book) => book.status === "CONFIRMED") && (
-                  <div className="absolute flex items-center justify-center top-2 right-2 w-2 h-2 bg-green-400 text-sm rounded-full animate-pulse"></div>
-                )}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogClose>X</DialogClose>
-              <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-              </DialogHeader>
-              {booking?.map((book) => (
-                <div
-                  key={book.id}
-                  className={`border ${
-                    book.status === "CANCELLED" && "border-red-400"
-                  } ${book.status === "CONFIRMED" && "border-green-400"} ${
-                    book.status === "COMPLETED" && "border-gray-400 bg-gray-300"
-                  } ${book.status === "PENDING" && "border-yellow-400"}`}
-                >
-                  <div>{book.status}</div>
-                  <div className="flex gap-2">
-                    Эхлэх:
-                    <div>{book.orderedTime[0].start}</div>
+          {user && (
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="relative">
+                  Booking{" "}
+                  {booking?.find((book) => book.status === "CONFIRMED") && (
+                    <div className="absolute flex items-center justify-center top-2 right-2 w-2 h-2 bg-green-400 text-sm rounded-full animate-pulse"></div>
+                  )}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogClose className="right-2 top-2 absolute">
+                  <X />
+                </DialogClose>
+                <DialogHeader>
+                  <DialogTitle>Bookings</DialogTitle>
+                </DialogHeader>
+                {booking?.length === 0 && <div>Захиалга хийгдээгүй байна</div>}
+                {booking?.map((book) => (
+                  <div
+                    key={book.id}
+                    className={`border ${
+                      book.status === "CANCELLED" && "border-red-400"
+                    } ${book.status === "CONFIRMED" && "border-green-400"} ${
+                      book.status === "COMPLETED" &&
+                      "border-gray-400 bg-gray-300"
+                    } ${book.status === "PENDING" && "border-yellow-400"}`}
+                  >
+                    <div>{book.status}</div>
+                    <div className="flex gap-2">
+                      Эхлэх:
+                      <div>{book.orderedTime[0].start}</div>
+                    </div>
+                    <div className="flex gap-2">
+                      Дуусах:
+                      <div>{book.orderedTime[0].end}</div>
+                    </div>
+                    <div>нийт дүн: {book.payment.amount}</div>
+                    <div>pcs : {book.pcs.length}</div>
+                    <div>
+                      <div>{book.orderedTime[0].vendor.name}</div>
+                      <div>{book.pcs[0].table.room.type}</div>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    Дуусах:
-                    <div>{book.orderedTime[0].end}</div>
-                  </div>
-                  <div>нийт дүн: {book.payment.amount}</div>
-                  <div>pcs : {book.pcs.length}</div>
-                  <div>
-                    <div>{book.orderedTime[0].vendor.name}</div>
-                    <div>{book.pcs[0].table.room.type}</div>
-                  </div>
-                </div>
-              ))}
-            </DialogContent>
-          </Dialog>
+                ))}
+              </DialogContent>
+            </Dialog>
+          )}
 
           {user ? (
             <div className="flex items-center space-x-9">

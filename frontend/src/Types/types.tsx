@@ -73,7 +73,7 @@ export type Booking = {
   pcs: PC[];
   startTime: Date;
   endTime: Date;
-  user : User[]
+  user : User
   orderedTime : Time[]
   payment : Payment
 

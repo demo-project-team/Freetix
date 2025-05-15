@@ -8,6 +8,7 @@ import VendorCardSkelton from "./_components/VendorCardSkelton";
 import TerminalCard from "@/components/TerminalCard";
 import FunnyEye from "@/components/FunnyEye";
 import Footer from "@/components/Footer";
+import GlowGlassCard from "@/components/TopGlowCard";
 
 export default function Home() {
   const router = useRouter();
@@ -29,40 +30,39 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-16">
             <span>💸</span>{" "}
-           <span className="bg-gradient-to-r from-[#00ffff] to-[#0066ff] drop-shadow-[0_0_25px_rgba(0,255,255,0.8)] bg-clip-text text-transparent">
-  Компьютер Тоглоомын Газрууд
-</span>
-
+            <span className="bg-gradient-to-r from-[#00ffff] to-[#0066ff] drop-shadow-[0_0_25px_rgba(0,255,255,0.8)] bg-clip-text text-transparent">
+              Компьютер Тоглоомын Газрууд
+            </span>
           </h2>
 
           {!isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {vendors.map((vendor) => (
-                <div
+              {vendors.slice(0, 3).map((vendor) => (
+                <GlowGlassCard
                   onClick={() => router.push(`/pc?vendorid=${vendor.id}`)}
                   key={vendor.id}
-                  className="bg-white bg-opacity-10 rounded-2xl shadow-2xl p-8 hover:scale-105 hover:bg-opacity-20 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
+                  className="rounded-2xl  shadow-2xl p-8 hover:scale-105 hover:bg-opacity-20 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300"
                 >
                   <img
                     src={vendor.imageUrl ? vendor.imageUrl : "pczurag.jpg"}
                     alt="Gaming Room 1"
-                    className="rounded-xl mb-4 object-cover h-64 w-full"
+                    className="rounded-xl mb-4 object-cover h-64 w-full border-2"
                   />
                   <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
                     {vendor.name}
                   </h3>
-                  <p className="mb-2 text-lg text-black">
+                  <p className="mb-2 text-lg text-white/40">
                     <span>🕐</span> Цагийн үнэ:{" "}
                     <span className="font-bold">5,000₮</span>
                   </p>
-                  <p className="mb-6 text-lg text-black">
+                  <p className="mb-6 text-lg text-white/40">
                     <span>🌙</span> Night pass:{" "}
                     <span className="font-bold">40,000₮</span>
                   </p>
                   <button className="inline-block mt-4 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent font-bold py-2 px-6 rounded-full border-2 border-blue-400 hover:scale-105 hover:shadow-[0_0_15px_#60a5fa] transition-all duration-300">
                     Захиалга өгөх
                   </button>
-                </div>
+                </GlowGlassCard>
               ))}
             </div>
           ) : (
@@ -82,7 +82,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
