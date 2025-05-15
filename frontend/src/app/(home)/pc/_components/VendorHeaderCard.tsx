@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MapPin, ClockAlert, ChevronLeft, Heart } from "lucide-react";
+import { MapPin, ClockAlert, ChevronLeft } from "lucide-react";
 import { Vendor } from "@/Types/types";
+import TakeTime from "./TakeTime";
 
 type Props = {
   vendor: Vendor;
@@ -32,9 +33,9 @@ export default function VendorHeaderCard({ vendor }: Props) {
       </button>
 
       {/* Favorite Button */}
-      <button className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white transition hover:shadow hover:bg-gradient-to-tl to-blue-950">
+      {/* <button className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white transition hover:shadow hover:bg-gradient-to-tl to-blue-950">
         <Heart className="w-5 h-5 stroke-[2.5] hover:text-pink-700" />
-      </button>
+      </button> */}
 
       {/* Bottom Card */}
       <div className="absolute bottom-0 left-0 w-full bg-white bg-opacity-90 backdrop-blur-sm p-4 md:p-6 flex items-center gap-4 shadow-inner">
@@ -66,9 +67,7 @@ export default function VendorHeaderCard({ vendor }: Props) {
           </div>
         </div>
         <div>
-          <button className="bg-black text-white text-sm px-18 py-2.5 rounded hover:bg-gradient-to-tl to-blue-950 font-semibold">
-            Цаг авах
-          </button>
+        <TakeTime vendor={vendor}/>
         </div>
       </div>
     </div>

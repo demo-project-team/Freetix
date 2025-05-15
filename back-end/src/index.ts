@@ -36,7 +36,6 @@ app.use(
       process.env.FRONT_URL ? process.env.FRONT_URL : 'http://localhost:3000',
       'http://localhost:3000',
       'http://localhost:3001',
-      'http://192.168.20.188:3000',
     ],
     credentials: true,
   }),

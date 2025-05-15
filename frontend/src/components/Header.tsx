@@ -46,6 +46,7 @@ const Header = () => {
   };
 
   const [openDialog, setOpenDialog] = useState(false);
+console.log(booking);
 
   return (
     <header
@@ -88,7 +89,7 @@ const Header = () => {
                   <DialogTitle>Bookings</DialogTitle>
                 </DialogHeader>
                 {booking?.length === 0 && <div>Захиалга хийгдээгүй байна</div>}
-                {booking?.map((book) => (
+                {booking?.filter((book)=>book.orderedTime.length !== 0).map((book) => (
                   <div
                     key={book.id}
                     className={`border ${
@@ -98,14 +99,14 @@ const Header = () => {
                       "border-gray-400 bg-gray-300"
                     } ${book.status === "PENDING" && "border-yellow-400"}`}
                   >
-                    <div>{book.status}</div>
+                    <div>{book?.status}</div>
                     <div className="flex gap-2">
                       Эхлэх:
-                      <div>{book.orderedTime[0].start}</div>
+                      <div>{book?.orderedTime[0].start}</div>
                     </div>
                     <div className="flex gap-2">
                       Дуусах:
-                      <div>{book.orderedTime[0].end}</div>
+                      <div>{book?.orderedTime[0].end}</div>
                     </div>
                     <div>нийт дүн: {book.payment.amount}</div>
                     <div>pcs : {book.pcs.length}</div>

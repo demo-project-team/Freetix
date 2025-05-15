@@ -196,6 +196,5 @@ export const getBookingVendor = async () :Promise<Booking[]> => {
   } catch (error) {
     console.log(error);
     return []
-    
   }
 }

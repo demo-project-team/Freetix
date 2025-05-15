@@ -74,6 +74,7 @@ export default function Room() {
         end: endUTC,
       });
       if (
+        response.data &&
         response.response.data.message === "Access denied. No token provided."
       ) {
         console.log(response.response.data);
@@ -81,14 +82,13 @@ export default function Room() {
         setLoading(false);
         return;
       }
-      if (response) {
-        refetchBooking();
+      console.log(response);
+      
+      if (response.pay) {
         router.push(`/payment?payid=${response.pay.id}`);
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.log(error.response);
     } finally {
+      await refetchBooking();
       setLoading(false);
     }
   };
@@ -206,6 +206,35 @@ export default function Room() {
                 "Check time"
               )}
             </Button>
+            {selectedPcs.length > 0 && (
+              <div className="mt-4 p-4 border rounded  flex flex-col gap-4 shadow-lg">
+                <h3 className="text-lg font-semibold">Захиалга хийх</h3>
+                <div className="flex gap-2">
+                  <span>⏰ Эхлэх цаг:</span>
+                  <span>{startTime}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span>⏰ Дуусах цаг:</span>
+                  <span>{endTime}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span>нийт дүн:</span>
+                  <span>
+                    {selectedPcs.length *
+                      table[0].room.pcPricePerHour *
+                      (Number(endTime.slice(0, 2)) -
+                        Number(startTime.slice(0, 2)))}
+                  </span>
+                </div>
+                <Button
+                  onClick={createBooking}
+                  disabled={loading}
+                  className="w-full"
+                >
+                  {loading ? "Processing..." : "Захиалга хийх"}
+                </Button>
+              </div>
+            )}
           </div>
 
           {unavailablePc ? (
@@ -231,31 +260,6 @@ export default function Room() {
             </div>
           )}
         </div>
-
-        {selectedPcs.length > 0 && (
-          <div className="mt-4 p-4 border rounded flex flex-col gap-4 shadow-lg">
-            <h3 className="text-lg font-semibold">Захиалга хийх</h3>
-            <div className="flex gap-2">
-              <span>⏰ Эхлэх цаг:</span>
-              <span>{startTime}</span>
-            </div>
-            <div className="flex gap-2">
-              <span>⏰ Дуусах цаг:</span>
-              <span>{endTime}</span>
-            </div>
-            <div className="flex gap-2">
-              <span>нийт дүн:</span>
-              <span>{selectedPcs.length * table[0].room.pcPricePerHour}</span>
-            </div>
-            <Button
-              onClick={createBooking}
-              disabled={loading}
-              className="w-full"
-            >
-              {loading ? "Processing..." : "Захиалга хийх"}
-            </Button>
-          </div>
-        )}
       </GlowGlassCard>
     </div>
   );

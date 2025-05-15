@@ -1,4 +1,5 @@
 import axiosInstance from "@/lib/axios";
+import { addressInput } from "@/schemas/schemas";
 import {
   OrganizationInput,
   OrganizationLoginInput,
@@ -17,7 +18,7 @@ export const singUpRequest = async (values: UserRegisterInput) => {
     return response;
   } catch (error) {
     console.log(error);
-    toast.error("Бүртгүүлэлт амжилтгүй")
+    toast.error("Бүртгүүлэлт амжилтгүй");
   }
 };
 export const signInRequest = async (values: UserLoginInput) => {
@@ -80,7 +81,7 @@ export const getUserPublicProfile = async () => {
       withCredentials: true,
     });
     console.log(data);
-    
+
     return data.data;
   } catch (error) {
     console.log(error);
@@ -89,35 +90,46 @@ export const getUserPublicProfile = async () => {
 };
 export const logoutUser = async () => {
   try {
-    const response = await axiosInstance.post("/auth/logout/user",{}, {
-      withCredentials: true,
-    });
+    const response = await axiosInstance.post(
+      "/auth/logout/user",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
     console.log(response);
   } catch (error) {
     console.log(error);
     return null;
   }
 };
-export const getUser = async ():Promise<User | null> => {
+export const getUser = async (): Promise<User | null> => {
   try {
-    const {data} = await axiosInstance.get(`/user`, {
-      withCredentials: true
-    })
+    const { data } = await axiosInstance.get(`/user`, {
+      withCredentials: true,
+    });
     console.log(data);
-    
-    return data.user
+
+    return data.user;
   } catch (error) {
     console.log(error);
-    return null
-    
+    return null;
   }
-}
-export const getBookings = async ():Promise<Booking[]> =>{
+};
+export const getBookings = async (): Promise<Booking[]> => {
   try {
-    const {data} = await axiosInstance.get('/user/booking')
-    return data.data
+    const { data } = await axiosInstance.get("/user/booking");
+    return data.data;
   } catch (error) {
     console.log(error);
-    return []
+    return [];
   }
-}
+};
+export const adminLogin = async (value: addressInput) => {
+  try {
+    const { data } = await axiosInstance.post("/auth/admin", value);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
