@@ -34,7 +34,10 @@ export default function Home() {
   if (!organization) return;
   return (
     <div className="flex gap-8 flex-wrap">
-      {organization.map((org, i) => (
+      {organization.filter((org)=>org.request === "PENDING").map((org, i) => (
+        <TableCont key={i} org={org} />
+      ))}
+       {organization.filter((org)=>org.request === "APPROVED").map((org, i) => (
         <TableCont key={i} org={org} />
       ))}
       <div className="mb-4">

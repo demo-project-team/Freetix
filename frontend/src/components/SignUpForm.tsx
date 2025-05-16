@@ -42,6 +42,13 @@ export const SignUpForm = () => {
     }
     setLoading(false);
   };
+  const demo = ()=> {
+    form.setValue('email', "exampleorg@gmail.com")
+    form.setValue('name', "exampleorg")
+    form.setValue('phone', "88998899")
+    form.setValue('password', '12345678')
+    form.setValue('OrganizationRegister', "UO0012")
+  }
   return (
     <TabsContent value="БҮРТГҮҮЛЭХ">
       <FormProvider {...form}>
@@ -54,7 +61,7 @@ export const SignUpForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <Label>UserName</Label>
+                <Label>Name</Label>
                 <FormControl>
                   <Input {...field} placeholder="Enter organization name" />
                 </FormControl>
@@ -95,7 +102,7 @@ export const SignUpForm = () => {
               <FormItem>
                 <Label>Password</Label>
                 <FormControl>
-                  <Input {...field} type="password" />
+                  <Input {...field} type="password" placeholder="enter password"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,6 +130,7 @@ export const SignUpForm = () => {
             Continue
           </Button>
         </form>
+        <Button onClick={demo} className="mt-5">for demo</Button>
       </FormProvider>
     </TabsContent>
   );

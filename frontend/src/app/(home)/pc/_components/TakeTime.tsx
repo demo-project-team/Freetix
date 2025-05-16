@@ -46,7 +46,7 @@ const TakeTime = ({ vendor }: { vendor: Vendor }) => {
                   .map((room) => (
                     <div
                       key={room.id}
-                      className="cursor-pointer bg-gray-50 hover:bg-gray-100 border border-gray-300 p-6 rounded-xl shadow transition"
+                      className="cursor-pointer bg-gray-500 hover:bg-gray-100 border border-gray-300 p-6 rounded-xl shadow transition"
                       onClick={() => router.push(`room?roomid=${room.id}`)}
                     >
                       <h2 className="text-xl text-green-600 flex items-center justify-center mb-2">Цагийн үнэ: {room.pcPricePerHour}</h2>

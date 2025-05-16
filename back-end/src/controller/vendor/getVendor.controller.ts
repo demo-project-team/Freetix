@@ -11,6 +11,7 @@ export const getOneVendor = async (req: Request, res: Response): Promise<void> =
         },
         include : {
             rooms : true,
+            images : true,
             reviews : {
               include : {
                 user : {

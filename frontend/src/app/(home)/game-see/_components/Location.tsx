@@ -25,7 +25,7 @@ export default function VendorMap({ vendors }: { vendors: Vendor[] }) {
       center={[47.9188, 106.9177]}
       zoom={13}
       className="rounded-lg flex z-10 "
-      style={{ height: "100%", width: "100%" }}
+      style={{ height: '400px', width: "500px" }}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       {vendors

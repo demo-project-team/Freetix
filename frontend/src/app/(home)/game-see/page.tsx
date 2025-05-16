@@ -42,7 +42,7 @@ export default function GameSee() {
       <div className="container max-w-7xl mx-auto -mt-6">
         <TopGlowCard>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[60px]">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-[60px]">
             {vendors.map((vendor) => (
               <div
                 key={vendor.id}

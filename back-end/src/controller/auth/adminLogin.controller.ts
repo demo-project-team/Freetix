@@ -16,6 +16,7 @@ export const adminLogin = async (req: Request, res: Response) => {
     const user = await prisma.user.findFirst({
       where: {
         email,
+        role : "ADMIN"
       },
     });
     if (!user || !user.passwordHash) {

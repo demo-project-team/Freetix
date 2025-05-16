@@ -1,4 +1,5 @@
 import { Vendor } from "@/Types/types";
+import { Mail, Phone } from "lucide-react";
 import styled from "styled-components";
 
 const BackCard = ({ vendor }: { vendor: Vendor }) => {
@@ -10,26 +11,40 @@ const BackCard = ({ vendor }: { vendor: Vendor }) => {
             <div className="back-content">
               <img
                 src={vendor.imageUrl || "/next.svg"}
-                className="w-[120px] h-[80px] object-cover rounded"
+                className="w-full h-[80px] object-cover rounded"
                 alt="vendor"
               />
               <strong>{vendor.name}</strong>
-              <p>{vendor.email || "Имэйл байхгүй байна."}</p>
-              <p>{vendor.phone || "Утас байхгүй байна."}</p>
+              <div>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  {" "}
+                  <Mail size={16} />
+                </div>
+                <div>{vendor.email}</div>
+              </div>
+               <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  {" "}
+                  <Phone size={16} />
+                </div>
+                    <p>{vendor.phone || "Утас байхгүй байна."}</p>
+              </div>
               <p>{vendor.address?.street || "Хаяг оруулаагүй байна."}</p>
-              <p>
+              </div>
+              {/* <p>
                 {vendor.createdAt
                   ? `Бүртгэгдсэн: ${vendor.createdAt.toString().split("T")[0]}`
                   : "Бүртгэгдээгүй байна."}
-              </p>
-              <p>
+              </p> */}
+              {/* <p>
                 {vendor.rooms.filter((room) => room.type === "VIP")[0]
                   ?.pcPricePerHour || "Үнэ оруулаагүй байна."}
               </p>
               <p>
                 {vendor.rooms.filter((room) => room.type === "VVIP")[0]
                   ?.pcPricePerHour || "Үнэ оруулаагүй байна."}
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
@@ -43,7 +58,6 @@ export default BackCard;
 const StyledWrapper = styled.div`
   .card {
     overflow: visible;
-    width: 190px;
     height: 254px;
   }
 

@@ -22,6 +22,7 @@ import { generateTimeOptions } from "@/utils/getTime";
 import { useBooking } from "@/provider/BookingProvider";
 import { useUser } from "@/provider/UserProvider";
 import { Loader, Loader2 } from "lucide-react";
+import Reminder from "./_components/Reminder";
 
 const isTimeBefore = (time1: string, time2: string) => {
   if (!time1 || !time2) return false;
@@ -42,6 +43,7 @@ export default function Room() {
   const [date, setDate] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
+  const [isOpen, setIsOpen] = useState(false);
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
   const [unavailablePc, setUnavailablePc] = useState<Time[]>();
@@ -73,19 +75,18 @@ export default function Room() {
         start: startUTC,
         end: endUTC,
       });
+         if (response.pay) {
+        router.push(`/payment?payid=${response.pay.id}`);
+      }
       if (
-        response.data &&
+        response.response.data &&
         response.response.data.message === "Access denied. No token provided."
       ) {
         console.log(response.response.data);
+       await setIsOpen(false)
         setOpen(true);
         setLoading(false);
         return;
-      }
-      console.log(response);
-      
-      if (response.pay) {
-        router.push(`/payment?payid=${response.pay.id}`);
       }
     } finally {
       await refetchBooking();
@@ -226,13 +227,12 @@ export default function Room() {
                         Number(startTime.slice(0, 2)))}
                   </span>
                 </div>
-                <Button
+                <Reminder
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
                   onClick={createBooking}
-                  disabled={loading}
-                  className="w-full"
-                >
-                  {loading ? "Processing..." : "Захиалга хийх"}
-                </Button>
+                  loading={loading}
+                />
               </div>
             )}
           </div>

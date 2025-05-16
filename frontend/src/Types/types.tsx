@@ -94,6 +94,7 @@ export type Address = {
   SumOrKhoroo: string;
   vendorID: string;
   districtId: string;
+  district : District
 };
 export type Room = {
   id: string;
