@@ -35,7 +35,7 @@ export const SignUp = () => {
               <TabsList className="flex flex-col sm:flex-row sm:justify-start gap-2 sm:gap-4 w-full">
                 <TabsTrigger
                   value="НЭВТРЭХ"
-                  className="pb-1 px-1 text-orange-500 border-b-2 border-orange-500 sm:border-none flex items-center"
+                  className="pb-1 px-1 border-b-2 border-orange-500 sm:border-none flex items-center"
                 >
                   НЭВТРЭХ
                 </TabsTrigger>

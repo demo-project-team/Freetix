@@ -39,7 +39,14 @@ const LoginForm = () => {
       router.push(`/vendor`);
     }
     setLoading(false);
+    if (!loading) {
+         form.setError('password', {message:"wrong password or email"})
+    }
   };
+   const demo = ()=> {
+    form.setValue('phoneOrOrganizationRegister', "exampleorg@gmail.com")
+    form.setValue('password', '12345678')
+  }
   return (
     <TabsContent value="НЭВТРЭХ" className="flex flex-col gap-3">
       <FormProvider {...form}>
@@ -82,6 +89,7 @@ const LoginForm = () => {
             Continue
           </Button>
         </form>
+        <Button onClick={demo} className="mt-5 w-20">for demo</Button>
       </FormProvider>
     </TabsContent>
   );

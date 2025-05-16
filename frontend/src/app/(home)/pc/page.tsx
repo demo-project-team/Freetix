@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MapPin, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getRoomUser } from "@/utils/request/vendor";
 import { useQueryState } from "nuqs";
@@ -12,8 +12,8 @@ import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import VendorHeaderCard from "@/app/(home)/pc/_components/VendorHeaderCard";
-import { Review } from "./_components/Review";
 import LoadingScreen from "@/components/LoadingScreen";
+import Images from "./_components/Images";
 
 export default function HotelPage() {
   const [vendorId] = useQueryState("vendorid");
@@ -26,7 +26,7 @@ export default function HotelPage() {
   }, [vendorId, router]);
 
   const { data: vendor, isLoading } = useQuery({
-    queryKey: ["vendor"],
+    queryKey: ["vendor", vendorId],
     queryFn: () => getRoomUser(vendorId),
     enabled: !!vendorId,
   });
@@ -38,7 +38,6 @@ export default function HotelPage() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [imageIndex, setImageIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const images =
     vendor?.images?.length && Array.isArray(vendor.images)
@@ -48,28 +47,28 @@ export default function HotelPage() {
             "https://fl-1.cdn.flockler.com/embed/no-image.svg",
         ];
 
-  const handlePrev = () => {
-    setImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  // const handlePrev = () => {
+  //   setImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  // };
 
-  const handleNext = () => {
-    setImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  // const handleNext = () => {
+  //   setImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  // };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setImageIndex((prev) => (prev + 1) % images.length);
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [images.length]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightboxOpen(false);
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  // useEffect(() => {
+  //   const handleKeyDown = (e: KeyboardEvent) => {
+  //     if (e.key === "Escape") setLightboxOpen(false);
+  //   };
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => window.removeEventListener("keydown", handleKeyDown);
+  // }, []);
 
   if (isLoading || !vendor) {
     return <LoadingScreen />;
@@ -81,75 +80,34 @@ export default function HotelPage() {
         <title>{vendor.name} - Gaming Center</title>
         <meta name="description" content={`Explore rooms at ${vendor.name}`} />
       </Head>
-
       <div className="p-6 max-w-6xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">{vendor.name}</h1>
         </div>
-
         <div className="flex items-center text-black-600">
           <MapPin className="mr-2" aria-label="location icon" />
-          {vendor.address?.street} {vendor.address?.SumOrKhoroo}
+          {vendor.address?.street} {vendor.address?.district.name}-дүүрэг {vendor.address?.SumOrKhoroo}-хороо
         </div>
-
         <div>
           <VendorHeaderCard vendor={vendor} />
-          {/* Other content... */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative w-full max-w-xl">
-            {/* <Image
-              // src={images}
-              alt={`Image ${imageIndex + 1} of ${vendor.name}`}
-              width={800}
-              height={500}
-              className="rounded-lg shadow object-cover cursor-pointer"
-              onClick={() => setLightboxOpen(true)}
-            /> */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrev}
-                  className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100 z-10"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100 z-10"
-                  aria-label="Next image"
-                >
-                  <ChevronRight />
-                </button>
-              </>
-            )}
-            <div className="flex space-x-2 mt-4">
-              {/* {images.map((src) => (
-                <Image
-                  key={i}
-                  src={src.toString()}
-                  alt={`Thumbnail ${i + 1}`}
-                  width={100}
-                  height={70}
-                  className={`rounded cursor-pointer ${
-                    imageIndex === i ? "ring-2 ring-blue-500" : ""
-                  }`}
-                  onClick={() => setImageIndex(i)}
-                />
-              ))} */}
-            </div>
+          <div className="relative w-full max-w-xl flex">
+            {images.length !== 0 ? (
+                 <Images images={vendor.images}/>
+            ): <div>зураг оруулаагүй байна</div>}
           </div>
 
-          <div className="space-y-4">
-            <div className="relative h-150">
+          <div className="space-y-4 flex flex-col items-end">
+            <div className="relative h-[400px]">
               <VendorMap vendors={[vendor]} />
             </div>
+            
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {vendor.rooms
             .filter((room) => room.type === "VIP")
             .map((room) => (
@@ -168,9 +126,9 @@ export default function HotelPage() {
                   {room.pcPricePerHour}
                 </div>
               </div>
-            ))}
+            ))} */}
 
-          {vendor.rooms
+          {/* {vendor.rooms
             .filter((room) => room.type === "VVIP")
             .map((room) => (
               <div
@@ -188,16 +146,16 @@ export default function HotelPage() {
                   {room.pcPricePerHour}
                 </div>
               </div>
-            ))}
-        </div>
+            ))} */}
+        {/* </div> */}
 
-        <Review vendor={vendor} />
+        {/* <Review vendor={vendor} /> */}
       </div>
 
       <Footer />
 
       {/* Lightbox fullscreen view */}
-      {lightboxOpen && (
+      {/* {lightboxOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
           onClick={() => setLightboxOpen(false)}
@@ -220,13 +178,13 @@ export default function HotelPage() {
             >
               <ChevronLeft size={48} />
             </button>
-            {/* <Image
+            <Image
               src={images[imageIndex]}
               alt={`Full screen view of ${vendor.name} image ${imageIndex + 1}`}
               width={1000}
               height={700}
               className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-lg"
-            /> */}
+            />
             <button
               onClick={handleNext}
               className="absolute right-6 top-1/2 -translate-y-1/2 text-white z-50"
@@ -236,7 +194,7 @@ export default function HotelPage() {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

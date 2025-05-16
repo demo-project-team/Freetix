@@ -38,7 +38,7 @@ const setBakcgroundImage = async (id : string) => {
     <div>
       <PcProfile />
       <FormItem>
-        <Label>
+        <Label className="w-30 h-30 flex items-center justify-center">
           <Input
             type="file"
             className="hidden"
@@ -47,18 +47,21 @@ const setBakcgroundImage = async (id : string) => {
           <div>
             <ImageIcon />
           </div>
+           зураг нэмэх
         </Label>
       </FormItem>
       <Button onClick={upload}>Upload</Button>
-      {image?.map((img) => (
+      <div className="flex gap-2">   {image?.map((img) => (
         <div
+
           onClick={()=>setBakcgroundImage(img.id)}
-          className={`w-40 h-40 ${img.status ==='BACKGROUND' && "border-2 "}`}
+          className={`w-40 h-40 overflow-hidden rounded-md ${img.status ==='BACKGROUND' && "border-2 "}`}
           key={img.id}
         >
-          <img src={img.url} alt="img" />
+          <img src={img.url} alt="img" className="h-full" />
         </div>
-      ))}
+      ))}</div>
+   
       <p>Background image</p>
          {image?.filter((img)=>img.status === "BACKGROUND").map((img) => (
         <div

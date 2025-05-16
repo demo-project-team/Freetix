@@ -47,6 +47,15 @@ const Header = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
 console.log(booking);
+const utcToMMMDDHH = (utcString: string) => {
+  const date = new Date(utcString);
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const MMM = months[date.getUTCMonth()];
+  const dd = String(date.getUTCDate()).padStart(2, "0");
+  const hh = String(date.getUTCHours()).padStart(2, "0");
+  return `${MMM}-${dd} ${hh}:00`;
+};
+
 
   return (
     <header
@@ -92,7 +101,7 @@ console.log(booking);
                 {booking?.filter((book)=>book.orderedTime.length !== 0).map((book) => (
                   <div
                     key={book.id}
-                    className={`border ${
+                    className={`border p-5 rounded-lg ${
                       book.status === "CANCELLED" && "border-red-400"
                     } ${book.status === "CONFIRMED" && "border-green-400"} ${
                       book.status === "COMPLETED" &&
@@ -102,11 +111,11 @@ console.log(booking);
                     <div>{book?.status}</div>
                     <div className="flex gap-2">
                       Эхлэх:
-                      <div>{book?.orderedTime[0].start}</div>
+                      <div>{utcToMMMDDHH(book?.orderedTime[0].start)}</div>
                     </div>
                     <div className="flex gap-2">
                       Дуусах:
-                      <div>{book?.orderedTime[0].end}</div>
+                      <div>{(utcToMMMDDHH(book?.orderedTime[0].end))}</div>
                     </div>
                     <div>нийт дүн: {book.payment.amount}</div>
                     <div>pcs : {book.pcs.length}</div>
